@@ -38,7 +38,7 @@
                                     <td style="font-size: 14px;">{{ $form->safety_observation_type }}</td>
                                     <td style="font-size: 14px;">
                                         @if ($form->image)
-                                        <img src="{{ asset('storage/images/' . $form->image->image) }}" alt="Image">
+                                            <img src="{{ asset('storage/app/public/images/'.$form->image->image) }}" alt="Image">
                                         @else
                                         No Image
                                         @endif
