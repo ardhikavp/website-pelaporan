@@ -61,14 +61,15 @@ class SafetyObservationFormController extends Controller
         // Upload the image
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imagePath = $image->store('images', 'public');
+            $fileName = time().'_'.$image->getClientOriginalName();
+            $imagePath = 'images';
 
-            // Mengambil nama file dari path yang disimpan di storage
-            $imageName = pathinfo($imagePath, PATHINFO_FILENAME);
+            // Memindahkan image ke file public/$imagePath
+            $image->move($imagePath,$fileName);
 
             // Menyimpan nama file ke kolom image di tabel
             $imageModel = Image::create([
-                'image' => $imageName,
+                'image' => $fileName,
             ]);
         } else {
             $imageModel = null;
