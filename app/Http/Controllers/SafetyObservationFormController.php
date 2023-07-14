@@ -98,7 +98,7 @@ class SafetyObservationFormController extends Controller
 
         Session::flash('message', 'Form created successfully.');
 
-        return Redirect::route('safety-observation-forms.show', $form->id);
+        return Redirect::route('safety-observation-forms.index', $form->id);
     }
 
     /**
