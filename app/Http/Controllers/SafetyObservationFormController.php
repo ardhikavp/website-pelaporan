@@ -39,6 +39,7 @@ class SafetyObservationFormController extends Controller
      */
     public function store(Request $request)
     {
+
         $validatedData = $request->validate([
             'nomor_laporan' => 'required',
             'date_finding' => 'required',
@@ -95,7 +96,6 @@ class SafetyObservationFormController extends Controller
             'approved_by' => $validatedData['approved_by'],
             'status' => "APPROVED",
         ]);
-
         Session::flash('message', 'Form created successfully.');
 
         return Redirect::route('safety-observation-forms.index', $form->id);
