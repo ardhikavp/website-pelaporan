@@ -19,6 +19,8 @@ class SafetyObservationForm extends Model
                             'date_finding',
                             'location_id',
                             'safety_observation_type',
+                            'image_id',
+                            'description',
                             'hazard_potential',
                             'impact',
                             'short_term_recommendation',
@@ -27,12 +29,13 @@ class SafetyObservationForm extends Model
                             'completation_date',
                             'created_by',
                             'approved_by',
+                            'status',
                         ];
 
 
     public function location()
     {
-        return $this->belongsTo(Location::class);
+        return $this->belongsTo(Location::class, 'location_id');
     }
 
     public function createdBy()
@@ -47,6 +50,6 @@ class SafetyObservationForm extends Model
 
     public function image()
     {
-        return $this->belongsTo(Image::class);
+        return $this->belongsTo(Image::class, 'image_id');
     }
 }

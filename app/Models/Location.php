@@ -13,9 +13,9 @@ class Location extends Model
     protected $table = 'locations';
     protected $fillable = ['location'];
 
-    // public function safetyobservationforms()
-    // {
-    //     return $this->hasMany(SafetyObservationForm::class);
-    // }
+    public function safetyobservationforms()
+    {
+        return $this->hasMany(SafetyObservationForm::class, 'location_id');
+    }
 
 }

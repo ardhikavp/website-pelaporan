@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Location;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Image;
 use App\Models\SafetyObservationForm;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -17,9 +18,9 @@ class SafetyObservationFormController extends Controller
      */
     public function index()
     {
-        $forms = SafetyObservationForm::all();
+        $forms = SafetyObservationForm::paginate(5);
 
-        return view('safety-observation-forms.index', compact('forms'));
+        return view('safety-observation-forms.safety-observation-form-index', compact('forms'));
     }
 
     /**
@@ -27,9 +28,10 @@ class SafetyObservationFormController extends Controller
      */
     public function create()
     {
+        $images = Image::all();
         $locations = Location::all();
         $users = User::all();
-        return view('safety-observation-forms.create', compact('locations', 'users'));
+        return view('safety-observation-forms.safety-observation-form-create', compact('locations', 'users', 'images'));
     }
 
     /**
@@ -42,6 +44,8 @@ class SafetyObservationFormController extends Controller
             'date_finding' => 'required',
             'location_id' => 'required',
             'safety_observation_type' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'description' => 'required',
             'hazard_potential' => 'required',
             'impact' => 'required',
             'short_term_recommendation' => 'required',
@@ -50,14 +54,47 @@ class SafetyObservationFormController extends Controller
             'completation_date' => 'required',
             'created_by' => 'required',
             'approved_by' => 'required',
+            'status' => 'required',
         ]);
 
+        // Upload the image
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imagePath = $image->store('images', 'public');
+
+            // Mengambil nama file dari path yang disimpan di storage
+            $imageName = pathinfo($imagePath, PATHINFO_FILENAME);
+
+            // Menyimpan nama file ke kolom image di tabel
+            $imageModel = Image::create([
+                'image' => $imageName,
+            ]);
+        } else {
+            $imageModel = null;
+        }
+
+        // Find the location by ID
         $location = Location::find($validatedData['location_id']);
 
         $validatedData['location'] = $location;
 
-        $form = SafetyObservationForm::create($validatedData);
-
+        $form = SafetyObservationForm::create([
+            'nomor_laporan' => $validatedData['nomor_laporan'],
+            'date_finding' => $validatedData['date_finding'],
+            'location_id' => $validatedData['location_id'],
+            'safety_observation_type' => $validatedData['safety_observation_type'],
+            'image_id' => $imageModel ? $imageModel->id : null,
+            'description' => $validatedData['description'],
+            'hazard_potential' => $validatedData['hazard_potential'],
+            'impact' => $validatedData['impact'],
+            'short_term_recommendation' => $validatedData['short_term_recommendation'],
+            'middle_term_recommendation' => $validatedData['middle_term_recommendation'],
+            'long_term_recommendation' => $validatedData['long_term_recommendation'],
+            'completation_date' => $validatedData['completation_date'],
+            'created_by' => $validatedData['created_by'],
+            'approved_by' => $validatedData['approved_by'],
+            'status' => $validatedData['status'],
+        ]);
 
         Session::flash('message', 'Form created successfully.');
 
@@ -90,6 +127,8 @@ class SafetyObservationFormController extends Controller
             'date_finding' => 'required',
             'location_id' => 'required',
             'safety_observation_type' => 'required',
+            'image_id' => 'required',
+            'description' => 'required',
             'hazard_potential' => 'required',
             'impact' => 'required',
             'short_term_recommendation' => 'required',
@@ -98,6 +137,7 @@ class SafetyObservationFormController extends Controller
             'completation_date' => 'required',
             'created_by' => 'required',
             'approved_by' => 'required',
+            'status' => 'required',
         ]);
 
         $form->update($validatedData);

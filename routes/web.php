@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\SafetyObservationFormController;
 use App\Http\Controllers\SafetyBehaviorChecklistController;
 
 /*
@@ -26,4 +27,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware(['auth'])->group(function(){
     Route::resource('location', LocationController::class);
     Route::resource('safety-behavior-checklist', SafetyBehaviorChecklistController::class);
+    Route::resource('safety-observation-forms', SafetyObservationFormController::class);
 });
