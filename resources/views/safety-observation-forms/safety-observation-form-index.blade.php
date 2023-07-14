@@ -38,9 +38,9 @@
                                         <tr>
                                             <td style="font-size: 14px;">{{ $form->nomor_laporan }}</td>
                                             <td style="font-size: 14px;">{{ $form->safety_observation_type }}</td>
-                                            <td style="font-size: 14px;">{{ $form->image_id->image }}</td>
-                                            <td style="font-size: 14px;">{{ $form->createdBy->users->name }}</td>
-                                            <td style="font-size: 14px;">{{ $form->approvedBy->users->name }}</td>
+                                            <td style="font-size: 14px;">{{ $form->image->image }}</td>
+                                            <td style="font-size: 14px;">{{ $form->createdBy->name }}</td>
+                                            <td style="font-size: 14px;">{{ $form->approvedBy->name }}</td>
                                             <td style="font-size: 14px;">{{ $form->status }}</td>
                                         </tr>
                                     @endforeach

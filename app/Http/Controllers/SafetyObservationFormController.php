@@ -54,7 +54,7 @@ class SafetyObservationFormController extends Controller
             'completation_date' => 'required',
             'created_by' => 'required',
             'approved_by' => 'required',
-            'status' => 'required',
+            // 'status' => 'required',
         ]);
 
         // Upload the image
@@ -93,7 +93,7 @@ class SafetyObservationFormController extends Controller
             'completation_date' => $validatedData['completation_date'],
             'created_by' => $validatedData['created_by'],
             'approved_by' => $validatedData['approved_by'],
-            'status' => $validatedData['status'],
+            'status' => "APPROVED",
         ]);
 
         Session::flash('message', 'Form created successfully.');
