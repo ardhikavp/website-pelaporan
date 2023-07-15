@@ -19,19 +19,22 @@
                                     @if (session('success'))
                                         <div class="alert alert-success">{{ session('success') }}</div>
                                     @endif
-                                    <form action="{{route('safety-behavior-checklist.store')}}" method="POST">
+                                    <form action="{{ route('safety-behavior-checklist.store') }}" method="POST">
                                         @csrf
                                         <div class="form-group">
                                             <label for="user_id">Pelapor</label>
-                                            <input type="text" name="user_id" id="user" class="form-control" value="{{ auth()->user()->name }}" required readonly>
+                                            <input type="text" name="user_id" id="user" class="form-control"
+                                                value="{{ auth()->user()->name }}" required readonly>
                                         </div>
                                         <div class="form-group">
                                             <label for="operation_name">Nama Operasi</label>
-                                            <input type="text" name="operation_name" id="answer" class="form-control" value="" required>
+                                            <input type="text" name="operation_name" id="answer" class="form-control"
+                                                value="" required>
                                         </div>
                                         <div class="form-group" style="margin-bottom: 20px;">
                                             <label for="company_id">Perusahaan</label>
-                                            <select name="company_id" id="company" class="form-control" required data-width="100%">
+                                            <select name="company_id" id="company" class="form-control" required
+                                                data-width="100%">
                                                 <option value="">Pilih Perusahaan</option>
                                                 @foreach ($companies as $company)
                                                     <option value="{{ $company->id }}">{{ $company->company }}</option>
@@ -54,8 +57,9 @@
                                                             @foreach (json_decode($checklist->question)->question as $key => $question)
                                                                 <div class="mb-3">
                                                                     <p class="mb-0">{{ $question }}</p>
-                                                                    <input type="hidden" name="category[]" value="{{ $checklist->category }}">
-                                                                    <input type="hidden" name="question_id[]" value="{{ $key }}">
+                                                                    <input type="hidden"
+                                                                        name="question[{{ $checklist->category }}][{{ $key }}]"
+                                                                        value="{{ $question }}">
                                                                 </div>
                                                             @endforeach
                                                         </td>
@@ -63,15 +67,21 @@
                                                             @foreach (json_decode($checklist->question)->question as $key => $question)
                                                                 <div class="mb-3">
                                                                     <label>
-                                                                        <input type="radio" name="answer[{{ $checklist->id }}][{{ $key }}]" value="yes">
+                                                                        <input type="radio"
+                                                                            name="answer[{{ $checklist->category }}][{{ $key }}]"
+                                                                            value="yes">
                                                                         <span>{{ __('Yes') }}</span>
                                                                     </label>
                                                                     <label>
-                                                                        <input type="radio" name="answer[{{ $checklist->id }}][{{ $key }}]" value="no">
+                                                                        <input type="radio"
+                                                                            name="answer[{{ $checklist->category }}][{{ $key }}]"
+                                                                            value="no">
                                                                         <span>{{ __('No') }}</span>
                                                                     </label>
                                                                     <label>
-                                                                        <input type="radio" name="answer[{{ $checklist->id }}][{{ $key }}]" value="n/a" checked>
+                                                                        <input type="radio"
+                                                                            name="answer[{{ $checklist->category }}][{{ $key }}]"
+                                                                            value="n/a" checked>
                                                                         <span>{{ __('N/A') }}</span>
                                                                     </label>
                                                                 </div>
@@ -82,46 +92,6 @@
                                             </tbody>
 
                                         </table>
-                                        {{-- <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>{{ __('Category') }}</th>
-                                                    <th>{{ __('Question') }}</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($safetyList as $checklist)
-                                                    <tr>
-                                                        <td>{{ $checklist->category }}</td>
-                                                        <td>
-                                                            @foreach (json_decode($checklist->question)->question as $key => $question)
-                                                                <div class="mb-3">
-                                                                    <p class="mb-0">{{ $question }}</p>
-                                                                    <label>
-                                                                        <input type="radio"
-                                                                            name="question[{{ $key }}][{{ $question }}]"
-                                                                            value="yes">
-                                                                        <span>Yes</span>
-                                                                    </label>
-                                                                    <label>
-                                                                        <input type="radio"
-                                                                            name="question[{{ $key }}][{{ $question }}]"
-                                                                            value="no">
-                                                                        <span>No</span>
-                                                                    </label>
-                                                                    <label>
-                                                                        <input type="radio"
-                                                                            name="question[{{ $key }}][{{ $question }}]"
-                                                                            value="n/a">
-                                                                        <span>N/A</span>
-                                                                    </label>
-                                                                </div>
-                                                            @endforeach
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table> --}}
                                         <button type="submit" class="btn btn-primary">Create</button>
                                     </form>
                                 </div>

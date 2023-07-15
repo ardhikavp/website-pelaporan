@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\SafetyBehaviorChecklist;
+use Illuminate\Support\Facades\Log;
 
 class SafetyBehaviorChecklistController extends Controller
 {
@@ -36,25 +37,27 @@ class SafetyBehaviorChecklistController extends Controller
     public function store(Request $request)
     {
         $questions = $request->input('question');
+        $answers = $request->input('answer');
 
-        $answers = [];
+        $question_answer_collection = [];
 
-        // Proses penyimpanan jawaban ke dalam tabel Answer
-        foreach ($questions as $key => $question) {
-            foreach ($question as $questionText => $answerText) {
-                $answers[] = [
-                    'question' => $questionText,
-                    'answer' => $answerText
+        foreach ($answers as $category => $question_ids) {
+            $item_to_be_added = ["category" => $category];
+            foreach ($question_ids as $question_id => $answer) {
+                $item_to_be_added[] = [
+                    "question_id" => $question_id,
+                    "question" => $questions[$category][$question_id],
+                    "answer" => $answer
                 ];
             }
+            $question_answer_collection[] = $item_to_be_added;
         }
 
-        // Simpan jawaban ke dalam tabel Answer
         Answer::create([
             'user_id' => auth()->user()->id,
             'operation_name' => $request->input('operation_name'),
             'company_id' => $request->input('company_id'),
-            'answers' => json_encode($answers)
+            'answer' => json_encode($question_answer_collection)
         ]);
 
         // Redirect ke halaman yang diinginkan (misalnya halaman indeks checklist)
