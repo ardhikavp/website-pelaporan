@@ -42,9 +42,9 @@ class SafetyBehaviorChecklistController extends Controller
         $question_answer_collection = [];
 
         foreach ($answers as $category => $question_ids) {
-            $item_to_be_added = ["category" => $category];
+            $item_to_be_added = ["category" => $category, "question_answers" => []];
             foreach ($question_ids as $question_id => $answer) {
-                $item_to_be_added[] = [
+                $item_to_be_added["question_answers"][] = [
                     "question_id" => $question_id,
                     "question" => $questions[$category][$question_id],
                     "answer" => $answer
