@@ -41,10 +41,17 @@
                 </div>
             </div>
         </nav>
-
-        <main class="py-4">
-            @yield('content')
-        </main>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                @include('layouts.nav.side-nav')
+            </div>
+            <div id="layoutSidenav_content">
+                <!-- Konten lainnya -->
+                <main class="py-4">
+                    @yield('content')
+                </main>
+            </div>
+        </div>
     </div>
 </body>
 </html>

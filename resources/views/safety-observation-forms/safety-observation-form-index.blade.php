@@ -38,9 +38,19 @@
                                     <td style="font-size: 14px;">{{ $form->safety_observation_type }}</td>
                                     <td style="font-size: 14px;">
                                         @if ($form->image)
-                                            <img style="width: 100%" src="{{ url('/images/'.$form->image->image) }}" alt="Image">
+                                        <a href="#" data-toggle="modal" data-target="#imageModal{{ $form->id }}">Detail</a>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="imageModal{{ $form->id }}" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel{{ $form->id }}" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-body">
+                                                                <img style="width: 100%" src="{{ url('/images/'.$form->image->image) }}" alt="Image">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                         @else
-                                        No Image
+                                            No Image
                                         @endif
                                     </td>
                                     <td style="font-size: 14px;">{{ $form->createdBy->name }}</td>
@@ -56,4 +66,14 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('#dataTable').on('click', '[data-toggle="modal"]', function () {
+            var targetModal = $(this).data('target');
+            $(targetModal).modal('show');
+        });
+    });
+</script>
+
 @endsection
