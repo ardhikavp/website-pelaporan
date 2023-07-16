@@ -14,8 +14,8 @@
             </a>
             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    <a class="nav-link" href="{{ url('dashboard/safety-observation-forms') }}">Safety Observation</a>
-                    <a class="nav-link" href="{{ url('dashboard/safety-behavior-checklist') }}">Safety Behavior Checklist</a>
+                    <a class="nav-link" href="{{ route('safety-observation-forms.index') }}">Safety Observation</a>
+                    <a class="nav-link" href="{{ route('safety-behavior-checklist.index') }}">Safety Behavior Checklist</a>
                 </nav>
             </div>
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -25,7 +25,7 @@
             </a>
             <div class="collapse" id="collapsePages" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    {{-- <a class="nav-link" href="{{ route('companies.index') }}">Perusahaan</a> --}}
+                    <a class="nav-link" href="{{ route('companies.index') }}">Perusahaan</a>
                     <a class="nav-link" href="{{ route('location.index') }}">Lokasi</a>
                 </nav>
             </div>

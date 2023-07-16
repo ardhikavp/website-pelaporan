@@ -28,7 +28,10 @@ class SafetyBehaviorChecklistController extends Controller
      */
     public function create()
     {
-        //
+        $data = SafetyBehaviorChecklist::all();
+        $answers = Answer::all();
+        $companies = Company::all();
+        return view('safety-behavior-checklists.safety-behavior-checklist-create', ['safetyList' => $data, 'answers' => $answers, 'companies' => $companies]);
     }
 
     /**
@@ -91,8 +94,10 @@ class SafetyBehaviorChecklistController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Answer $answer)
     {
-        //
+        $answer->delete();
+
+        return redirect()->route('safety-behavior-checklist.index')->with('success', 'Safety Behavior Checklist berhasil dihapus.');
     }
 }

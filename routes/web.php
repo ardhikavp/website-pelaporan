@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\CompanyController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\SafetyObservationFormController;
 use App\Http\Controllers\SafetyBehaviorChecklistController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -24,8 +26,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth'])->prefix('dashboard')->group(function(){
     Route::resource('location', LocationController::class);
+    Route::resource('companies', CompanyController::class);
     Route::resource('safety-behavior-checklist', SafetyBehaviorChecklistController::class);
     Route::resource('safety-observation-forms', SafetyObservationFormController::class);
 });

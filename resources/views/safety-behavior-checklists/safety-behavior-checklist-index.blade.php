@@ -1,116 +1,60 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">{{ __('Safety Behavior Checklist') }}
-                    </div>
-
-                    <div class="card-body">
-                        @if (session('success'))
-                            <div class="alert alert-success">{{ session('success') }}</div>
-                        @endif
-
-                        <div class="container">
-                            <div class="row justify-content-center">
-                                <div class="col-md-12">
-                                    @if (session('success'))
-                                        <div class="alert alert-success">{{ session('success') }}</div>
-                                    @endif
-                                    <form action="{{ route('safety-behavior-checklist.store') }}" method="POST">
-                                        @csrf
-                                        <div class="form-group">
-                                            <label for="user_id">Pelapor</label>
-                                            <input type="text" name="user_id" id="user" class="form-control"
-                                                value="{{ auth()->user()->name }}" required readonly>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="operation_name">Nama Operasi</label>
-                                            <input type="text" name="operation_name" id="answer" class="form-control"
-                                                value="" required>
-                                        </div>
-                                        <div class="form-group" style="margin-bottom: 20px;">
-                                            <label for="company_id">Perusahaan</label>
-                                            <select name="company_id" id="company" class="form-control" required
-                                                data-width="100%">
-                                                <option value="">Pilih Perusahaan</option>
-                                                @foreach ($companies as $company)
-                                                    <option value="{{ $company->id }}">{{ $company->company }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>{{ __('Category') }}</th>
-                                                    <th>{{ __('Question') }}</th>
-                                                    <th>{{ __('Answer') }}</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($safetyList as $checklist)
-                                                    <tr>
-                                                        <td>{{ $checklist->category }}</td>
-                                                        <td>
-                                                            @foreach (json_decode($checklist->question)->question as $key => $question)
-                                                                <div class="mb-3">
-                                                                    <p class="mb-0">{{ $question }}</p>
-                                                                    <input type="hidden"
-                                                                        name="question[{{ $checklist->category }}][{{ $key }}]"
-                                                                        value="{{ $question }}">
-                                                                </div>
-                                                            @endforeach
-                                                        </td>
-                                                        <td>
-                                                            @foreach (json_decode($checklist->question)->question as $key => $question)
-                                                                <div class="mb-3">
-                                                                    <label>
-                                                                        <input type="radio"
-                                                                            name="answer[{{ $checklist->category }}][{{ $key }}]"
-                                                                            value="yes">
-                                                                        <span>{{ __('Yes') }}</span>
-                                                                    </label>
-                                                                    <label>
-                                                                        <input type="radio"
-                                                                            name="answer[{{ $checklist->category }}][{{ $key }}]"
-                                                                            value="no">
-                                                                        <span>{{ __('No') }}</span>
-                                                                    </label>
-                                                                    <label>
-                                                                        <input type="radio"
-                                                                            name="answer[{{ $checklist->category }}][{{ $key }}]"
-                                                                            value="n/a" checked>
-                                                                        <span>{{ __('N/A') }}</span>
-                                                                    </label>
-                                                                </div>
-                                                            @endforeach
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-
-                                        </table>
-                                        <button type="submit" class="btn btn-primary">Create</button>
-                                    </form>
-                                </div>
-                            </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="text left">
+                            <h4 class="card-title">Input Safety Observation</h4>
                         </div>
+                        <div class="text-right">
+                            <a href="{{ route('safety-behavior-checklist.create') }}" class="btn btn-primary">Catat <i>Safety Behavior Checklist</i> Baru</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @if (Session::has('message'))
+                    <div class="alert alert-success">{{ Session::get('message') }}</div>
+                    @endif
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 15%;">Nomor Laporan</th>
+                                    <th style="width: 15%;">Pekerjaan</th>
+                                    <th style="width: 30%;">Perusahaan</th>
+                                    <th style="width: 20%;">Status</th>
+                                    <th style="width: 20%;">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($answers as $answer)
+                                <tr>
+                                    <td>{{ $answer->id }}</td>
+                                    <td>{{ $answer->operation_name }}</td>
+                                    <td>{{ $companies->find($answer->company_id)->company }}</td>
+                                    <td>Approved</td>
+                                    <td>
+                                        <a href="{{ route('safety-behavior-checklist.show', $answer->id) }}" class="btn btn-info">Lihat</a>
+                                        <a href="{{ route('safety-behavior-checklist.edit', $answer->id) }}" class="btn btn-primary">Edit</a>
+                                        <form action="{{ route('safety-behavior-checklist.destroy', $answer) }}" method="POST" class="btn btn-danger">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-@endsection
+</div>
 
-@section('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/js/select2.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/css/select2.min.css" rel="stylesheet" />
-    <script>
-        $(document).ready(function() {
-            $('#company').select2();
-        });
-    </script>
 @endsection

@@ -47,6 +47,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function isAdmin()
+    {
+        return $this->role === 'admin'; // Gantikan dengan logika pengecekan peran admin pada model User Anda
+    }
+
     public function answer()
     {
         return $this->hasMany(Answer::class);

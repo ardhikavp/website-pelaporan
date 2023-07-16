@@ -12,13 +12,13 @@ class CompanyController extends Controller
 {
     public function index()
     {
-        $companies = Company::withCount('users')->get();
-        return view('company.index', compact('companies'));
+        $companies = Company::withCount('users')->paginate(5);
+        return view('companies.company-index', compact('companies'));
     }
 
     public function create()
     {
-        return view('company.create');
+        return view('companies.company-create');
     }
 
     public function store(Request $request)
@@ -34,7 +34,7 @@ class CompanyController extends Controller
 
     public function edit(Company $company)
     {
-        return view('company.edit', compact('company'));
+        return view('companies.company-edit', compact('company'));
     }
 
     public function update(Request $request, Company $company)

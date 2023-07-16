@@ -44,11 +44,31 @@
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-body">
-                                                                <img style="width: 100%" src="{{ url('/images/'.$form->image->image) }}" alt="Image">
+
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                    Launch demo modal
+                                                  </button>
+
+                                                  <!-- Modal -->
+                                                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                      <div class="modal-content">
+                                                        <div class="modal-header">
+                                                          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <img style="width: 100%" src="{{ url('/images/'.$form->image->image) }}" alt="Image">
+                                                        </div>
+                                                        <div class="modal-footer">
+
+                                                        </div>
+                                                      </div>
+                                                    </div>
                                         @else
                                             No Image
                                         @endif
@@ -67,13 +87,19 @@
     </div>
 </div>
 
+
+
+@endsection
+{{-- @push('script')
 <script>
-    $(document).ready(function () {
-        $('#dataTable').on('click', '[data-toggle="modal"]', function () {
-            var targetModal = $(this).data('target');
-            $(targetModal).modal('show');
+    document.addEventListener('DOMContentLoaded', function() {
+        const modalTriggerList = document.querySelectorAll('[data-bs-toggle="modal"]');
+        modalTriggerList.forEach(function(modalTrigger) {
+            modalTrigger.addEventListener('click', function() {
+                const targetModal = document.querySelector(modalTrigger.getAttribute('data-bs-target'));
+                new bootstrap.Modal(targetModal).show();
+            });
         });
     });
 </script>
-
-@endsection
+@endpush --}}
