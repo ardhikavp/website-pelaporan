@@ -35,10 +35,11 @@ class ProfileController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(User $user) // TODO: remove param
     {
-        $company = $user->company_id;
-        // dd($user);
+        $user = auth()->user(); // get current login user
+        $company = $user->company;
+
         return view('profiles.profile-show', compact('user', 'company'));
     }
 
@@ -64,10 +65,10 @@ class ProfileController extends Controller
             'password' => 'required|string|min:8|confirmed',
             // tambahkan validasi lain sesuai kebutuhan
         ]);
-    
+
         // Update data profil pengguna
         $user->update($validatedData);
-    
+
         return redirect()->route('profile.show', $user->id)->with('success', 'Profile updated successfully.');
     }
 
