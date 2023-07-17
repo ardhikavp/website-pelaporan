@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('category')->required();
             $table->json('question')->required();
+            $table->integer('question_count')->nullable();
             $table->timestamps();
         });
     }

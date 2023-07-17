@@ -31,7 +31,12 @@ class SafetyBehaviorChecklistController extends Controller
         $data = SafetyBehaviorChecklist::all();
         $answers = Answer::all();
         $companies = Company::all();
-        return view('safety-behavior-checklists.safety-behavior-checklist-create', ['safetyList' => $data, 'answers' => $answers, 'companies' => $companies]);
+
+        return view('safety-behavior-checklists.safety-behavior-checklist-create', [
+            'safetyList' => $data,
+            'answers' => $answers,
+            'companies' => $companies
+            ]);
     }
 
     /**

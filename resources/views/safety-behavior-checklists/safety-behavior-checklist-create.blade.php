@@ -37,9 +37,14 @@
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th>{{ __('Category') }}</th>
-                                                    <th>{{ __('Question') }}</th>
-                                                    <th>{{ __('Answer') }}</th>
+                                                    <th rowspan="2">{{ __('Category') }}</th>
+                                                    <th rowspan="2">{{ __('Question') }}</th>
+                                                    <th colspan="3">{{ __('Answer') }}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ __('Safe') }}</th>
+                                                    <th>{{ __('Unsafe') }}</th>
+                                                    <th>{{ __('N/A') }}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -62,20 +67,29 @@
                                                                     <label>
                                                                         <input type="radio"
                                                                             name="answer[{{ $checklist->category }}][{{ $key }}]"
-                                                                            value="yes">
-                                                                        <span>{{ __('Yes') }}</span>
+                                                                            value="safe">
                                                                     </label>
+                                                                </div>
+                                                            @endforeach
+                                                        </td>
+                                                        <td>
+                                                            @foreach (json_decode($checklist->question)->question as $key => $question)
+                                                                <div class="mb-3">
                                                                     <label>
                                                                         <input type="radio"
                                                                             name="answer[{{ $checklist->category }}][{{ $key }}]"
-                                                                            value="no">
-                                                                        <span>{{ __('No') }}</span>
+                                                                            value="unsafe">
                                                                     </label>
+                                                                </div>
+                                                            @endforeach
+                                                        </td>
+                                                        <td>
+                                                            @foreach (json_decode($checklist->question)->question as $key => $question)
+                                                                <div class="mb-3">
                                                                     <label>
                                                                         <input type="radio"
                                                                             name="answer[{{ $checklist->category }}][{{ $key }}]"
                                                                             value="n/a" checked>
-                                                                        <span>{{ __('N/A') }}</span>
                                                                     </label>
                                                                 </div>
                                                             @endforeach

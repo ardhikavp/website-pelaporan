@@ -103,9 +103,12 @@ class SafetyBehaviorChecklistSeeder extends Seeder
                 'question'  => $questions[strtolower($string1)]
             ];
 
+            $questionCount = count($jsonData['question']);
+
             SafetyBehaviorChecklist::create([
                 'category' => $category,
-                'question' => json_encode($jsonData)
+                'question' => json_encode($jsonData),
+                'question_count' => $questionCount,
             ]);
         }
     }
