@@ -14,6 +14,7 @@ class CompanySeeder extends Seeder
     public function run(): void
     {
         $companies = [
+            'PPNS',
             'CV. Trikarya Abadi',
             'PT. Putra Baru Sentosa',
             'CV. BLM',

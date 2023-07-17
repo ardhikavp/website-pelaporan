@@ -25,9 +25,13 @@ class DatabaseSeeder extends Seeder
         $this->call([
             LocationSeeder::class,
         ]);
-        
+
         $this->call([
             SafetyBehaviorChecklistSeeder::class,
+        ]);
+
+        $this->call([
+            AdminSeeder::class,
         ]);
     }
 }

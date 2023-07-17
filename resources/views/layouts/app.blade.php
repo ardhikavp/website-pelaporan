@@ -14,10 +14,12 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Menambahkan link CSS SweetAlert -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11"> --}}
 
     <!-- Menambahkan script SweetAlert -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
@@ -49,7 +51,9 @@
         </nav>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
+                @if (!in_array(request()->route()->getName(), ['register', 'login']))
                 @include('layouts.nav.side-nav')
+            @endif
             </div>
             <div id="layoutSidenav_content">
                 <!-- Konten lainnya -->
