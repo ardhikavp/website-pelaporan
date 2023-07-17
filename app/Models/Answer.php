@@ -18,7 +18,9 @@ class Answer extends Model
                         'user_id',
                         'operation_name',
                         'company_id',
-                        'answer'
+                        'answer',
+                        'safety_index',
+                        'nomor_laporan',
                     ];
 
     // public function question()

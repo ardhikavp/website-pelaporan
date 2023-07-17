@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Answer;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Company;
-use App\Models\SafetyBehaviorChecklist;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use App\Models\SafetyBehaviorChecklist;
 
 class SafetyBehaviorChecklistController extends Controller
 {
@@ -44,6 +45,7 @@ class SafetyBehaviorChecklistController extends Controller
      */
     public function store(Request $request)
     {
+        // Menyimpan data jawaban
         $questions = $request->input('question');
         $answers = $request->input('answer');
 
@@ -61,11 +63,70 @@ class SafetyBehaviorChecklistController extends Controller
             $question_answer_collection[] = $item_to_be_added;
         }
 
+        // Menghitung safety index
+        $safeCount = 0;
+        $unsafeCount = 0;
+        $naCount = 0;
+
+        foreach ($answers as $category => $questionIds) {
+            foreach ($questionIds as $questionId => $answer) {
+                if ($answer === 'safe') {
+                    $safeCount++;
+                } elseif ($answer === 'unsafe') {
+                    $unsafeCount++;
+                } elseif ($answer === 'n/a') {
+                    $naCount++;
+                }
+            }
+        }
+        $totalAnswers = $safeCount + $unsafeCount;
+
+        $safetyIndex = $totalAnswers > 0 ? ($safeCount / $totalAnswers) * 100 : 0;
+
+        // Membuat nomot laporan
+        // Ambil bulan dan tahun saat ini
+        $now = Carbon::now();
+        $month = $now->format('m');
+        $year = $now->format('y');
+
+        // Ambil laporan terakhir dalam bulan tersebut
+        $lastReport = Answer::whereMonth('created_at', $month)
+                            ->whereYear('created_at', $year)
+                            ->orderByDesc('id')
+                            ->first();
+
+        // Buat nomor laporan berikutnya
+        if ($lastReport) {
+            $lastNumber = intval(substr($lastReport->nomor_laporan, 0, 3));
+            $newNumber = $lastNumber + 1;
+            $nomorLaporan = str_pad($newNumber, 3, '0', STR_PAD_LEFT);
+        } else {
+            $nomorLaporan = '001';
+        }
+
+        // Ambil singkatan perusahaan dari input
+        $companyName = $request->input('company_id');
+        $words = explode(" ", $companyName);
+        $abbreviation = '';
+
+        foreach ($words as $word) {
+            if (preg_match('/^[A-Z]+$/', $word)) {
+                $abbreviation .= $word;
+            }
+        }
+
+        $abbreviation = str_pad($abbreviation, 5);
+        // Buat string nomor laporan
+
+        $nomorLaporanString = $nomorLaporan. '/' . 'SBC'. '/'. $abbreviation. '/' . $month . '/' . $year;
+
         Answer::create([
             'user_id' => auth()->user()->id,
             'operation_name' => $request->input('operation_name'),
             'company_id' => $request->input('company_id'),
-            'answer' => json_encode($question_answer_collection)
+            'answer' => json_encode($question_answer_collection),
+            'safety_index' => $safetyIndex,
+            'nomor_laporan' => $nomorLaporanString,
         ]);
 
         // Redirect ke halaman yang diinginkan (misalnya halaman indeks checklist)

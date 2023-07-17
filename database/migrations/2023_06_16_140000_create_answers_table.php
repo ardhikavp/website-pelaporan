@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
+            $table->string('nomor_laporan')->required();
             $table->foreignId('user_id')->constrained();
             $table->string('operation_name')->required();
             $table->foreignId('company_id')->constrained();
             $table->json('answer')->required();
+            $table->decimal('safety_index', 5, 2);
             $table->timestamps();
         });
     }

@@ -16,8 +16,8 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @if (Session::has('message'))
-                    <div class="alert alert-success">{{ Session::get('message') }}</div>
+                    @if (Session::has('success'))
+                    <div class="alert alert-success">{{ Session::get('success') }}</div>
                     @endif
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -26,17 +26,17 @@
                                     <th style="width: 15%;">Nomor Laporan</th>
                                     <th style="width: 15%;">Pekerjaan</th>
                                     <th style="width: 30%;">Perusahaan</th>
-                                    <th style="width: 20%;">Status</th>
+                                    <th style="width: 20%;">Safety Index</th>
                                     <th style="width: 20%;">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($answers as $answer)
                                 <tr>
-                                    <td>{{ $answer->id }}</td>
+                                    <td>{{ $answer->nomor_laporan }}</td>
                                     <td>{{ $answer->operation_name }}</td>
                                     <td>{{ $companies->find($answer->company_id)->company }}</td>
-                                    <td>Approved</td>
+                                    <td>{{ $answer->safety_index }}%</td>
                                     <td>
                                         <a href="{{ route('safety-behavior-checklist.show', $answer->id) }}" class="btn btn-info">Lihat</a>
                                         <a href="{{ route('safety-behavior-checklist.edit', $answer->id) }}" class="btn btn-primary">Edit</a>
