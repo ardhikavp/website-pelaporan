@@ -37,7 +37,7 @@ class SafetyBehaviorChecklistController extends Controller
             'safetyList' => $data,
             'answers' => $answers,
             'companies' => $companies
-            ]);
+        ]);
     }
 
     /**
@@ -87,13 +87,13 @@ class SafetyBehaviorChecklistController extends Controller
         // Ambil bulan dan tahun saat ini
         $now = Carbon::now();
         $month = $now->format('m');
-        $year = $now->format('y');
+        $year = $now->format('Y');
 
         // Ambil laporan terakhir dalam bulan tersebut
-        $lastReport = Answer::whereMonth('created_at', $month)
-                            ->whereYear('created_at', $year)
-                            ->orderByDesc('id')
-                            ->first();
+        $lastReport = Answer::whereMonth('created_at', '=', $month)
+            ->whereYear('created_at', '=', $year)
+            ->orderByDesc('id')
+            ->first();
 
         // Buat nomor laporan berikutnya
         if ($lastReport) {
@@ -105,20 +105,21 @@ class SafetyBehaviorChecklistController extends Controller
         }
 
         // Ambil singkatan perusahaan dari input
-        $companyName = $request->input('company_id');
-        $words = explode(" ", $companyName);
+        $companyId = $request->input('company_id');
+        $companyName = Company::find($companyId)->company;
         $abbreviation = '';
 
-        foreach ($words as $word) {
-            if (preg_match('/^[A-Z]+$/', $word)) {
-                $abbreviation .= $word;
-            }
+        $words = explode(" ", $companyName);
+
+        foreach ($words as &$word) {
+            preg_match_all('/[A-Z]/', $word, $matches);
+            $abbreviation .= implode("", $matches[0]);
         }
 
         $abbreviation = str_pad($abbreviation, 5);
-        // Buat string nomor laporan
 
-        $nomorLaporanString = $nomorLaporan. '/' . 'SBC'. '/'. $abbreviation. '/' . $month . '/' . $year;
+        // Buat string nomor laporan
+        $nomorLaporanString = $nomorLaporan . '/' . 'SBC' . '/' . $abbreviation . '/' . $month . '/' . $year;
 
         Answer::create([
             'user_id' => auth()->user()->id,
