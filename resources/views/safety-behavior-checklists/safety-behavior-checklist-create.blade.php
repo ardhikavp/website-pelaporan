@@ -49,52 +49,55 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($safetyList as $checklist)
-                                                    <tr>
-                                                        <td>{{ $checklist->category }}</td>
-                                                        <td>
-                                                            @foreach (json_decode($checklist->question)->question as $key => $question)
+                                                    @php
+                                                        $question_array = json_decode($checklist->question, true)['question'];
+                                                        $keys = array_keys($question_array);
+                                                        $first_index = $keys[0];
+                                                    @endphp
+                                                    @foreach (json_decode($checklist->question)->question as $key => $question)
+                                                        <tr>
+                                                            @php
+                                                                if($first_index == $key) {
+                                                                    echo '<td rowspan="' . count($question_array) . '">' . $checklist->category . '</td>';
+                                                                }
+                                                            @endphp
+                                                            <td>
                                                                 <div class="mb-3">
                                                                     <p class="mb-0">{{ $question }}</p>
                                                                     <input type="hidden"
                                                                         name="question[{{ $checklist->category }}][{{ $key }}]"
                                                                         value="{{ $question }}">
                                                                 </div>
-                                                            @endforeach
-                                                        </td>
-                                                        <td>
-                                                            @foreach (json_decode($checklist->question)->question as $key => $question)
-                                                                <div class="mb-3">
-                                                                    <label>
-                                                                        <input type="radio"
-                                                                            name="answer[{{ $checklist->category }}][{{ $key }}]"
-                                                                            value="safe">
-                                                                    </label>
-                                                                </div>
-                                                            @endforeach
-                                                        </td>
-                                                        <td>
-                                                            @foreach (json_decode($checklist->question)->question as $key => $question)
-                                                                <div class="mb-3">
-                                                                    <label>
-                                                                        <input type="radio"
-                                                                            name="answer[{{ $checklist->category }}][{{ $key }}]"
-                                                                            value="unsafe">
-                                                                    </label>
-                                                                </div>
-                                                            @endforeach
-                                                        </td>
-                                                        <td>
-                                                            @foreach (json_decode($checklist->question)->question as $key => $question)
-                                                                <div class="mb-3">
-                                                                    <label>
-                                                                        <input type="radio"
-                                                                            name="answer[{{ $checklist->category }}][{{ $key }}]"
-                                                                            value="n/a" checked>
-                                                                    </label>
-                                                                </div>
-                                                            @endforeach
-                                                        </td>
-                                                    </tr>
+                                                            </td>
+                                                            <td>
+                                                                    <div class="mb-3">
+                                                                        <label>
+                                                                            <input type="radio"
+                                                                                name="answer[{{ $checklist->category }}][{{ $key }}]"
+                                                                                value="safe">
+                                                                        </label>
+                                                                    </div>
+                                                            </td>
+                                                            <td>
+                                                                    <div class="mb-3">
+                                                                        <label>
+                                                                            <input type="radio"
+                                                                                name="answer[{{ $checklist->category }}][{{ $key }}]"
+                                                                                value="unsafe">
+                                                                        </label>
+                                                                    </div>
+                                                            </td>
+                                                            <td>
+                                                                    <div class="mb-3">
+                                                                        <label>
+                                                                            <input type="radio"
+                                                                                name="answer[{{ $checklist->category }}][{{ $key }}]"
+                                                                                value="n/a" checked>
+                                                                        </label>
+                                                                    </div>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
                                                 @endforeach
                                             </tbody>
 
