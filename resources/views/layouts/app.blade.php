@@ -51,9 +51,10 @@
         </nav>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
+                {{-- @include('layouts.nav.side-nav') --}}
                 @if (!in_array(request()->route()->getName(), ['register', 'login']))
-                @include('layouts.nav.side-nav')
-            @endif
+                    @include('layouts.nav.side-nav')
+                @endif
             </div>
             <div id="layoutSidenav_content">
                 <!-- Konten lainnya -->
