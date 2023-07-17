@@ -54,7 +54,7 @@ class SafetyObservationFormController extends Controller
             'long_term_recommendation' => 'required',
             'completation_date' => 'required',
             'created_by' => 'required',
-            'approved_by' => 'required',
+            // 'approved_by' => 'required',
             // 'status' => 'required',
         ]);
 

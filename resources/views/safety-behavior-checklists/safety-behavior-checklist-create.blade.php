@@ -7,7 +7,6 @@
                 <div class="card">
                     <div class="card-header">{{ __('Safety Behavior Checklist') }}
                     </div>
-
                     <div class="card-body">
                         <div class="container">
                             <div class="row justify-content-center">
@@ -16,18 +15,15 @@
                                         @csrf
                                         <div class="form-group">
                                             <label for="user_id">Pelapor</label>
-                                            <input type="text" name="user_id" id="user" class="form-control"
-                                                value="{{ auth()->user()->name }}" required readonly>
+                                            <input type="text" name="user_id" id="user_id" class="form-control" value="{{ auth()->user()->name }}" required readonly>
                                         </div>
                                         <div class="form-group">
                                             <label for="operation_name">Nama Operasi</label>
-                                            <input type="text" name="operation_name" id="answer" class="form-control"
-                                                value="" required>
+                                            <input type="text" name="operation_name" id="operation_name" class="form-control" value="" required>
                                         </div>
                                         <div class="form-group" style="margin-bottom: 20px;">
-                                            <label for="company_id">Perusahaan</label>
-                                            <select name="company_id" id="company" class="form-control" required
-                                                data-width="100%">
+                                            <label for="company">Perusahaan</label>
+                                            <select name="company_id" id="company" class="form-control" required data-width="100%" data-target="#company" autocomplete="organization">
                                                 <option value="">Pilih Perusahaan</option>
                                                 @foreach ($companies as $company)
                                                     <option value="{{ $company->id }}">{{ $company->company }}</option>

@@ -38,37 +38,28 @@
                                     <td style="font-size: 14px;">{{ $form->safety_observation_type }}</td>
                                     <td style="font-size: 14px;">
                                         @if ($form->image)
-                                        <a href="#" data-toggle="modal" data-target="#imageModal{{ $form->id }}">Detail</a>
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="imageModal{{ $form->id }}" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel{{ $form->id }}" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-body">
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                    Launch demo modal
-                                                  </button>
+                                        <img style="width: 50%" src="{{ url('/images/'.$form->image->image) }}" alt="Image"><br>
+                                                {{-- <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#fotoModal">
+                                                    Detail Foto
+                                                </button> --}}
+                                                <a href="#" class="link-secondary" data-bs-toggle="modal" data-bs-target="#fotoModal">Detail Foto</a>
 
                                                   <!-- Modal -->
-                                                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
+                                                  <div class="modal fade" id="fotoModal" tabindex="-1" aria-labelledby="fotoModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-xl">
                                                       <div class="modal-content">
                                                         <div class="modal-header">
-                                                          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                                          <h1 class="modal-title fs-5" id="fotoModalLabel">Foto Laporan</h1>
                                                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
-                                                        <div class="modal-body">
+                                                        <div class="modal-body ">
                                                             <img style="width: 100%" src="{{ url('/images/'.$form->image->image) }}" alt="Image">
                                                         </div>
                                                         <div class="modal-footer">
-
                                                         </div>
                                                       </div>
                                                     </div>
+                                                </div>
                                         @else
                                             No Image
                                         @endif
@@ -88,18 +79,4 @@
 </div>
 
 
-
 @endsection
-{{-- @push('script')
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const modalTriggerList = document.querySelectorAll('[data-bs-toggle="modal"]');
-        modalTriggerList.forEach(function(modalTrigger) {
-            modalTrigger.addEventListener('click', function() {
-                const targetModal = document.querySelector(modalTrigger.getAttribute('data-bs-target'));
-                new bootstrap.Modal(targetModal).show();
-            });
-        });
-    });
-</script>
-@endpush --}}
