@@ -70,6 +70,7 @@
             <div class="collapse" id="collapsePages">
                 <ul class="nav">
                     <li class="nav-item"><a class="nav-link" href="{{ route('companies.index') }}">Perusahaan</a></li>
+                    
                     <li class="nav-item"><a class="nav-link" href="{{ route('location.index') }}">Lokasi</a></li>
                 </ul>
             </div>

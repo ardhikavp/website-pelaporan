@@ -9,7 +9,9 @@
             <div class="card-body">
                 <h2>User Information</h2>
                 <p>Name: {{ $user->name}}</p>
-                <p>Email: {{ $user->username }}</p>
+                <p>Username: {{ $user->username }}</p>
+                <p>Email: {{ $user->email }}</p>
+                <p>Role: {{ $user->role }}</p>
 
                 @if ($company)
                     <h2>Company Information</h2>

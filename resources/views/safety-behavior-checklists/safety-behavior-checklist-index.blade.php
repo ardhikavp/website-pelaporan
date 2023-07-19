@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-8 mx-auto">
+        <div class="col-md-12 mx-auto">
             <div class="card">
                 <div class="card-header">
                     <div class="row">
@@ -38,9 +38,9 @@
                                     <td>{{ $companies->find($answer->company_id)->company }}</td>
                                     <td>{{ $answer->safety_index }}%</td>
                                     <td>
-                                        <a href="{{ route('safety-behavior-checklist.show', $answer->id) }}" class="btn btn-info">Lihat</a>
-                                        <a href="{{ route('safety-behavior-checklist.edit', $answer->id) }}" class="btn btn-primary">Edit</a>
-                                        <form action="{{ route('safety-behavior-checklist.destroy', $answer) }}" method="POST" class="btn btn-danger">
+                                        <a href="{{ route('safety-behavior-checklist.show', $answer->id) }}" class="btn btn-sm btn-info">Lihat</a>
+                                        <a href="{{ route('safety-behavior-checklist.edit', $answer->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                        <form action="{{ route('safety-behavior-checklist.destroy', $answer) }}" method="POST" class="btn btn-sm btn-danger">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
