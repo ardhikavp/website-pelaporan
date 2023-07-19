@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid">
+<div class="container">
     <div class="row">
-        <div class="col-md-12 mx-auto">
+        <div class="row justify-content-center">
             <div class="card">
                 <div class="card-header">
                     <div class="row">
@@ -20,7 +20,7 @@
                     <div class="alert alert-success">{{ Session::get('success') }}</div>
                     @endif
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" max-width="500px">
                             <thead>
                                 <tr>
                                     <th style="width: 15%;">Nomor Laporan</th>

@@ -7,9 +7,16 @@ use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Policies\CompanyPolicy;
 
 class CompanyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin');
+        $this->authorizeResource(Company::class, 'company');
+    }
+
     public function index()
     {
         $companies = Company::withCount('users')->paginate(5);
