@@ -28,6 +28,11 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <style type="text/css">
+        i{
+            font-size: 100%;
+        }
+    </style>
 </head>
 <body>
     <div id="app">

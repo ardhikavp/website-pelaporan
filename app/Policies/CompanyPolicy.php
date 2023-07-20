@@ -13,8 +13,11 @@ class CompanyPolicy
 
     public function viewAny(User $user)
     {
-        return $user->isAdmin() || $user->isSHE() ? Response::allow() : Response::deny('Anda tidak memiliki izin untuk akses halaman ini.');
+        return $user->role === 'admin' || $user->role === 'SHE'
+            ? Response::allow()
+            : Response::deny('Anda tidak memiliki izin untuk akses halaman ini.');
     }
+
 
     public function view(User $user, Company $company)
     {

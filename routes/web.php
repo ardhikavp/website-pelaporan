@@ -32,6 +32,10 @@ Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])
     ->middleware(['auth', 'checkUserStatus']);
 
 Route::middleware(['auth', 'checkUserStatus'])->prefix('dashboard')->group(function () {
+    Route::get('/users/pending', [UserController::class, 'pendingUsers'])->name('users.pending');
+    });
+    
+Route::middleware(['auth', 'checkUserStatus'])->prefix('dashboard')->group(function () {
         Route::resource('profile', ProfileController::class);
         Route::resource('users', UserController::class);
         Route::resource('location', LocationController::class);

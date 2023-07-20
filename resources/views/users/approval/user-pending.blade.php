@@ -3,8 +3,8 @@
 @section('content')
     <div class="container">
         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-            <a href="{{ route('users.index') }}" class="btn btn-primary" id="btn-users-all">All</a>
-            <a href="{{ route('users.pending') }}" class="btn btn-outline-primary" id="btn-users-pending">Pending Approval</a>
+            <a href="{{ route('users.index') }}" class="btn btn-outline-primary" id="btn-users-all">All</a>
+            <a href="{{ route('users.pending') }}" class="btn btn-primary" id="btn-users-pending">Pending Approval</a>
             <a href="{{ url('/dashboard') }}" class="btn btn-outline-primary" id="btn-users-approved">Approved</a>
             <a href="{{ url('/dashboard') }}" class="btn btn-outline-primary" id="btn-users-rejected">Rejected</a>
         </div>
@@ -23,7 +23,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $user)
+                    @foreach ($pendingUsers as $user)
                         <tr>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->username }}</td>
@@ -31,16 +31,10 @@
                             <td>{{ $user->status }}</td>
                             <td>{{ $user->role }}</td>
                             <td>
-                                <a href="#" class="button button--primary">
-                                    <i class="bi bi-pencil-square"></i> Edit
-                                  </a>
-                                  <a href="#" class="button button--secondary">
-                                    <i class="bi bi-eye"></i> Show
-                                  </a>
-                                  <a href="#" class="button button--danger">
-                                    <i class="bi bi-trash3"></i> Delete
-                                  </a>
-                                {{-- <a href="#" class="btn btn-success"><i class="far fa-check-circle"></i> Approve</a> --}}
+                                <a href="#" class="btn btn-primary mr-2"><i class="bi bi-pencil-square"></i> Edit</a>
+                                <a href="#" class="btn btn-secondary mr-2"><i class="bi bi-eye"></i> Show</a>
+                                <a href="#" class="btn btn-danger"><i class="bi bi-trash3"></i> Delete</a>
+                                <a href="#" class="btn btn-success"><i class="far fa-check-circle"></i> Approve</a>
                             </td>
                         </tr>
                     @endforeach

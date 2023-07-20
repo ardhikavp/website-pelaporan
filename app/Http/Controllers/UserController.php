@@ -22,6 +22,19 @@ class UserController extends Controller
         return view('users.user-index', compact('users', 'companies','pendingUsers', 'approvedUsers', 'rejectedUsers'));
     }
 
+    public function pendingUsers()
+    {
+        // Ambil daftar pengguna dengan status "PENDING_APPROVAL"
+        $users = User::paginate(5);
+        $companies = Company::all();
+        $pendingUsers = User::where('status', 'PENDING_APPROVAL')->get();
+        $approvedUsers = User::where('status', 'APPROVED')->get();
+        $rejectedUsers = User::where('status', 'REJECTED')->get();
+
+        // Tampilkan view dengan passing data daftar pengguna ke view
+        return view('users.approval.user-pending', compact('users', 'companies','pendingUsers', 'approvedUsers', 'rejectedUsers'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
