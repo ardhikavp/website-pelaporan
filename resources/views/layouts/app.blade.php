@@ -15,15 +15,19 @@
 
     <!-- Menambahkan link CSS SweetAlert -->
     {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11"> --}}
-
+    <style>
+        .responsive-image {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
     <!-- Menambahkan script SweetAlert -->
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
 
     <!-- Scripts -->
-
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 </head>
 <body>
     <div id="app">
@@ -53,13 +57,13 @@
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
                 <div id="layoutSidenav_content" class="row">
-                    <div class="col-md-1">
+                    <div class="col-md-3">
                         <!-- Sidebar -->
                         @if (!in_array(request()->route()->getName(), ['register', 'login']))
-                        @include('layouts.nav.side-nav')
+                            @include('layouts.nav.side-nav')
                         @endif
                     </div>
-                    <div class="col-md-11">
+                    <div class="col-md-8">
                         <!-- Konten lainnya -->
                         <main class="py-4">
                             @yield('content')
@@ -68,8 +72,27 @@
                 </div>
             </div>
         </div>
-
     </div>
+    {{-- <script>
+        // JavaScript untuk mengubah konten berdasarkan pilihan tombol radio yang dipilih
+        document.getElementById('btnradio1').addEventListener('click', function () {
+            document.getElementById('pending-approval-users').style.display = 'block';
+            document.getElementById('approved-users').style.display = 'none';
+            document.getElementById('rejected-users').style.display = 'none';
+        });
+
+        document.getElementById('btnradio2').addEventListener('click', function () {
+            document.getElementById('pending-approval-users').style.display = 'none';
+            document.getElementById('approved-users').style.display = 'block';
+            document.getElementById('rejected-users').style.display = 'none';
+        });
+
+        document.getElementById('btnradio3').addEventListener('click', function () {
+            document.getElementById('pending-approval-users').style.display = 'none';
+            document.getElementById('approved-users').style.display = 'none';
+            document.getElementById('rejected-users').style.display = 'block';
+        });
+    </script> --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>

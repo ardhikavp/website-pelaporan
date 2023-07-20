@@ -44,7 +44,17 @@
 
                                 <div class="form-group">
                                     <label for="image">Foto Temuan</label><br>
-                                    <input type="file" name="image" id="image" class="form-control-file" accept="image/*" required>
+                                    <input type="file" name="image" id="image" class="form-control-file" accept="image/*" onchange="loadFile(event)">
+                                    <img id="output" class="responsive-image">
+                                    <script>
+                                        var loadFile = function(event) {
+                                          var output = document.getElementById('output');
+                                          output.src = URL.createObjectURL(event.target.files[0]);
+                                          output.onload = function() {
+                                            URL.revokeObjectURL(output.src) // free memory
+                                          }
+                                        };
+                                    </script>
                                 </div>
 
                                 <div class="form-group">
@@ -89,16 +99,6 @@
                                     </select>
                                 </div>
 
-
-                                {{-- <div class="form-group">
-                                    <label for="approved_by">Approved By</label>
-                                    <select name="approved_by" id="approved_by" class="form-control">
-                                        <option value="">Select a user</option>
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div> --}}
                                 <br>
                                 <footer class="footer">
                                     <!-- Footer content here -->

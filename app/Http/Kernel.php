@@ -70,5 +70,6 @@ class Kernel extends HttpKernel
         'SHE' => \App\Http\Middleware\SHEMiddleware::class,
         'safety officer' => \App\Http\Middleware\SafetyOfficerMiddleware::class,
         'manager' => \App\Http\Middleware\ManagerMiddleware::class,
+        'checkUserStatus' => \App\Http\Middleware\CheckUserStatus::class,
     ];
 }

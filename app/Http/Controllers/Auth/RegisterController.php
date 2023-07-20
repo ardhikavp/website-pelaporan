@@ -57,7 +57,6 @@ class RegisterController extends Controller
             'company_id' => ['required', Rule::exists('companies','id')],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-
         ]);
     }
 
@@ -81,6 +80,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'company_id' => $data['company_id'],
+            'is_accepted' => false,
         ]);
     }
 

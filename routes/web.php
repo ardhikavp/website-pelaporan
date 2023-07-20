@@ -3,6 +3,7 @@
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LocationController;
@@ -26,15 +27,19 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::middleware(['auth'])->prefix('dashboard')->group(function(){
-    Route::resource('profile', ProfileController::class);
-    Route::resource('user', UserController::class);
-    Route::resource('location', LocationController::class);
-    Route::resource('companies', CompanyController::class);
-    Route::resource('safety-behavior-checklist', SafetyBehaviorChecklistController::class);
-    Route::resource('safety-observation-forms', SafetyObservationFormController::class);
-});
+Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])
+    ->name('home')
+    ->middleware(['auth', 'checkUserStatus']);
+
+Route::middleware(['auth', 'checkUserStatus'])->prefix('dashboard')->group(function () {
+        Route::resource('profile', ProfileController::class);
+        Route::resource('users', UserController::class);
+        Route::resource('location', LocationController::class);
+        Route::resource('companies', CompanyController::class);
+        Route::resource('safety-behavior-checklist', SafetyBehaviorChecklistController::class);
+        Route::resource('safety-observation-forms', SafetyObservationFormController::class);
+    });
+
 
 // Route::middleware(['auth', 'pegawai'])->prefix('dashboard')->group(function(){
 //     Route::resource('profile', ProfileController::class);

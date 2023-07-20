@@ -24,16 +24,22 @@
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#collapsePages" role="button" aria-expanded="false" aria-controls="collapsePages">
                 <i class="fas fa-book-open"></i>
+                @if(auth()->user()->role == 'admin' || auth()->user()->role == 'she')
                 Pengaturan
+                @endif
                 <i class="fas fa-angle-down ml-auto"></i>
             </a>
             <div class="collapse" id="collapsePages">
+                @if(auth()->user()->role == 'admin' || auth()->user()->role == 'she')
                 <ul class="nav">
                     <li class="nav-item"><a class="nav-link" href="{{ route('companies.index') }}">Perusahaan</a></li>
                 </ul>
+                @endif
+                @if(auth()->user()->role == 'admin' || auth()->user()->role == 'she')
                 <ul class="nav">
                     <li class="nav-item"><a class="nav-link" href="{{ route('location.index') }}">Lokasi</a></li>
                 </ul>
+                @endif
                     {{-- <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">Pengguna</a></li> --}}
             </div>
         </li>
