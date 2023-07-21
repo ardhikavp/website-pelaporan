@@ -22,7 +22,7 @@ return new class extends Migration
             $table->decimal('safety_index', 5, 2);
             $table->foreignId('reviewed_by')->constrained('users');
             $table->foreignId('approved_by')->constrained('users');
-            $table->enum('status',['NEED_REVIEW','PENDING_APPROVAL', 'APPROVED', 'REJECTED'])->default('PENDING_APPROVAL');
+            $table->enum('status',['PENDING_REVIEW','PENDING_APPROVAL', 'APPROVED', 'REJECTED']);
             $table->timestamps();
         });
     }

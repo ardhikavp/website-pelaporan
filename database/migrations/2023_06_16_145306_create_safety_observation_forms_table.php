@@ -29,7 +29,7 @@ return new class extends Migration
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('reviewed_by')->constrained('users');
             $table->foreignId('approved_by')->constrained('users');
-            $table->enum('status',['NEED_REVIEW','PENDING_APPROVAL', 'APPROVED', 'REJECTED'])->default('PENDING_APPROVAL');
+            $table->enum('status',['PENDING_REVIEW','PENDING_APPROVAL', 'APPROVED', 'REJECTED']);
             $table->timestamps();
         });
     }
