@@ -5,15 +5,28 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate(5);
+        $users = User::query()
+        ->when(
+            $request->q,
+            function (Builder $builder) use ($request) {
+                $builder->where('name', 'like', "%{$request->q}%")
+                    ->orWhere('username', 'like', "%{$request->q}%")
+                    ->orWhereHas('company', function (Builder $query) use ($request) {
+                        $query->where('company', 'like', "%{$request->q}%");
+                    });
+            }
+        )
+        ->simplePaginate(5);
         $companies = Company::all();
         $pendingUsers = User::where('status', 'PENDING_APPROVAL')->get();
         $approvedUsers = User::where('status', 'APPROVED')->get();
@@ -33,6 +46,32 @@ class UserController extends Controller
 
         // Tampilkan view dengan passing data daftar pengguna ke view
         return view('users.approval.user-pending', compact('users', 'companies','pendingUsers', 'approvedUsers', 'rejectedUsers'));
+    }
+
+    public function approvedUsers()
+    {
+        // Ambil daftar pengguna dengan status "PENDING_APPROVAL"
+        $users = User::paginate(5);
+        $companies = Company::all();
+        $pendingUsers = User::where('status', 'PENDING_APPROVAL')->get();
+        $approvedUsers = User::where('status', 'APPROVED')->get();
+        $rejectedUsers = User::where('status', 'REJECTED')->get();
+
+        // Tampilkan view dengan passing data daftar pengguna ke view
+        return view('users.approval.user-approved', compact('users', 'companies','pendingUsers', 'approvedUsers', 'rejectedUsers'));
+    }
+
+    public function rejectedUsers()
+    {
+        // Ambil daftar pengguna dengan status "PENDING_APPROVAL"
+        $users = User::paginate(5);
+        $companies = Company::all();
+        $pendingUsers = User::where('status', 'PENDING_APPROVAL')->get();
+        $approvedUsers = User::where('status', 'APPROVED')->get();
+        $rejectedUsers = User::where('status', 'REJECTED')->get();
+
+        // Tampilkan view dengan passing data daftar pengguna ke view
+        return view('users.approval.user-rejected', compact('users', 'companies','pendingUsers', 'approvedUsers', 'rejectedUsers'));
     }
 
     /**

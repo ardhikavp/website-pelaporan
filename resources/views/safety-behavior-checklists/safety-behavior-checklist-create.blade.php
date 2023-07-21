@@ -17,7 +17,13 @@
                                             <label for="user_id">Pelapor</label>
                                             <input type="text" name="user_id" id="user_id" class="form-control" value="{{ auth()->user()->name }}" required readonly>
                                         </div>
-                                        <div class="form-group  fw-bold">
+                                        <div class="form-group fw-bold">
+                                            <label for="date_finding">Tanggal Temuan</label>
+                                            <input type="date" name="date_finding" id="date_finding" class="form-control" required>
+                                        </div>
+                                        <div class="form-group fw-bold">
+                                            {{-- <auto-complete-input-operation-name>
+                                            </auto-complete-input-operation-name> --}}
                                             <label for="operation_name">Nama Operasi</label>
                                             <input type="text" name="operation_name" id="operation_name" class="form-control" value="" required>
                                         </div>

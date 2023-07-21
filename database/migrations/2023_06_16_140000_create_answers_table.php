@@ -14,11 +14,15 @@ return new class extends Migration
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
             $table->string('nomor_laporan')->required();
+            $table->date('date_finding')->required();
             $table->foreignId('user_id')->constrained();
             $table->string('operation_name')->required();
             $table->foreignId('company_id')->constrained();
             $table->json('answer')->required();
             $table->decimal('safety_index', 5, 2);
+            $table->foreignId('reviewed_by')->constrained('users');
+            $table->foreignId('approved_by')->constrained('users');
+            $table->enum('status',['NEED_REVIEW','PENDING_APPROVAL', 'APPROVED', 'REJECTED'])->default('PENDING_APPROVAL');
             $table->timestamps();
         });
     }

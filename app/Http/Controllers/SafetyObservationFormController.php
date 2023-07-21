@@ -3,22 +3,42 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Image;
 use App\Models\Location;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Image;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use App\Models\SafetyObservationForm;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 
 class SafetyObservationFormController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin')->except('store');
+        // $this->middleware('SHE')->except('approveSafetyObservation');
+        // $this->middleware('pegawai')->except(['reviewSafetyObservation', 'approveSafetyObservation']);
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $forms = SafetyObservationForm::paginate(5);
+        // $forms = SafetyObservationForm::paginate(5);
+        $user = Auth::user();
+
+        if ($user->role === 'SHE' || $user->role === 'admin') {
+            // Fetch all safety observation forms without restricting by company for 'SHE' and 'admin' users.
+            $forms = SafetyObservationForm::paginate(5);
+        } else {
+            // Fetch the company ID of the authenticated user.
+            $companyId = $user->company->id;
+
+            // Get the safety observation forms that belong to the company of the authenticated user and paginate the results.
+            $forms = SafetyObservationForm::where('company_id', $companyId)->paginate(5);
+        }
 
         return view('safety-observation-forms.safety-observation-form-index', compact('forms'));
     }
@@ -54,18 +74,33 @@ class SafetyObservationFormController extends Controller
             'long_term_recommendation' => 'required',
             'completation_date' => 'required',
             'created_by' => 'required',
-            // 'approved_by' => 'required',
-            // 'status' => 'required',
+            'status' => 'required',
         ]);
 
         // Upload the image
+        // if ($request->hasFile('image')) {
+        //     $image = $request->file('image');
+        //     $fileName = time().'_'.$image->getClientOriginalName();
+        //     $imagePath = 'images';
+
+        //     // Memindahkan image ke file public/$imagePath
+        //     $image->move($imagePath,$fileName);
+
+        //     // Menyimpan nama file ke kolom image di tabel
+        //     $imageModel = Image::create([
+        //         'image' => $fileName,
+        //     ]);
+        // } else {
+        //     $imageModel = null;
+        // }
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $fileName = time().'_'.$image->getClientOriginalName();
-            $imagePath = 'images';
+            $fileName = time() . '_' . $image->getClientOriginalName();
+            $imagePath = public_path('images'); // Use public_path() to get the full storage path
 
-            // Memindahkan image ke file public/$imagePath
-            $image->move($imagePath,$fileName);
+            // Memindahkan image ke file public/images
+            $image->move($imagePath, $fileName);
 
             // Menyimpan nama file ke kolom image di tabel
             $imageModel = Image::create([
@@ -94,8 +129,7 @@ class SafetyObservationFormController extends Controller
             'long_term_recommendation' => $validatedData['long_term_recommendation'],
             'completation_date' => $validatedData['completation_date'],
             'created_by' => $validatedData['created_by'],
-            'approved_by' => $validatedData['approved_by'],
-            'status' => "APPROVED",
+            'status' => $validatedData['status'],
         ]);
         Session::flash('message', 'Form created successfully.');
 
@@ -158,5 +192,31 @@ class SafetyObservationFormController extends Controller
         Session::flash('message', 'Form deleted successfully.');
 
         return Redirect::route('safety-observation-forms.index');
+    }
+
+    public function reviewSafetyObservation(SafetyObservationForm $forms)
+    {
+        // Assuming you have authenticated the reviewer user.
+        $reviewer = auth()->user();
+
+        // Perform any checks to ensure the user is authorized to review the form.
+
+        // For example, check user roles or permissions here.
+
+        // Update the review status of the form to "Reviewed" (you can adjust this status according to your needs).
+        $forms->status = 'Reviewed';
+        $forms->save();
+
+        // Associate the reviewer with the form.
+        $forms->reviewer()->associate($reviewer);
+        $forms->save();
+
+        // Redirect back or perform any other action as needed.
+        return redirect()->back()->with('success', 'Safety Observation Form reviewed successfully.');
+    }
+
+    public function approveSafetyObservation(SafetyObservationForm $forms)
+    {
+
     }
 }

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Answer;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\SafetyBehaviorChecklist;
@@ -123,12 +124,16 @@ class SafetyBehaviorChecklistController extends Controller
 
         Answer::create([
             'user_id' => auth()->user()->id,
+            'date_finding' => $request,
             'operation_name' => $request->input('operation_name'),
             'company_id' => $request->input('company_id'),
             'answer' => json_encode($question_answer_collection),
             'safety_index' => $safetyIndex,
             'nomor_laporan' => $nomorLaporanString,
         ]);
+
+
+        
 
         // Redirect ke halaman yang diinginkan (misalnya halaman indeks checklist)
         return redirect()->route('safety-behavior-checklist.index')->with('success', 'Safety Behavior Checklist created successfully.');
@@ -168,4 +173,14 @@ class SafetyBehaviorChecklistController extends Controller
 
         return redirect()->route('safety-behavior-checklist.index')->with('success', 'Safety Behavior Checklist berhasil dihapus.');
     }
+
+    // public function getOperationNames(Request $request)
+    // {
+    //     $query = $request->query('q');
+    //     $operationNames = DB::table('answers')
+    //         ->where('operation_name', 'like', "%{$query}%")
+    //         ->pluck('operation_name');
+
+    //     return response()->json($operationNames);
+    // }
 }

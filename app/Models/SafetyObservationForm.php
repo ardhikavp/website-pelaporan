@@ -28,10 +28,10 @@ class SafetyObservationForm extends Model
                             'long_term_recommendation',
                             'completation_date',
                             'created_by',
+                            'reviewed_by',
                             'approved_by',
                             'status',
                         ];
-
 
     public function location()
     {
@@ -41,6 +41,11 @@ class SafetyObservationForm extends Model
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function reviewedBy()
+    {
+        return $this->belongsTo(User::class, 'reviewed_by');
     }
 
     public function approvedBy()

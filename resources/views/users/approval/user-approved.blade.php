@@ -3,25 +3,13 @@
 @section('content')
     <div class="container">
         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-            <a href="{{ route('users.index') }}" class="btn btn-primary" id="btn-users-all">All</a>
+            <a href="{{ route('users.index') }}" class="btn btn-outline-primary" id="btn-users-all">All</a>
             <a href="{{ route('users.pending') }}" class="btn btn-outline-primary" id="btn-users-pending">Pending Approval</a>
-            <a href="{{ route('users.approved') }}" class="btn btn-outline-primary" id="btn-users-approved">Approved</a>
+            <a href="{{ route('users.approved') }}" class="btn btn-primary" id="btn-users-approved">Approved</a>
             <a href="{{ route('users.rejected') }}" class="btn btn-outline-primary" id="btn-users-rejected">Rejected</a>
         </div>
-        <div style="mt-1">
-            <form action="{{ route('users.index') }}" method="get">
-                <div class="row">
-                    <div class="col-md-10">
-                        <input type="text" class="form-control mb-3 mt-2" placeholder="search" name="q">
-                    </div>
-                    <div class="col-md-2">
-                        <input type="submit" class="form-control mb-3 mt-2" value="Search">
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div>
-            <h2>Daftar <i>User</i></h2>
+        <div class="mt-1">
+            <h2>Daftar Pengguna Approved</h2>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -34,23 +22,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $user)
+                    @foreach ($approvedUsers as $user)
                         <tr>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->username }}</td>
                             <td>{{ $companies->find($user->company_id)->company }}</td>
                             <td>{{ $user->status }}</td>
                             <td>{{ $user->role }}</td>
-                            <td >
-                                <a href="#" class="button button--primary">
-                                    <i class="bi bi-pencil-square"></i> Edit
-                                  </a>
-                                  <a href="#" class="button button--secondary">
-                                    <i class="bi bi-eye"></i> Show
-                                  </a>
-                                  <a href="#" class="button button--danger">
-                                    <i class="bi bi-trash3"></i> Delete
-                                  </a>
+                            <td>
+                                <a href="#" class="btn btn-primary mr-2"><i class="bi bi-pencil-square"></i> Edit</a>
+                                <a href="#" class="btn btn-secondary mr-2"><i class="bi bi-eye"></i> Show</a>
+                                <a href="#" class="btn btn-danger"><i class="bi bi-trash3"></i> Delete</a>
                                 {{-- <a href="#" class="btn btn-success"><i class="far fa-check-circle"></i> Approve</a> --}}
                             </td>
                         </tr>

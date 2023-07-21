@@ -40,6 +40,11 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('location.index') }}">Lokasi</a></li>
                 </ul>
                 @endif
+                @if(auth()->user()->role == 'admin' || auth()->user()->role == 'she')
+                <ul class="nav">
+                    <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">User</a></li>
+                </ul>
+                @endif
                     {{-- <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">Pengguna</a></li> --}}
             </div>
         </li>

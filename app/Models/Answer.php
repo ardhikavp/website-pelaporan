@@ -16,21 +16,30 @@ class Answer extends Model
     protected $table = 'answers';
     protected $fillable = [
                         'user_id',
+                        'tanggal_pelaporan',
                         'operation_name',
                         'company_id',
                         'answer',
                         'safety_index',
                         'nomor_laporan',
+                        'reviewed_by',
+                        'approved_by',
+                        'status',
                     ];
-
-    // public function question()
-    // {
-    //     return $this->belongsTo(Question::class);
-    // }
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function reviewedBy()
+    {
+        return $this->belongsTo(User::class, 'reviewed_by');
+    }
+
+    public function approvedBy()
+    {
+        return $this->belongsTo(User::class, 'approved_by');
     }
 
     public function company()

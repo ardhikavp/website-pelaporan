@@ -27,8 +27,9 @@ return new class extends Migration
             $table->text('long_term_recommendation')->nullable();
             $table->date('completation_date')->nullable();
             $table->foreignId('created_by')->constrained('users');
+            $table->foreignId('reviewed_by')->constrained('users');
             $table->foreignId('approved_by')->constrained('users');
-            $table->enum('status',['PENDING_APPROVAL', 'APPROVED', 'REJECTED'])->default('PENDING_APPROVAL');
+            $table->enum('status',['NEED_REVIEW','PENDING_APPROVAL', 'APPROVED', 'REJECTED'])->default('PENDING_APPROVAL');
             $table->timestamps();
         });
     }

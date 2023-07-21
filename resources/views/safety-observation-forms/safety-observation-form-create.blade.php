@@ -42,7 +42,7 @@
                                     </select>
                                 </div>
 
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="image">Foto Temuan</label><br>
                                     <input type="file" name="image" id="image" class="form-control-file" accept="image/*" onchange="loadFile(event)">
                                     <img id="output" class="responsive-image">
@@ -53,6 +53,21 @@
                                           output.onload = function() {
                                             URL.revokeObjectURL(output.src) // free memory
                                           }
+                                        };
+                                    </script>
+                                </div> --}}
+                                
+                                <div class="form-group">
+                                    <label for="image">Foto Temuan</label><br>
+                                    <input type="file" name="image" id="image" class="form-control-file" accept="image/*" onchange="loadFile(event)">
+                                    <img id="output" class="responsive-image">
+                                    <script>
+                                        var loadFile = function(event) {
+                                            var output = document.getElementById('output');
+                                            output.src = URL.createObjectURL(event.target.files[0]);
+                                            output.onload = function() {
+                                                // URL.revokeObjectURL should be called after the image is no longer needed.
+                                            }
                                         };
                                     </script>
                                 </div>
@@ -99,6 +114,13 @@
                                     </select>
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="approved_by">Approved By</label>
+                                    <select name="approved_by" id="approved_by" class="form-control" disabled>
+                                        <option value="{{ auth()->user()->id }}" selected>{{ auth()->user()->name }}</option>
+                                    </select>
+                                </div>
+
                                 <br>
                                 <footer class="footer">
                                     <!-- Footer content here -->
@@ -112,5 +134,13 @@
         </div>
     </div>
 </div>
-
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 @endsection

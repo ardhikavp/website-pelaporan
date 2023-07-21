@@ -69,6 +69,7 @@ class Kernel extends HttpKernel
         'pegawai' => \App\Http\Middleware\PegawaiMiddleware::class,
         'SHE' => \App\Http\Middleware\SHEMiddleware::class,
         'safety officer' => \App\Http\Middleware\SafetyOfficerMiddleware::class,
+        'safety representatif' => \App\Http\Middleware\SafetyRepresentatifMiddleware::class,
         'manager' => \App\Http\Middleware\ManagerMiddleware::class,
         'checkUserStatus' => \App\Http\Middleware\CheckUserStatus::class,
     ];

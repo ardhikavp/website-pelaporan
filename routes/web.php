@@ -31,10 +31,12 @@ Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])
     ->name('home')
     ->middleware(['auth', 'checkUserStatus']);
 
-Route::middleware(['auth', 'checkUserStatus'])->prefix('dashboard')->group(function () {
-    Route::get('/users/pending', [UserController::class, 'pendingUsers'])->name('users.pending');
+Route::middleware(['auth', 'checkUserStatus'])->prefix('dashboard/users')->group(function () {
+    Route::get('/pending', [UserController::class, 'pendingUsers'])->name('users.pending');
+    Route::get('/approved', [UserController::class, 'approvedUsers'])->name('users.approved');
+    Route::get('/rejected', [UserController::class, 'rejectedUsers'])->name('users.rejected');
     });
-    
+
 Route::middleware(['auth', 'checkUserStatus'])->prefix('dashboard')->group(function () {
         Route::resource('profile', ProfileController::class);
         Route::resource('users', UserController::class);
