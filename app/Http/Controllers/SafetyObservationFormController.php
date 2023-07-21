@@ -59,7 +59,6 @@ class SafetyObservationFormController extends Controller
      */
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
             'nomor_laporan' => 'required',
             'date_finding' => 'required',
@@ -74,25 +73,8 @@ class SafetyObservationFormController extends Controller
             'long_term_recommendation' => 'required',
             'completation_date' => 'required',
             'created_by' => 'required',
-            'status' => 'required',
+            // 'status' => 'required',
         ]);
-
-        // Upload the image
-        // if ($request->hasFile('image')) {
-        //     $image = $request->file('image');
-        //     $fileName = time().'_'.$image->getClientOriginalName();
-        //     $imagePath = 'images';
-
-        //     // Memindahkan image ke file public/$imagePath
-        //     $image->move($imagePath,$fileName);
-
-        //     // Menyimpan nama file ke kolom image di tabel
-        //     $imageModel = Image::create([
-        //         'image' => $fileName,
-        //     ]);
-        // } else {
-        //     $imageModel = null;
-        // }
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -129,7 +111,9 @@ class SafetyObservationFormController extends Controller
             'long_term_recommendation' => $validatedData['long_term_recommendation'],
             'completation_date' => $validatedData['completation_date'],
             'created_by' => $validatedData['created_by'],
-            'status' => $validatedData['status'],
+            'status' => 'NEED_REVIEW',
+            'reviewed_by' => $validatedData['created_by'], // TODO: fix
+            'approved_by' => $validatedData['created_by'] // TODO: fix
         ]);
         Session::flash('message', 'Form created successfully.');
 
@@ -217,6 +201,5 @@ class SafetyObservationFormController extends Controller
 
     public function approveSafetyObservation(SafetyObservationForm $forms)
     {
-
     }
 }
