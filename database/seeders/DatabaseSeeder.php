@@ -33,5 +33,21 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AdminSeeder::class,
         ]);
+
+        $this->call([
+            SHESeeder::class,
+        ]);
+        $this->call([
+            SafetyOfficerSeeder::class,
+        ]);
+        $this->call([
+            ManagerSeeder::class,
+        ]);
+        $this->call([
+            PegawaiSeeder::class,
+        ]);
+        $this->call([
+            SafetyRepresentatifSeeder::class,
+        ]);
     }
 }

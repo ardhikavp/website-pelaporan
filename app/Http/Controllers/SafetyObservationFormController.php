@@ -21,7 +21,7 @@ class SafetyObservationFormController extends Controller
         // $this->middleware('SHE')->except('approveSafetyObservation');
         // $this->middleware('pegawai')->except(['reviewSafetyObservation', 'approveSafetyObservation']);
     }
-    /**
+    /** 
      * Display a listing of the resource.
      */
     public function index()
