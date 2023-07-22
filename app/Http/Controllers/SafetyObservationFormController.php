@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Image;
 use App\Models\Location;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\SafetyObservationForm;
@@ -102,7 +103,7 @@ class SafetyObservationFormController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nomor_laporan' => 'required',
+            // 'nomor_laporan' => 'required',
             'date_finding' => 'required',
             'location_id' => 'required',
             'safety_observation_type' => 'required',
@@ -147,9 +148,45 @@ class SafetyObservationFormController extends Controller
         $location = Location::find($validatedData['location_id']);
 
         $validatedData['location'] = $location;
+        // Ambil bulan dan tahun saat ini
+        $now = Carbon::now();
+        $month = $now->format('m');
+        $year = $now->format('Y');
+
+        // Ambil laporan terakhir dalam bulan tersebut
+        $lastReport = SafetyObservationForm::whereMonth('created_at', '=', $month)
+            ->whereYear('created_at', '=', $year)
+            ->orderByDesc('id')
+            ->first();
+
+        // Buat nomor laporan berikutnya
+        if ($lastReport) {
+            $lastNumber = intval(substr($lastReport->nomor_laporan, 0, 3));
+            $newNumber = $lastNumber + 1;
+            $nomorLaporan = str_pad($newNumber, 3, '0', STR_PAD_LEFT);
+        } else {
+            $nomorLaporan = '001';
+        }
+
+        // Ambil singkatan perusahaan dari input
+        $locationId = $request->input('location_id');
+        $locationName = Location::find($locationId)->location;
+        $abbreviation = '';
+
+        $words = explode(" ", $locationName);
+
+        foreach ($words as &$word) {
+            preg_match_all('/[A-Z]/', $word, $matches);
+            $abbreviation .= implode("", $matches[0]);
+        }
+
+        $abbreviation = str_pad($abbreviation, 5);
+
+        // Buat string nomor laporan
+        $nomorLaporanString = $nomorLaporan . '/' . 'SBC' . '/' . $abbreviation . '/' . $month . '/' . $year;
 
         $form = SafetyObservationForm::create([
-            'nomor_laporan' => $validatedData['nomor_laporan'],
+            'nomor_laporan' => $nomorLaporanString,
             'date_finding' => $validatedData['date_finding'],
             'location_id' => $validatedData['location_id'],
             'safety_observation_type' => $validatedData['safety_observation_type'],

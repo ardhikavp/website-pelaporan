@@ -13,11 +13,11 @@
                                     enctype="multipart/form-data">
                                     @csrf
 
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <label for="nomor_laporan">Nomor Laporan</label>
                                         <input type="text" name="nomor_laporan" id="nomor_laporan" class="form-control"
                                             required>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="form-group">
                                         <label for="date_finding">Tanggal Temuan</label>
