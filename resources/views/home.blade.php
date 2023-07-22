@@ -13,11 +13,19 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    
+
                     {{ __('You are logged in!') }}
+                </div>
+            </div>
+        </div>
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <canvas id="pieChart" width="400" height="400"> </canvas>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 @endsection

@@ -16,7 +16,7 @@ class Answer extends Model
     protected $table = 'answers';
     protected $fillable = [
                         'user_id',
-                        'tanggal_pelaporan',
+                        'date_finding',
                         'operation_name',
                         'company_id',
                         'answer',

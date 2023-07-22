@@ -90,7 +90,10 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            {{ $form_pending_review->links() }}
+
+                                {!! $form_pending_review->withQueryString()->links('pagination::bootstrap-5') !!}
+                                {{-- {{ $form_pending_review->links() }} --}}
+
                         </div>
 
                         <div class="table-responsive mb-3">
@@ -164,7 +167,9 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            {{ $form_pending_approval->links() }}
+                            <div class="d-flex justify-content-center">
+                                {{ $form_pending_approval->links() }}
+                            </div>
                         </div>
 
                         <div class="table-responsive mb-3">
@@ -236,7 +241,9 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            {{ $form_approved->links() }}
+                            <div class="d-flex justify-content-center">
+                                {{ $form_approved->links() }}
+                            </div>
                         </div>
 
                         <div class="table-responsive mb-3">

@@ -12,7 +12,7 @@ class LocationController extends Controller
      */
     public function index()
     {
-        $locations = Location::paginate(5);
+        $locations = Location::paginate(5)->onEachSide(2);
         return view('locations.location-index', compact('locations'));
     }
 
