@@ -26,21 +26,46 @@ class SafetyObservationFormController extends Controller
      */
     public function index()
     {
-        // $forms = SafetyObservationForm::paginate(5);
         $user = Auth::user();
 
-        if ($user->role === 'SHE' || $user->role === 'admin') {
-            // Fetch all safety observation forms without restricting by company for 'SHE' and 'admin' users.
-            $forms = SafetyObservationForm::paginate(5);
-        } else {
-            // Fetch the company ID of the authenticated user.
-            $companyId = $user->company->id;
+        $form_pending_review = [];
+        $form_pending_approval = [];
+        $form_approved = [];
+        $form_rejected = [];
 
-            // Get the safety observation forms that belong to the company of the authenticated user and paginate the results.
-            $forms = SafetyObservationForm::where('company_id', $companyId)->paginate(5);
+        switch ($user->role) {
+            case ('admin' || 'SHE'):
+                $form_pending_review = SafetyObservationForm::where('status', 'PENDING_REVIEW')
+                    ->paginate(5, ['*'], 'pending_review')
+                    ->appends(request()->except('pending_review'));
+                $form_pending_approval = SafetyObservationForm::where('status', 'PENDING_APPROVAL')
+                    ->paginate(5, ['*'], 'pending_approval')
+                    ->appends(request()->except('pending_approval'));
+                $form_approved = SafetyObservationForm::where('status', 'APPROVED')
+                    ->paginate(5, ['*'], 'approved')
+                    ->appends(request()->except('approved'));
+                $form_rejected = SafetyObservationForm::where('status', 'REJECTED')
+                    ->paginate(5, ['*'], 'rejected')
+                    ->appends(request()->except('rejected'));
+
+                break;
+
+            default:
+                break;
         }
 
-        return view('safety-observation-forms.safety-observation-form-index', compact('forms'));
+        // if (true) {
+        //     // Fetch the company ID of the authenticated user.
+        //     $companyId = $user->company->id;
+
+        //     // Get the safety observation forms that belong to the company of the authenticated user and paginate the results.
+        //     $forms = SafetyObservationForm::where('company_id', $companyId)->paginate(5);
+        //     $forms->setPageName('forms');
+        //     $forms2 = SafetyObservationForm::where('company_id', $companyId)->paginate(5);
+        //     $forms2->setPageName('forms2');
+        // }
+
+        return view('safety-observation-forms.safety-observation-form-index', compact('form_pending_review', 'form_pending_approval', 'form_approved', 'form_rejected'));
     }
 
     /**
