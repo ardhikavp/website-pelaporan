@@ -257,13 +257,19 @@ class SafetyObservationFormController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SafetyObservationForm $form)
+    public function destroy($id)
     {
+        // Retrieve the form based on the provided ID
+        $form = SafetyObservationForm::findOrFail($id);
+
+        // Delete the form
         $form->delete();
 
+        // Optionally, you can add a flash message to indicate the successful deletion
         Session::flash('message', 'Form deleted successfully.');
 
-        return Redirect::route('safety-observation-forms.index');
+        // Redirect back to the index page or any other page as needed
+        return redirect()->route('safety-observation-forms.index');
     }
 
     public function reviewSafetyObservation(SafetyObservationForm $forms)

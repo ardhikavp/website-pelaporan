@@ -37,17 +37,17 @@ Route::middleware(['auth', 'checkUserStatus'])->prefix('dashboard/users')->group
     Route::get('/pending', [UserController::class, 'pendingUsers'])->name('users.pending');
     Route::get('/approved', [UserController::class, 'approvedUsers'])->name('users.approved');
     Route::get('/rejected', [UserController::class, 'rejectedUsers'])->name('users.rejected');
-    });
+});
 
 Route::middleware(['auth', 'checkUserStatus'])->prefix('dashboard')->group(function () {
-        Route::get('/chart', [ChartJSController::class, 'index']);
-        Route::resource('profile', ProfileController::class);
-        Route::resource('users', UserController::class);
-        Route::resource('location', LocationController::class);
-        Route::resource('companies', CompanyController::class);
-        Route::resource('safety-behavior-checklist', SafetyBehaviorChecklistController::class);
-        Route::resource('safety-observation-forms', SafetyObservationFormController::class);
-    });
+    Route::get('/chart', [ChartJSController::class, 'index']);
+    Route::resource('profile', ProfileController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('location', LocationController::class);
+    Route::resource('companies', CompanyController::class);
+    Route::resource('safety-behavior-checklist', SafetyBehaviorChecklistController::class);
+    Route::resource('safety-observation-forms', SafetyObservationFormController::class);
+});
 
 
 // Route::middleware(['auth', 'pegawai'])->prefix('dashboard')->group(function(){
@@ -68,4 +68,3 @@ Route::middleware(['auth', 'checkUserStatus'])->prefix('dashboard')->group(funct
 //     Route::resource('safety-behavior-checklist', SafetyBehaviorChecklistController::class)->only(['create', 'stpre', 'edit']);
 //     Route::resource('safety-observation-forms', SafetyObservationFormController::class)->only(['create', 'stpre', 'edit']);
 // });
-

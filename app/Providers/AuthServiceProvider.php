@@ -6,6 +6,7 @@ namespace App\Providers;
 
 use App\Models\Company;
 use App\Policies\CompanyPolicy;
+use App\Policies\SafetyObservationFormPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -28,5 +29,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::resource('company', CompanyPolicy::class);
+        Gate::define('edit-safety-observation-form', [SafetyObservationFormPolicy::class, 'editForm']);
+        Gate::define('delete-safety-observation-form', [SafetyObservationFormPolicy::class, 'deleteForm']);
     }
 }

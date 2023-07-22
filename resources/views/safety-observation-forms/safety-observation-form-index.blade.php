@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8 mx-auto">
+            <div class="col-md-12 mx-auto">
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
@@ -33,6 +33,7 @@
                                         <th style="width: 15%;">Direview Oleh</th>
                                         <th style="width: 15%;">Disetujui Oleh</th>
                                         <th style="width: 20%;">Status</th>
+                                        <th style="width: 20%;">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -86,6 +87,21 @@
                                                 {{ $form->approvedBy?->name ?? 'NOT APPROVED' }}
                                             </td>
                                             <td style="font-size: 14px;">{{ $form->status }}</td>
+                                            <td>
+                                                <a href="" class="btn btn-sm btn-info">Lihat</a>
+                                                @can('edit-safety-observation-form', $form)
+                                                    <a href="" class="btn btn-sm btn-primary">Edit</a>
+                                                @endcan
+                                                @can('delete-safety-observation-form', $form)
+                                                    <form action="{{ route('safety-observation-forms.destroy', $form->id) }}"
+                                                        method="POST" class="btn btn-sm btn-danger">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-sm btn-danger"
+                                                            onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
+                                                    </form>
+                                                @endcan
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -139,7 +155,8 @@
                                                                         Foto
                                                                         Laporan</h1>
                                                                     <button type="button" class="btn-close"
-                                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body ">
                                                                     <img style="width: 100%"

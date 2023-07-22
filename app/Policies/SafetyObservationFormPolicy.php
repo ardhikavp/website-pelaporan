@@ -9,13 +9,13 @@ use App\Models\SafetyObservationForm;
 
 class SafetyObservationFormPolicy
 {
-    /**
-     * Determine whether the user can view any models.
-     */
-    public function boot(): void
+    public function editForm(User $user, SafetyObservationForm $form)
     {
-    Gate::define('update-post', function (User $user, Post $post) {
-        return $user->id === $post->user_id;
-    });
+        return ($user->id === $form->createdBy || $user->role === 'SHE') && $form->status === 'PENDING_REVIEW';
+    }
+
+    public function deleteForm(User $user, SafetyObservationForm $form)
+    {
+        return $user->role === 'SHE' || ($user->role === 'admin' && $form->status === 'REJECTED');
     }
 }
