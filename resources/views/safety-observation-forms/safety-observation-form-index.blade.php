@@ -26,6 +26,7 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 10%;">Nomor Laporan</th>
+                                        <th style="width: 10%;">Nama Perusahaan</th>
                                         <th style="width: 10%;">Jenis</th>
                                         <th style="width: 30%;">Foto</th>
                                         <th style="width: 15%;">Dibuat Oleh</th>
@@ -38,6 +39,7 @@
                                     @foreach ($form_pending_review as $form)
                                         <tr>
                                             <td style="font-size: 14px;">{{ $form->nomor_laporan }}</td>
+                                            <td style="font-size: 14px;">{{ $form->createdBy->company->company }}</td>
                                             <td style="font-size: 14px;">{{ $form->safety_observation_type }}</td>
                                             <td style="font-size: 14px;">
                                                 @if ($form->image)
@@ -97,6 +99,7 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 10%;">Nomor Laporan</th>
+                                        <th style="width: 10%;">Nama Perusahaan</th>
                                         <th style="width: 10%;">Jenis</th>
                                         <th style="width: 30%;">Foto</th>
                                         <th style="width: 15%;">Dibuat Oleh</th>
@@ -110,6 +113,7 @@
                                     @foreach ($form_pending_approval as $form)
                                         <tr>
                                             <td style="font-size: 14px;">{{ $form->nomor_laporan }}</td>
+                                            <td style="font-size: 14px;">{{ $form->createdBy->company->company }}</td>
                                             <td style="font-size: 14px;">{{ $form->safety_observation_type }}</td>
                                             <td style="font-size: 14px;">
                                                 @if ($form->image)
@@ -169,6 +173,7 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 10%;">Nomor Laporan</th>
+                                        <th style="width: 10%;">Nama Perusahaan</th>
                                         <th style="width: 10%;">Jenis</th>
                                         <th style="width: 30%;">Foto</th>
                                         <th style="width: 15%;">Dibuat Oleh</th>
@@ -182,6 +187,7 @@
                                     @foreach ($form_approved as $form)
                                         <tr>
                                             <td style="font-size: 14px;">{{ $form->nomor_laporan }}</td>
+                                            <td style="font-size: 14px;">{{ $form->createdBy->company->company }}</td>
                                             <td style="font-size: 14px;">{{ $form->safety_observation_type }}</td>
                                             <td style="font-size: 14px;">
                                                 @if ($form->image)
@@ -239,6 +245,7 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 10%;">Nomor Laporan</th>
+                                        <th style="width: 10%;">Nama Perusahaan</th>
                                         <th style="width: 10%;">Jenis</th>
                                         <th style="width: 30%;">Foto</th>
                                         <th style="width: 15%;">Dibuat Oleh</th>
@@ -252,6 +259,7 @@
                                     @foreach ($form_rejected as $form)
                                         <tr>
                                             <td style="font-size: 14px;">{{ $form->nomor_laporan }}</td>
+                                            <td style="font-size: 14px;">{{ $form->createdBy->company->company }}</td>
                                             <td style="font-size: 14px;">{{ $form->safety_observation_type }}</td>
                                             <td style="font-size: 14px;">
                                                 @if ($form->image)
@@ -300,7 +308,12 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            {{ $form_rejected->links() }}
+                            {{-- {{ $form_rejected->links() }} --}}
+                            @if ($form_rejected instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                                {{ $form_rejected->links() }}
+                            @else
+                                {{-- show nothing --}}
+                            @endif
                         </div>
 
                     </div>

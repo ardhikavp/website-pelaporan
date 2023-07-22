@@ -8,7 +8,6 @@ use App\Models\Location;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use App\Models\SafetyObservationForm;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -34,7 +33,9 @@ class SafetyObservationFormController extends Controller
         $form_rejected = [];
 
         switch ($user->role) {
-            case ('admin' || 'SHE'):
+            case ('admin'):
+            case ('manager maintenance'):
+            case ('SHE'):
                 $form_pending_review = SafetyObservationForm::where('status', 'PENDING_REVIEW')
                     ->paginate(5, ['*'], 'pending_review')
                     ->appends(request()->except('pending_review'));
@@ -47,23 +48,39 @@ class SafetyObservationFormController extends Controller
                 $form_rejected = SafetyObservationForm::where('status', 'REJECTED')
                     ->paginate(5, ['*'], 'rejected')
                     ->appends(request()->except('rejected'));
+                break;
 
+            case ('safety representatif'):
+            case ('safety officer'):
+                $companyId = $user->company->id;
+                $form_pending_review = SafetyObservationForm::where('status', 'PENDING_REVIEW')
+                    ->whereHas('createdBy', function ($query) use ($companyId) {
+                        $query->where('company_id', $companyId);
+                    })
+                    ->paginate(5, ['*'], 'pending_review');
+                $form_pending_approval = SafetyObservationForm::where('status', 'PENDING_APPROVAL')
+                    ->whereHas('createdBy', function ($query) use ($companyId) {
+                        $query->where('company_id', $companyId);
+                    })
+                    ->paginate(5, ['*'], 'pending_approval');
+                $form_approved = SafetyObservationForm::where('status', 'APPROVED')
+                    ->paginate(5, ['*'], 'form_approved');
+                break;
+
+            case ('pegawai'):
+                $form_pending_review = SafetyObservationForm::where('status', 'PENDING_REVIEW')
+                    ->where('created_by', $user->id)
+                    ->paginate(5, ['*'], 'pending_review');
+                $form_pending_approval = SafetyObservationForm::where('status', 'PENDING_APPROVAL')
+                    ->where('created_by', $user->id)
+                    ->paginate(5, ['*'], 'pending_approval');
+                $form_approved = SafetyObservationForm::where('status', 'APPROVED')
+                    ->paginate(5, ['*'], 'form_approved');
                 break;
 
             default:
                 break;
         }
-
-        // if (true) {
-        //     // Fetch the company ID of the authenticated user.
-        //     $companyId = $user->company->id;
-
-        //     // Get the safety observation forms that belong to the company of the authenticated user and paginate the results.
-        //     $forms = SafetyObservationForm::where('company_id', $companyId)->paginate(5);
-        //     $forms->setPageName('forms');
-        //     $forms2 = SafetyObservationForm::where('company_id', $companyId)->paginate(5);
-        //     $forms2->setPageName('forms2');
-        // }
 
         return view('safety-observation-forms.safety-observation-form-index', compact('form_pending_review', 'form_pending_approval', 'form_approved', 'form_rejected'));
     }
