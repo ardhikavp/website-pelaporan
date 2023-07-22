@@ -124,16 +124,13 @@ class SafetyBehaviorChecklistController extends Controller
 
         Answer::create([
             'user_id' => auth()->user()->id,
-            'date_finding' => $request,
+            'date_finding' => $request->input('date_finding'),
             'operation_name' => $request->input('operation_name'),
             'company_id' => $request->input('company_id'),
             'answer' => json_encode($question_answer_collection),
             'safety_index' => $safetyIndex,
             'nomor_laporan' => $nomorLaporanString,
         ]);
-
-
-        
 
         // Redirect ke halaman yang diinginkan (misalnya halaman indeks checklist)
         return redirect()->route('safety-behavior-checklist.index')->with('success', 'Safety Behavior Checklist created successfully.');

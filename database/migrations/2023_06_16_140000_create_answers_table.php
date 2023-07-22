@@ -20,8 +20,8 @@ return new class extends Migration
             $table->foreignId('company_id')->constrained();
             $table->json('answer')->required();
             $table->decimal('safety_index', 5, 2);
-            $table->foreignId('reviewed_by')->constrained('users')->nullable();
-            $table->foreignId('approved_by')->constrained('users')->nullable();
+            $table->foreignId('reviewed_by')->nullable()->constrained('users');
+            $table->foreignId('approved_by')->nullable()->constrained('users');
             $table->enum('status',['PENDING_REVIEW','PENDING_APPROVAL', 'APPROVED', 'REJECTED'])->default('PENDING_REVIEW');
             $table->timestamps();
         });
