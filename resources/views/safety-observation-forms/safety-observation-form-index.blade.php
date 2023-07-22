@@ -125,6 +125,7 @@
                                         <th style="width: 15%;">Direview Oleh</th>
                                         <th style="width: 15%;">Disetujui Oleh</th>
                                         <th style="width: 20%;">Status</th>
+                                        <th style="width: 20%;">Aksi</th>
                                     </tr>
                                 </thead>
 
@@ -180,6 +181,21 @@
                                                 {{ $form->approvedBy?->name ?? 'NOT APPROVED' }}
                                             </td>
                                             <td style="font-size: 14px;">{{ $form->status }}</td>
+                                            <td>
+                                                <a href="" class="btn btn-sm btn-info">Lihat</a>
+                                                @can('edit-safety-observation-form', $form)
+                                                    <a href="" class="btn btn-sm btn-primary">Edit</a>
+                                                @endcan
+                                                @can('delete-safety-observation-form', $form)
+                                                    <form action="{{ route('safety-observation-forms.destroy', $form->id) }}"
+                                                        method="POST" class="btn btn-sm btn-danger">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-sm btn-danger"
+                                                            onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
+                                                    </form>
+                                                @endcan
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -202,6 +218,7 @@
                                         <th style="width: 15%;">Direview Oleh</th>
                                         <th style="width: 15%;">Disetujui Oleh</th>
                                         <th style="width: 20%;">Status</th>
+                                        <th style="width: 20%;">Aksi</th>
                                     </tr>
                                 </thead>
 
@@ -254,6 +271,21 @@
                                             <td style="font-size: 14px;">{{ $form->approvedBy?->name ?? 'NOT APPROVED' }}
                                             </td>
                                             <td style="font-size: 14px;">{{ $form->status }}</td>
+                                            <td>
+                                                <a href="" class="btn btn-sm btn-info">Lihat</a>
+                                                @can('edit-safety-observation-form', $form)
+                                                    <a href="" class="btn btn-sm btn-primary">Edit</a>
+                                                @endcan
+                                                @can('delete-safety-observation-form', $form)
+                                                    <form action="{{ route('safety-observation-forms.destroy', $form->id) }}"
+                                                        method="POST" class="btn btn-sm btn-danger">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-sm btn-danger"
+                                                            onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
+                                                    </form>
+                                                @endcan
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -276,6 +308,7 @@
                                         <th style="width: 15%;">Direview Oleh</th>
                                         <th style="width: 15%;">Disetujui Oleh</th>
                                         <th style="width: 20%;">Status</th>
+                                        <th style="width: 20%;">Aksi</th>
                                     </tr>
                                 </thead>
 
@@ -328,6 +361,9 @@
                                             <td style="font-size: 14px;">{{ $form->approvedBy?->name ?? 'NOT APPROVED' }}
                                             </td>
                                             <td style="font-size: 14px;">{{ $form->status }}</td>
+                                            <td>
+                                                <a href="" class="btn btn-sm btn-info">Lihat</a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
