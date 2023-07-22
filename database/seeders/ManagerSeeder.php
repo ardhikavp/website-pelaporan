@@ -16,16 +16,16 @@ class ManagerSeeder extends Seeder
     public function run(): void
     {
         $company = Company::where('company', 'PPNS')->first();
-            if ($company) {
-                User::create([
-                    'name' => 'Manager',
-                    'username' => 'manager',
-                    'email' => 'manager@example.com',
-                    'password' => Hash::make('password'),
-                    'role' => 'manager',
-                    'company_id' => $company->id,
-                    'status' => 'APPROVED',
-                ]);
-            }
+        if ($company) {
+            User::create([
+                'name' => 'Manager',
+                'username' => 'manager',
+                'email' => 'manager@example.com',
+                'password' => Hash::make('password'),
+                'role' => 'manager maintenance',
+                'company_id' => $company->id,
+                'status' => 'APPROVED',
+            ]);
+        }
     }
 }

@@ -27,12 +27,14 @@
                                     <th style="width: 10%;">Jenis</th>
                                     <th style="width: 30%;">Foto</th>
                                     <th style="width: 15%;">Dibuat Oleh</th>
+                                    <th style="width: 15%;">Direview Oleh</th>
                                     <th style="width: 15%;">Disetujui Oleh</th>
                                     <th style="width: 20%;">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($forms as $form)
+                                {{-- {{dd($form->created_by)}}; --}}
                                 <tr>
                                     <td style="font-size: 14px;">{{ $form->nomor_laporan }}</td>
                                     <td style="font-size: 14px;">{{ $form->safety_observation_type }}</td>
@@ -65,7 +67,8 @@
                                         @endif
                                     </td>
                                     <td style="font-size: 14px;">{{ $form->createdBy->name }}</td>
-                                    <td style="font-size: 14px;">{{ $form->approvedBy->name }}</td>
+                                    <td style="font-size: 14px;">{{ $form->reviewedBy?->name ?? 'NOT REVIEWED' }}</td>
+                                    <td style="font-size: 14px;">{{ $form->approvedBy?->name ?? 'NOT APPROVED' }}</td>
                                     <td style="font-size: 14px;">{{ $form->status }}</td>
                                 </tr>
                                 @endforeach

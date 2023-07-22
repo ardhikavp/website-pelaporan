@@ -17,11 +17,11 @@ class SafetyObservationFormController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('admin')->except('store');
+        // $this->middleware('admin')->except('store');
         // $this->middleware('SHE')->except('approveSafetyObservation');
         // $this->middleware('pegawai')->except(['reviewSafetyObservation', 'approveSafetyObservation']);
     }
-    /** 
+    /**
      * Display a listing of the resource.
      */
     public function index()
@@ -73,8 +73,17 @@ class SafetyObservationFormController extends Controller
             'long_term_recommendation' => 'required',
             'completation_date' => 'required',
             'created_by' => 'required',
-            // 'status' => 'required',
         ]);
+
+        $user = auth()->user();
+
+        // check if role is SHE and update data accordingly
+        $defaultStatus = 'PENDING_REVIEW';
+        $defaultReviewedBy = null;
+        if ($user->role == 'SHE') {
+            $defaultStatus = 'PENDING_APPROVAL';
+            $defaultReviewedBy = $user->id;
+        }
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -111,9 +120,9 @@ class SafetyObservationFormController extends Controller
             'long_term_recommendation' => $validatedData['long_term_recommendation'],
             'completation_date' => $validatedData['completation_date'],
             'created_by' => $validatedData['created_by'],
-            'status' => 'NEED_REVIEW',
-            'reviewed_by' => $validatedData['created_by'], // TODO: fix
-            'approved_by' => $validatedData['created_by'] // TODO: fix
+            'status' => $defaultStatus,
+            'reviewed_by' => $defaultReviewedBy,
+            'approved_by' => null
         ]);
         Session::flash('message', 'Form created successfully.');
 

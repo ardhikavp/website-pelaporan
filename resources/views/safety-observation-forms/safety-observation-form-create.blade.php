@@ -123,11 +123,12 @@
                                             value="{{ auth()->user()->id }}" readonly>
                                     </div>
 
-                                    <div class="form-group">
+                                    {{-- NOT NEEDED SINCE DEFAULT VALUE IS PENDING_APPROVAL --}}
+                                    {{-- <div class="form-group">
                                         <label for="approved_by">Approved By</label>
                                         <input type="text" name="approved_by" id="approved_by" class="form-control"
                                             value="{{ auth()->user()->id }}" readonly>
-                                    </div>
+                                    </div> --}}
 
                                     <br>
                                     <footer class="footer">
