@@ -4,6 +4,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ChartJSController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LocationController;
@@ -38,6 +39,7 @@ Route::middleware(['auth', 'checkUserStatus'])->prefix('dashboard/users')->group
     });
 
 Route::middleware(['auth', 'checkUserStatus'])->prefix('dashboard')->group(function () {
+        Route::get('/chart', [ChartJSController::class, 'index']);
         Route::resource('profile', ProfileController::class);
         Route::resource('users', UserController::class);
         Route::resource('location', LocationController::class);

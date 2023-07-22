@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\SafetyObservationForm;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -49,5 +51,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SafetyRepresentatifSeeder::class,
         ]);
+
+        SafetyObservationForm::factory(30)->create();
     }
 }

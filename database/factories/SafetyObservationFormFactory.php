@@ -41,7 +41,7 @@ class SafetyObservationFormFactory extends Factory
             'created_by' => User::factory(),
             'reviewed_by' => null,
             'approved_by' => null,
-            'status' => $this->faker->randomElement(['PENDING_REVIEW', 'PENDING_APPROVAL', 'APPROVED', 'REJECTED']),
+            'status' => $this->faker->randomElement(['PENDING_REVIEW']),
             'created_at' => now(),
             'updated_at' => now(),
         ];
