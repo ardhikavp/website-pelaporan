@@ -27,5 +27,7 @@
         </div>
     </div>
 </div>
-
+<script>
+    var chartData = @json($chartData);
+</script>
 @endsection
