@@ -50,6 +50,8 @@ Route::middleware(['auth', 'checkUserStatus'])->prefix('dashboard')->group(funct
 
     Route::get('safety-observation-forms/{safety_observation_form}/review-by-she', [SafetyObservationFormController::class, 'reviewByShe'])
         ->name('safety-observation-forms.review-by-she');
+    Route::put('/safety-observation-forms/{id}/reviewed-by-she', [SafetyObservationFormController::class, 'updateReviewedByShe'])
+        ->name('safety-observation-forms.update-reviewed-by-she');
 });
 
 

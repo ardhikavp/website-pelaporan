@@ -10,8 +10,8 @@
                     <div class="card-body">
                         <div class="container">
                             <div class="row justify-content-center">
-                                <form action="{{ route('safety-observation-forms.update', $form->id) }}" method="POST"
-                                    enctype="multipart/form-data">
+                                <form action="{{ route('safety-observation-forms.update-reviewed-by-she', $form->id) }}"
+                                    method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
 
@@ -124,12 +124,14 @@
 
                                     <div class="form-group">
                                         <label for="review_comment">Review Comment</label>
-                                        <textarea name="review_comment" id="review_comment" class="form-control" rows="3" placeholder="Komentar untuk feedback review"></textarea>
+                                        <textarea name="review_comment" id="review_comment" class="form-control" rows="3"
+                                            placeholder="Komentar untuk feedback review"></textarea>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="reject_comment">Reject Comment</label>
-                                        <textarea name="reject_comment" id="reject_comment" class="form-control" rows="3" placeholder="Komentar untuk feedback tolak laporan"></textarea>
+                                        <textarea name="reject_comment" id="reject_comment" class="form-control" rows="3"
+                                            placeholder="Komentar untuk feedback tolak laporan"></textarea>
                                     </div>
 
                                     <br>

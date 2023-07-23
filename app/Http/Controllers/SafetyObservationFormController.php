@@ -280,7 +280,34 @@ class SafetyObservationFormController extends Controller
         // Retrieve the form based on the provided ID
         $form = SafetyObservationForm::findOrFail($id);
 
-        return view('safety-observation-forms.safety-observation-review', compact('form'));
+        return view('safety-observation-forms.safety-observation-form-review', compact('form'));
+    }
+
+    public function updateReviewedByShe(Request $request, $id)
+    {
+        // Retrieve the form based on the provided ID
+        $form = SafetyObservationForm::findOrFail($id);
+
+        $action = $request->input('action');
+
+        $reviewComment = null;
+        $rejectionComment = null;
+        if ($action === 'approve') {
+            $finalStatus = 'PENDING_APPROVAL';
+            $reviewComment = $request->input('review_comment') ?? 'NO COMMENT';
+        } elseif ($action === 'reject') {
+            $finalStatus = 'REJECTED';
+            $rejectionComment = $request->input('reject_comment') ?? 'NO COMMENT';
+        }
+
+        $form->update([
+            'status' => $finalStatus,
+            'review_comment' => $reviewComment,
+            'reject_comment' => $rejectionComment
+        ]);
+
+        Session::flash('message', 'Form ' . ucfirst($action) . 'ed successfully.');
+        return redirect()->route('safety-observation-forms.index');
     }
 
     public function reviewSafetyObservation(SafetyObservationForm $forms)
