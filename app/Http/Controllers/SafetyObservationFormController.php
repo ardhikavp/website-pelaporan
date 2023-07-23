@@ -219,22 +219,24 @@ class SafetyObservationFormController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SafetyObservationForm $form)
+    public function edit($id)
     {
-        //
+        $form = SafetyObservationForm::findOrFail($id);
+        $locations = Location::all();
+        return view('safety-observation-forms.safetty-observation-form-edit', compact('form', 'locations'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SafetyObservationForm $form)
+    public function update(Request $request, string $id)
     {
         $validatedData = $request->validate([
             'nomor_laporan' => 'required',
             'date_finding' => 'required',
             'location_id' => 'required',
             'safety_observation_type' => 'required',
-            'image_id' => 'required',
+            // 'image' => 'required|image|mimes:jpeg,png,jpg|max:2048', // TODO: fix this
             'description' => 'required',
             'hazard_potential' => 'required',
             'impact' => 'required',
@@ -243,15 +245,16 @@ class SafetyObservationFormController extends Controller
             'long_term_recommendation' => 'required',
             'completation_date' => 'required',
             'created_by' => 'required',
-            'approved_by' => 'required',
             'status' => 'required',
         ]);
 
+        $form = SafetyObservationForm::findOrFail($id);
         $form->update($validatedData);
 
         Session::flash('message', 'Form updated successfully.');
 
-        return Redirect::route('safety-observation-forms.show', $form->id);
+        // return Redirect::route('safety-observation-forms.show', $form->id); TODO: integrate
+        return Redirect::route('safety-observation-forms.index');
     }
 
     /**
