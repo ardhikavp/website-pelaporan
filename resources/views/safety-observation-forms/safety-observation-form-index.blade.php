@@ -88,27 +88,32 @@
                                             </td>
                                             <td style="font-size: 14px;">{{ $form->status }}</td>
                                             <td>
-                                                <a href="" class="btn btn-sm btn-info">Lihat</a>
+                                                <a href="" class="btn btn-sm btn-info"><i class="bi bi-eye"></i></a>
                                                 @can('edit-safety-observation-form', $form)
-                                                    <a href="" class="btn btn-sm btn-primary">Edit</a>
+                                                <!-- Assuming $form is the Safety Observation Form you want to edit -->
+                                                <a href="{{ route('safety-observation-forms.edit', ['safety_observation_form' => $form->id]) }}">Edit</a>
+                                                    {{-- <a href="{{ route('safety-observation-forms.edit') }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i></a> --}}
                                                 @endcan
-                                                @can('delete-safety-observation-form', $form)
-                                                    <form action="{{ route('safety-observation-forms.destroy', $form->id) }}"
-                                                        method="POST" class="btn btn-sm btn-danger">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm btn-danger"
-                                                            onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
-                                                    </form>
+                                                @can('review-safety-observation-form', $form)
+                                                <a href="" class="btn btn-sm btn-danger">Review</a>
                                                 @endcan
+                                                    @can('delete-safety-observation-form', $form)
+                                                        <form action="{{ route('safety-observation-forms.destroy', $form->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-sm btn-danger"
+                                                                onclick="return confirm('Are you sure you want to delete this item?')"><i class="bi bi-trash3"  data-bs-toggle="tooltip" title="Hapus Laporan"></i></button>
+                                                        </form>
+                                                    @endcan
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
 
-                                {!! $form_pending_review->withQueryString()->links('pagination::bootstrap-5') !!}
-                                {{-- {{ $form_pending_review->links() }} --}}
+                                {{-- {!! $form_pending_review->withQueryString()->links('pagination::bootstrap-5') !!} --}}
+                                {{ $form_pending_review->links() }}
 
                         </div>
 

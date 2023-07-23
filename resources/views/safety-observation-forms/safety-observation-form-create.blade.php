@@ -13,12 +13,6 @@
                                     enctype="multipart/form-data">
                                     @csrf
 
-                                    {{-- <div class="form-group">
-                                        <label for="nomor_laporan">Nomor Laporan</label>
-                                        <input type="text" name="nomor_laporan" id="nomor_laporan" class="form-control"
-                                            required>
-                                    </div> --}}
-
                                     <div class="form-group">
                                         <label for="date_finding">Tanggal Temuan</label>
                                         <input type="date" name="date_finding" id="date_finding" class="form-control"
@@ -45,21 +39,6 @@
                                             <option value="bad_housekeeping">Bad Housekeeping</option>
                                         </select>
                                     </div>
-
-                                    {{-- <div class="form-group">
-                                    <label for="image">Foto Temuan</label><br>
-                                    <input type="file" name="image" id="image" class="form-control-file" accept="image/*" onchange="loadFile(event)">
-                                    <img id="output" class="responsive-image">
-                                    <script>
-                                        var loadFile = function(event) {
-                                          var output = document.getElementById('output');
-                                          output.src = URL.createObjectURL(event.target.files[0]);
-                                          output.onload = function() {
-                                            URL.revokeObjectURL(output.src) // free memory
-                                          }
-                                        };
-                                    </script>
-                                </div> --}}
 
                                     <div class="form-group">
                                         <label for="image">Foto Temuan</label><br>
