@@ -37,18 +37,18 @@ class SafetyObservationFormController extends Controller
         switch ($user->role) {
             case ('admin'):
             case ('manager maintenance'):
-            $form_pending_review = SafetyObservationForm::where('status', 'PENDING_REVIEW')
-                ->paginate(5, ['*'], 'pending_review')
-                ->appends(request()->except('pending_review'));
-            $form_pending_approval = SafetyObservationForm::where('status', 'PENDING_APPROVAL')
-                ->paginate(5, ['*'], 'pending_approval')
-                ->appends(request()->except('pending_approval'));
-            $form_approved = SafetyObservationForm::where('status', 'APPROVED')
-                ->paginate(5, ['*'], 'approved')
-                ->appends(request()->except('approved'));
-            $form_rejected = SafetyObservationForm::where('status', 'REJECTED')
-                ->paginate(5, ['*'], 'rejected')
-                ->appends(request()->except('rejected'));
+                $form_pending_review = SafetyObservationForm::where('status', 'PENDING_REVIEW')
+                    ->paginate(5, ['*'], 'pending_review')
+                    ->appends(request()->except('pending_review'));
+                $form_pending_approval = SafetyObservationForm::where('status', 'PENDING_APPROVAL')
+                    ->paginate(5, ['*'], 'pending_approval')
+                    ->appends(request()->except('pending_approval'));
+                $form_approved = SafetyObservationForm::where('status', 'APPROVED')
+                    ->paginate(5, ['*'], 'approved')
+                    ->appends(request()->except('approved'));
+                $form_rejected = SafetyObservationForm::where('status', 'REJECTED')
+                    ->paginate(5, ['*'], 'rejected')
+                    ->appends(request()->except('rejected'));
                 break;
 
             case ('SHE'):
@@ -237,19 +237,16 @@ class SafetyObservationFormController extends Controller
     public function edit($id)
     {
         $form = SafetyObservationForm::findOrFail($id);
-        $locations = Location::all();
-        return view('safety-observation-forms.safetty-observation-form-edit', compact('form', 'locations'));
-
 
         // Check if the user is authorized to edit the form using the editForm policy
-        // if (Gate::allows('editForm', $form)) {
-        //     $locations = Location::all();
-        //     return view('safety-observation-forms.safety-observation-form-edit', compact('form', 'locations'));
-        // } else {
-        //     // User is not authorized to edit the form
-        //     // You can redirect them to a different page or show an error message
-        //     return redirect()->route('safety-observation-forms.index')->with('error', 'You are not authorized to edit this form.');
-        // }
+        if (Gate::allows('editForm', $form)) {
+            $locations = Location::all();
+            return view('safety-observation-forms.safety-observation-form-edit', compact('form', 'locations'));
+        } else {
+            // User is not authorized to edit the form
+            // You can redirect them to a different page or show an error message
+            return redirect()->route('safety-observation-forms.index')->with('error', 'You are not authorized to edit this form.');
+        }
     }
 
     /**

@@ -16,7 +16,7 @@ class SafetyObservationFormPolicy
 
     public function editForm(User $user, SafetyObservationForm $form)
     {
-        return ($user->id === $form->createdBy || $user->role === 'SHE') && $form->status === 'PENDING_REVIEW';
+        return ($user->id === $form->createdBy->id || $user->role === 'SHE') && $form->status === 'PENDING_REVIEW';
     }
 
     public function deleteForm(User $user, SafetyObservationForm $form)
