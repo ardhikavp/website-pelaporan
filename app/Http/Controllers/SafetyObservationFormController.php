@@ -211,9 +211,9 @@ class SafetyObservationFormController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(SafetyObservationForm $form)
+    public function show(SafetyObservationForm $safety_observation_form)
     {
-        return view('safety-observation-forms.show', compact('form'));
+        return view('safety-observation-forms.safety-observation-form-show', compact('safety_observation_form'));
     }
 
     /**
