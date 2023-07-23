@@ -30,6 +30,9 @@ class SafetyObservationForm extends Model
                             'created_by',
                             'reviewed_by',
                             'approved_by',
+                            'review_comment',
+                            'reject_comment',
+                            'approve_comment',
                             'status',
                         ];
 

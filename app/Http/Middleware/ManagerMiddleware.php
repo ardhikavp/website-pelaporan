@@ -29,6 +29,6 @@ class ManagerMiddleware
     private function isManager()
     {
         // Modify this logic based on your user role implementation
-        return auth()->check() && auth()->user()->role === 'manager';
+        return auth()->check() && auth()->user()->role === 'manager maintenance';
     }
 }

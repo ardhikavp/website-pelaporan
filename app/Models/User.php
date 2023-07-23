@@ -57,9 +57,14 @@ class User extends Authenticatable
         return $this->hasMany(Answer::class);
     }
 
+    public function safetyObservationForms()
+    {
+        return $this->hasMany(SafetyObservationForm::class);
+    }
+    
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id', 'id');
     }
 
-}   
+}

@@ -9,6 +9,11 @@ use App\Models\SafetyObservationForm;
 
 class SafetyObservationFormPolicy
 {
+    // public function viewPegawai(User $user)
+    // {
+    //     return $user->role === 'pegawai';
+    // }
+
     public function editForm(User $user, SafetyObservationForm $form)
     {
         return ($user->id === $form->createdBy || $user->role === 'SHE') && $form->status === 'PENDING_REVIEW';
@@ -22,5 +27,10 @@ class SafetyObservationFormPolicy
     public function giveReview(User $user, SafetyObservationForm $form)
     {
         return $user->role === 'SHE' && $form->status === 'PENDING_REVIEW';
+    }
+
+    public function giveApprove(User $user, SafetyObservationForm $form)
+    {
+        return $user->role === 'manager maintenance' && $form->status === 'PENDING_APPROVAL';
     }
 }

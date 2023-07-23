@@ -19,6 +19,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Company::class => CompanyPolicy::class,
+        // SafetyObservationForm::class => SafetyObservationFormPolicy::class,
     ];
 
     /**
@@ -32,5 +33,6 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('edit-safety-observation-form', [SafetyObservationFormPolicy::class, 'editForm']);
         Gate::define('delete-safety-observation-form', [SafetyObservationFormPolicy::class, 'deleteForm']);
         Gate::define('give-safety-observation-review', [SafetyObservationFormPolicy::class, 'giveReview']);
+        Gate::define('give-safety-observation-approve', [SafetyObservationFormPolicy::class, 'giveApprove']);
     }
 }

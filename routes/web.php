@@ -50,8 +50,12 @@ Route::middleware(['auth', 'checkUserStatus'])->prefix('dashboard')->group(funct
 
     Route::get('safety-observation-forms/{safety_observation_form}/review-by-she', [SafetyObservationFormController::class, 'reviewByShe'])
         ->name('safety-observation-forms.review-by-she');
-    Route::put('/safety-observation-forms/{id}/reviewed-by-she', [SafetyObservationFormController::class, 'updateReviewedByShe'])
+    Route::put('/safety-observation-forms/{safety_observation_form}/reviewed-by-she', [SafetyObservationFormController::class, 'updateReviewedByShe'])
         ->name('safety-observation-forms.update-reviewed-by-she');
+    Route::get('safety-observation-forms/{safety_observation_form}/approve-by-manager', [SafetyObservationFormController::class, 'approveByManager'])
+        ->name('safety-observation-forms.approve-by-manager');
+    Route::put('/safety-observation-forms/{safety_observation_form}/approved-by-manager', [SafetyObservationFormController::class, 'updateApprovedByManager'])
+        ->name('safety-observation-forms.update-approved-by-manager');
 });
 
 

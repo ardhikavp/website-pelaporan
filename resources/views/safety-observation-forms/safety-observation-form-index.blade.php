@@ -1,7 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container">
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Laporan Safety Observation</li>
+              <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+            </ol>
+          </nav>
         <div class="row">
             <div class="col-md-12 mx-auto">
                 <div class="card">
@@ -20,7 +27,10 @@
                         @if (Session::has('message'))
                             <div class="alert alert-success">{{ Session::get('message') }}</div>
                         @endif
-                        <div class="table-responsive mb-3">
+                        @if (Session::has('error'))
+                        <div class="alert alert-danger">{{ Session::get('error') }}</div>
+                        @endif
+                        <div class="table-responsive">
                             <h3>PENDING REVIEW</h3>
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
@@ -90,6 +100,7 @@
                                             <td>
                                                 <a href="{{ route('safety-observation-forms.show', ['safety_observation_form' => $form->id]) }}"
                                                     class="btn btn-sm btn-info my-1"><i class="bi bi-eye"></i></a>
+
                                                 @can('edit-safety-observation-form', $form)
                                                     <!-- Assuming $form is the Safety Observation Form you want to edit -->
                                                     <a href="{{ route('safety-observation-forms.edit', ['safety_observation_form' => $form->id]) }}"
@@ -100,6 +111,10 @@
                                                 @can('give-safety-observation-review', $form)
                                                     <a href="{{ route('safety-observation-forms.review-by-she', ['safety_observation_form' => $form->id]) }}"
                                                         class="btn btn-sm btn-primary my-1"><i class="bi bi-pass"></i></a>
+                                                @endcan
+                                                @can('give-safety-observation-approve', $form)
+                                                    <a href="{{ route('safety-observation-forms.approve-by-manager', ['safety_observation_form' => $form->id]) }}"
+                                                    class="btn btn-sm btn-primary my-1"><i class="bi bi-pass"></i></a>
                                                 @endcan
                                                 @can('delete-safety-observation-form', $form)
                                                     <form action="{{ route('safety-observation-forms.destroy', $form->id) }}"
@@ -119,8 +134,10 @@
                             </table>
 
                             {{-- {!! $form_pending_review->withQueryString()->links('pagination::bootstrap-5') !!} --}}
+                            {{-- {{ $form_pending_review->links('pagination::bootstrap-5') }} --}}
+                            @if ($form_pending_review instanceof \Illuminate\Pagination\LengthAwarePaginator)
                             {{ $form_pending_review->links() }}
-
+                            @endif
                         </div>
 
                         <div class="table-responsive mb-3">
@@ -193,17 +210,31 @@
                                             </td>
                                             <td style="font-size: 14px;">{{ $form->status }}</td>
                                             <td>
-                                                <a href="" class="btn btn-sm btn-info">Lihat</a>
+                                                <a href="{{ route('safety-observation-forms.show', ['safety_observation_form' => $form->id]) }}"
+                                                    class="btn btn-sm btn-info my-1"><i class="bi bi-eye"></i></a>
                                                 @can('edit-safety-observation-form', $form)
-                                                    <a href="" class="btn btn-sm btn-primary">Edit</a>
+                                                    <!-- Assuming $form is the Safety Observation Form you want to edit -->
+                                                    <a href="{{ route('safety-observation-forms.edit', ['safety_observation_form' => $form->id]) }}"
+                                                        class="btn btn-sm btn-secondary my-1"><i
+                                                            class="bi bi-pencil-square"></i></a>
+                                                    {{-- <a href="{{ route('safety-observation-forms.edit') }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i></a> --}}
+                                                @endcan
+                                                @can('give-safety-observation-review', $form)
+                                                    <a href="{{ route('safety-observation-forms.review-by-she', ['safety_observation_form' => $form->id]) }}"
+                                                        class="btn btn-sm btn-primary my-1"><i class="bi bi-pass"></i></a>
+                                                @endcan
+                                                @can('give-safety-observation-approve', $form)
+                                                <a href="{{ route('safety-observation-forms.approve-by-manager', ['safety_observation_form' => $form->id]) }}" class="btn btn-sm btn-primary my-1"><i class="bi bi-pass"></i></a>
                                                 @endcan
                                                 @can('delete-safety-observation-form', $form)
                                                     <form action="{{ route('safety-observation-forms.destroy', $form->id) }}"
-                                                        method="POST" class="btn btn-sm btn-danger">
+                                                        method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm btn-danger"
-                                                            onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
+                                                        <button type="submit" class="btn btn-sm btn-danger my-1"
+                                                            onclick="return confirm('Are you sure you want to delete this item?')"><i
+                                                                class="bi bi-trash3" data-bs-toggle="tooltip"
+                                                                title="Hapus Laporan"></i></button>
                                                     </form>
                                                 @endcan
                                             </td>
@@ -212,7 +243,10 @@
                                 </tbody>
                             </table>
                             <div class="d-flex justify-content-center">
-                                {{ $form_pending_approval->links() }}
+                                {{-- {{ $form_pending_approval->links() }} --}}
+                                @if ($form_pending_approval instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                                    {{ $form_pending_approval->links() }}
+                                @endif
                             </div>
                         </div>
 
@@ -283,17 +317,32 @@
                                             </td>
                                             <td style="font-size: 14px;">{{ $form->status }}</td>
                                             <td>
-                                                <a href="" class="btn btn-sm btn-info">Lihat</a>
+                                                <a href="{{ route('safety-observation-forms.show', ['safety_observation_form' => $form->id]) }}"
+                                                    class="btn btn-sm btn-info my-1"><i class="bi bi-eye"></i></a>
                                                 @can('edit-safety-observation-form', $form)
-                                                    <a href="" class="btn btn-sm btn-primary">Edit</a>
+                                                    <!-- Assuming $form is the Safety Observation Form you want to edit -->
+                                                    <a href="{{ route('safety-observation-forms.edit', ['safety_observation_form' => $form->id]) }}"
+                                                        class="btn btn-sm btn-secondary my-1"><i
+                                                            class="bi bi-pencil-square"></i></a>
+                                                    {{-- <a href="{{ route('safety-observation-forms.edit') }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i></a> --}}
+                                                @endcan
+                                                @can('give-safety-observation-review', $form)
+                                                    <a href="{{ route('safety-observation-forms.review-by-she', ['safety_observation_form' => $form->id]) }}"
+                                                        class="btn btn-sm btn-primary my-1"><i class="bi bi-pass"></i></a>
+                                                @endcan
+                                                @can('give-safety-observation-approve', $form)
+                                                    <a href="{{ route('safety-observation-forms.approve-by-manager', [' ' => $form->id]) }}"
+                                                    class="btn btn-sm btn-primary my-1"><i class="bi bi-pass"></i></a>
                                                 @endcan
                                                 @can('delete-safety-observation-form', $form)
                                                     <form action="{{ route('safety-observation-forms.destroy', $form->id) }}"
-                                                        method="POST" class="btn btn-sm btn-danger">
+                                                        method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm btn-danger"
-                                                            onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
+                                                        <button type="submit" class="btn btn-sm btn-danger my-1"
+                                                            onclick="return confirm('Are you sure you want to delete this item?')"><i
+                                                                class="bi bi-trash3" data-bs-toggle="tooltip"
+                                                                title="Hapus Laporan"></i></button>
                                                     </form>
                                                 @endcan
                                             </td>
@@ -302,7 +351,10 @@
                                 </tbody>
                             </table>
                             <div class="d-flex justify-content-center">
-                                {{ $form_approved->links() }}
+                                {{-- {{ $form_approved->links() }} --}}
+                                @if ($form_approved instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                                    {{ $form_approved->links() }}
+                                @endif
                             </div>
                         </div>
 
@@ -381,9 +433,9 @@
                             </table>
                             {{-- {{ $form_rejected->links() }} --}}
                             @if ($form_rejected instanceof \Illuminate\Pagination\LengthAwarePaginator)
-                                {{ $form_rejected->links() }}
+                            {{ $form_rejected->links() }}
                             @else
-                                {{-- show nothing --}}
+                                show nothing
                             @endif
                         </div>
 

@@ -24,6 +24,9 @@ class Answer extends Model
                         'nomor_laporan',
                         'reviewed_by',
                         'approved_by',
+                        'review_comment',
+                        'reject_comment',
+                        'approve_comment',
                         'status',
                     ];
 
