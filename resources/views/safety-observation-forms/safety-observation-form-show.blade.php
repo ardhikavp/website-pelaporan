@@ -11,6 +11,12 @@
                             <div class="row justify-content-center">
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="created_by">Nomor Laporan</label>
+                                        <input type="text" name="nomor_laporan" id="nomor_laporan" class="form-control"
+                                            value="{{ $safety_observation_form->nomor_laporan }}" readonly>
+                                        </div>
+
+                                    <div class="form-group">
                                         <label for="date_finding">Tanggal Temuan</label>
                                         <input type="text" name="date_finding" id="date_finding" class="form-control"
                                             value="{{ $safety_observation_form->date_finding }}" readonly>
