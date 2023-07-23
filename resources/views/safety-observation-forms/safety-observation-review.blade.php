@@ -122,6 +122,16 @@
                                             value="{{ $form->status }}" disabled>
                                     </div>
 
+                                    <div class="form-group">
+                                        <label for="review_comment">Review Comment</label>
+                                        <textarea name="review_comment" id="review_comment" class="form-control" rows="3" placeholder="Komentar untuk feedback review"></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="reject_comment">Reject Comment</label>
+                                        <textarea name="reject_comment" id="reject_comment" class="form-control" rows="3" placeholder="Komentar untuk feedback tolak laporan"></textarea>
+                                    </div>
+
                                     <br>
                                     <footer class="footer">
                                         <!-- Footer content here -->
