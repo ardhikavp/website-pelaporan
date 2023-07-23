@@ -19,8 +19,8 @@ class SafetyObservationFormPolicy
         return $user->role === 'SHE' || ($user->role === 'admin' && $form->status === 'REJECTED');
     }
 
-    public function approveReview(User $user)
+    public function giveReview(User $user, SafetyObservationForm $form)
     {
-        return $user->role === 'SHE';
+        return $user->role === 'SHE' && $form->status === 'PENDING_REVIEW';
     }
 }

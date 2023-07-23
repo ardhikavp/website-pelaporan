@@ -88,32 +88,38 @@
                                             </td>
                                             <td style="font-size: 14px;">{{ $form->status }}</td>
                                             <td>
-                                                <a href="{{ route('safety-observation-forms.show', ['safety_observation_form' => $form->id]) }}" class="btn btn-sm btn-info"><i class="bi bi-eye"></i></a>
+                                                <a href="{{ route('safety-observation-forms.show', ['safety_observation_form' => $form->id]) }}"
+                                                    class="btn btn-sm btn-info my-1"><i class="bi bi-eye"></i></a>
                                                 @can('edit-safety-observation-form', $form)
-                                                <!-- Assuming $form is the Safety Observation Form you want to edit -->
-                                                <a href="{{ route('safety-observation-forms.edit', ['safety_observation_form' => $form->id]) }}">Edit</a>
+                                                    <!-- Assuming $form is the Safety Observation Form you want to edit -->
+                                                    <a href="{{ route('safety-observation-forms.edit', ['safety_observation_form' => $form->id]) }}"
+                                                        class="btn btn-sm btn-secondary my-1"><i
+                                                            class="bi bi-pencil-square"></i></a>
                                                     {{-- <a href="{{ route('safety-observation-forms.edit') }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i></a> --}}
                                                 @endcan
-                                                @can('review-safety-observation-form', $form)
-                                                <a href="" class="btn btn-sm btn-danger">Review</a>
+                                                @can('give-safety-observation-review', $form)
+                                                    <a href="{{ route('safety-observation-forms.review-by-she', ['safety_observation_form' => $form->id]) }}"
+                                                        class="btn btn-sm btn-primary my-1"><i class="bi bi-pass"></i></a>
                                                 @endcan
-                                                    @can('delete-safety-observation-form', $form)
-                                                        <form action="{{ route('safety-observation-forms.destroy', $form->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-sm btn-danger"
-                                                                onclick="return confirm('Are you sure you want to delete this item?')"><i class="bi bi-trash3"  data-bs-toggle="tooltip" title="Hapus Laporan"></i></button>
-                                                        </form>
-                                                    @endcan
+                                                @can('delete-safety-observation-form', $form)
+                                                    <form action="{{ route('safety-observation-forms.destroy', $form->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-sm btn-danger my-1"
+                                                            onclick="return confirm('Are you sure you want to delete this item?')"><i
+                                                                class="bi bi-trash3" data-bs-toggle="tooltip"
+                                                                title="Hapus Laporan"></i></button>
+                                                    </form>
+                                                @endcan
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
 
-                                {{-- {!! $form_pending_review->withQueryString()->links('pagination::bootstrap-5') !!} --}}
-                                {{ $form_pending_review->links() }}
+                            {{-- {!! $form_pending_review->withQueryString()->links('pagination::bootstrap-5') !!} --}}
+                            {{ $form_pending_review->links() }}
 
                         </div>
 

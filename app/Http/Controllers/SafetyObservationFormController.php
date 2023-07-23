@@ -275,6 +275,14 @@ class SafetyObservationFormController extends Controller
         return redirect()->route('safety-observation-forms.index');
     }
 
+    public function reviewByShe($id)
+    {
+        // Retrieve the form based on the provided ID
+        $form = SafetyObservationForm::findOrFail($id);
+
+        return view('safety-observation-forms.safety-observation-review', compact('form'));
+    }
+
     public function reviewSafetyObservation(SafetyObservationForm $forms)
     {
         // Assuming you have authenticated the reviewer user.

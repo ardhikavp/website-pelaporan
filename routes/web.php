@@ -47,6 +47,9 @@ Route::middleware(['auth', 'checkUserStatus'])->prefix('dashboard')->group(funct
     Route::resource('companies', CompanyController::class);
     Route::resource('safety-behavior-checklist', SafetyBehaviorChecklistController::class);
     Route::resource('safety-observation-forms', SafetyObservationFormController::class);
+
+    Route::get('safety-observation-forms/{safety_observation_form}/review-by-she', [SafetyObservationFormController::class, 'reviewByShe'])
+        ->name('safety-observation-forms.review-by-she');
 });
 
 
