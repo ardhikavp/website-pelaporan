@@ -8,7 +8,7 @@
               <li class="breadcrumb-item active" aria-current="page">Laporan Safety Observation</li>
               <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
             </ol>
-          </nav>
+          </nav>    
         <div class="row">
             <div class="col-md-12 mx-auto">
                 <div class="card">

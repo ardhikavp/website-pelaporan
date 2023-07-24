@@ -134,6 +134,12 @@
                                             placeholder="Komentar untuk feedback tolak laporan"></textarea>
                                     </div>
 
+                                    <div class="form-group">
+                                        <label for="reviewed_by">Reviewed By</label>
+                                        <input type="text" name="reviewed_by" id="reviewed_by" class="form-control"
+                                            value="{{ auth()->user()->id }}" readonly>
+                                    </div>
+
                                     <br>
                                     <footer class="footer">
                                         <!-- Footer content here -->

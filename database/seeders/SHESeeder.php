@@ -15,12 +15,22 @@ class SHESeeder extends Seeder
      */
     public function run(): void
     {
-        $company = Company::where('company', 'PPNS')->first();
+        $company = Company::where('company', 'PT Petro Jordan Abadi')->first();
             if ($company) {
                 User::create([
                     'name' => 'SHE',
                     'username' => 'SHE',
                     'email' => 'SHE@example.com',
+                    'password' => Hash::make('password'),
+                    'role' => 'SHE',
+                    'company_id' => $company->id,
+                    'status' => 'APPROVED',
+                ]);
+
+                User::create([
+                    'name' => 'Ardhika Vira Pramudya',
+                    'username' => 'SHE2',
+                    'email' => 'SHE2@example.com',
                     'password' => Hash::make('password'),
                     'role' => 'SHE',
                     'company_id' => $company->id,

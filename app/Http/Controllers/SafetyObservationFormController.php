@@ -36,6 +36,13 @@ class SafetyObservationFormController extends Controller
 
         switch ($user->role) {
             case ('admin'):
+                $form_approved = SafetyObservationForm::where('status', 'APPROVED')
+                ->paginate(5, ['*'], 'approved')
+                ->appends(request()->except('approved'));
+                $form_rejected = SafetyObservationForm::where('status', 'REJECTED')
+                ->paginate(5, ['*'], 'rejected')
+                ->appends(request()->except('rejected'));
+
             case ('manager maintenance'):
                 $form_pending_review = SafetyObservationForm::where('status', 'PENDING_REVIEW')
                     ->paginate(5, ['*'], 'pending_review')
@@ -67,6 +74,21 @@ class SafetyObservationFormController extends Controller
                 break;
 
             case ('safety representatif'):
+                $companyId = $user->company->id;
+                $form_pending_review = SafetyObservationForm::where('status', 'PENDING_REVIEW')
+                    ->whereHas('createdBy', function ($query) use ($companyId) {
+                        $query->where('company_id', $companyId);
+                    })
+                    ->paginate(5, ['*'], 'pending_review');
+                $form_pending_approval = SafetyObservationForm::where('status', 'PENDING_APPROVAL')
+                    ->whereHas('createdBy', function ($query) use ($companyId) {
+                        $query->where('company_id', $companyId);
+                    })
+                    ->paginate(5, ['*'], 'pending_approval');
+                $form_approved = SafetyObservationForm::where('status', 'APPROVED')
+                    ->paginate(5, ['*'], 'form_approved');
+                break;
+                
             case ('safety officer'):
                 $companyId = $user->company->id;
                 $form_pending_review = SafetyObservationForm::where('status', 'PENDING_REVIEW')
@@ -198,7 +220,7 @@ class SafetyObservationFormController extends Controller
         $abbreviation = str_pad($abbreviation, 5);
 
         // Buat string nomor laporan
-        $nomorLaporanString = $nomorLaporan . '/' . 'SBC' . '/' . $abbreviation . '/' . $month . '/' . $year;
+        $nomorLaporanString = $nomorLaporan . '/' . 'SOF' . '/' . $abbreviation . '/' . $month . '/' . $year;
 
         $form = SafetyObservationForm::create([
             'nomor_laporan' => $nomorLaporanString,
@@ -313,6 +335,7 @@ class SafetyObservationFormController extends Controller
 
         $action = $request->input('action');
 
+
         $reviewComment = null;
         $rejectionComment = null;
         if ($action === 'approve') {
@@ -323,10 +346,12 @@ class SafetyObservationFormController extends Controller
             $rejectionComment = $request->input('reject_comment') ?? 'NO COMMENT';
         }
 
+        $reviewedById = Auth::id();
         $form->update([
             'status' => $finalStatus,
             'review_comment' => $reviewComment,
-            'reject_comment' => $rejectionComment
+            'reject_comment' => $rejectionComment,
+            'reviewed_by' => $reviewedById
         ]);
 
         Session::flash('message', 'Form ' . ucfirst($action) . 'ed successfully.');
@@ -377,10 +402,16 @@ class SafetyObservationFormController extends Controller
             $rejectionComment = $request->input('reject_comment') ?? 'NO COMMENT';
         }
 
+        $approvedById = null;
+        if ($action === 'approve') {
+            $approvedById = Auth::id();
+        }
+
         $form->update([
             'status' => $finalStatus,
             'approve_comment' => $approveComment,
-            'reject_comment' => $rejectionComment
+            'reject_comment' => $rejectionComment,
+            'approved_by' => $approvedById
         ]);
 
         Session::flash('message', 'Form ' . ucfirst($action) . 'ed successfully.');

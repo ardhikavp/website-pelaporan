@@ -15,12 +15,25 @@ class PegawaiSeeder extends Seeder
      */
     public function run(): void
     {
-        $company = Company::where('company', 'PPNS')->first();
+        $company = Company::where('company', 'Politeknik Perkapalan Negeri Surabaya')->first();
         if ($company) {
             User::create([
                 'name' => 'pegawai',
                 'username' => 'pegawai',
                 'email' => 'pegawai@example.com',
+                'password' => Hash::make('password'),
+                'role' => 'pegawai',
+                'company_id' => $company->id,
+                'status' => 'APPROVED',
+            ]);
+        }
+
+        $company = Company::where('company', 'PT Petro Jordan Abadi')->first();
+        if ($company) {
+            User::create([
+                'name' => 'Ayu Puspa Arum',
+                'username' => 'pegawai2',
+                'email' => 'pegawai2@example.com',
                 'password' => Hash::make('password'),
                 'role' => 'pegawai',
                 'company_id' => $company->id,

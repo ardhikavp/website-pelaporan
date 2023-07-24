@@ -27,6 +27,7 @@
                                     <th style="width: 15%;">Pekerjaan</th>
                                     <th style="width: 30%;">Perusahaan</th>
                                     <th style="width: 20%;">Safety Index</th>
+                                    <th>Status</th>
                                     <th style="width: 20%;">Aksi</th>
                                 </tr>
                             </thead>
@@ -37,6 +38,7 @@
                                     <td>{{ $answer->operation_name }}</td>
                                     <td>{{ $companies->find($answer->company_id)->company }}</td>
                                     <td>{{ $answer->safety_index }}%</td>
+                                    <td>{{ $answer->status }}</td>
                                     <td>
                                         <a href="{{ route('safety-behavior-checklist.show', $answer->id) }}" class="btn btn-sm btn-info">Lihat</a>
                                         <a href="{{ route('safety-behavior-checklist.edit', $answer->id) }}" class="btn btn-sm btn-primary">Edit</a>

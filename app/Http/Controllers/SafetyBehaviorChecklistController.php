@@ -50,6 +50,7 @@ class SafetyBehaviorChecklistController extends Controller
         $questions = $request->input('question');
         $answers = $request->input('answer');
 
+        $defaultStatus = 'PENDING_REVIEW';
         $question_answer_collection = [];
 
         foreach ($answers as $category => $question_ids) {
@@ -130,6 +131,7 @@ class SafetyBehaviorChecklistController extends Controller
             'answer' => json_encode($question_answer_collection),
             'safety_index' => $safetyIndex,
             'nomor_laporan' => $nomorLaporanString,
+            'status' => $defaultStatus,
             'reviewed_by' => null,
             'approved_by' => null,
         ]);
