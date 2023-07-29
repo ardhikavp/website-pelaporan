@@ -24,7 +24,6 @@ class PegawaiSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'role' => 'pegawai',
                 'company_id' => $company->id,
-                'status' => 'APPROVED',
             ]);
         }
 
@@ -37,7 +36,6 @@ class PegawaiSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'role' => 'pegawai',
                 'company_id' => $company->id,
-                'status' => 'APPROVED',
             ]);
         }
     }

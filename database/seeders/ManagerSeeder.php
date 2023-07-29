@@ -24,7 +24,6 @@ class ManagerSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'role' => 'manager maintenance',
                 'company_id' => $company->id,
-                'status' => 'APPROVED',
             ]);
         }
     }

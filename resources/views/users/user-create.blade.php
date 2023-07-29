@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h2>Create New User</h2>
-        <form action="{{ route('user.store') }}" method="post">
+        <form action="{{ route('users.store') }}" method="post">
             @csrf
             <div class="form-group">
                 <label for="name">Name:</label>
@@ -27,7 +27,6 @@
             <div class="form-group">
                 <label for="company_id">Company:</label>
                 <select name="company_id" id="company_id" class="form-control">
-                    <!-- Tampilkan pilihan perusahaan sesuai data yang ada di database -->
                     @foreach ($companies as $company)
                         <option value="{{ $company->id }}">{{ $company->name }}</option>
                     @endforeach

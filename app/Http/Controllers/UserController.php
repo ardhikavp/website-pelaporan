@@ -26,52 +26,10 @@ class UserController extends Controller
                     });
             }
         )
-        ->simplePaginate(5);
+        ->Paginate(5);
         $companies = Company::all();
-        $pendingUsers = User::where('status', 'PENDING_APPROVAL')->get();
-        $approvedUsers = User::where('status', 'APPROVED')->get();
-        $rejectedUsers = User::where('status', 'REJECTED')->get();
 
-        return view('users.user-index', compact('users', 'companies','pendingUsers', 'approvedUsers', 'rejectedUsers'));
-    }
-
-    public function pendingUsers()
-    {
-        // Ambil daftar pengguna dengan status "PENDING_APPROVAL"
-        $users = User::paginate(5);
-        $companies = Company::all();
-        $pendingUsers = User::where('status', 'PENDING_APPROVAL')->get();
-        $approvedUsers = User::where('status', 'APPROVED')->get();
-        $rejectedUsers = User::where('status', 'REJECTED')->get();
-
-        // Tampilkan view dengan passing data daftar pengguna ke view
-        return view('users.approval.user-pending', compact('users', 'companies','pendingUsers', 'approvedUsers', 'rejectedUsers'));
-    }
-
-    public function approvedUsers()
-    {
-        // Ambil daftar pengguna dengan status "PENDING_APPROVAL"
-        $users = User::paginate(5);
-        $companies = Company::all();
-        $pendingUsers = User::where('status', 'PENDING_APPROVAL')->get();
-        $approvedUsers = User::where('status', 'APPROVED')->get();
-        $rejectedUsers = User::where('status', 'REJECTED')->get();
-
-        // Tampilkan view dengan passing data daftar pengguna ke view
-        return view('users.approval.user-approved', compact('users', 'companies','pendingUsers', 'approvedUsers', 'rejectedUsers'));
-    }
-
-    public function rejectedUsers()
-    {
-        // Ambil daftar pengguna dengan status "PENDING_APPROVAL"
-        $users = User::paginate(5);
-        $companies = Company::all();
-        $pendingUsers = User::where('status', 'PENDING_APPROVAL')->get();
-        $approvedUsers = User::where('status', 'APPROVED')->get();
-        $rejectedUsers = User::where('status', 'REJECTED')->get();
-
-        // Tampilkan view dengan passing data daftar pengguna ke view
-        return view('users.approval.user-rejected', compact('users', 'companies','pendingUsers', 'approvedUsers', 'rejectedUsers'));
+        return view('users.user-index', compact('users', 'companies'));
     }
 
     /**
@@ -79,7 +37,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.user-create');
+        $companies = Company::all();
+
+        return view('users.user-create', compact('companies'));
     }
 
     /**
@@ -140,15 +100,4 @@ class UserController extends Controller
         //
     }
 
-    // public function showApprovalPage()
-    // {
-    //     $users = User::where('is_accepted', false)->get();
-    //     return view('user-approval', compact('users'));
-    // }
-
-    // public function acceptUser(User $user)
-    // {
-    //     $user->update(['is_accepted' => true]);
-    //     return redirect()->route('user.approval')->with('success', 'User has been accepted.');
-    // }
 }

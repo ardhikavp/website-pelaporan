@@ -149,7 +149,11 @@ class SafetyBehaviorChecklistController extends Controller
 
     public function show(string $id)
     {
+        $answer = Answer::findOrFail($id);
+        $companies = Company::all();
+        $safetyList = SafetyBehaviorChecklist::all();
 
+        return view('safety-behavior-checklists.safety-behavior-checklist-show', compact('answer', 'companies', 'safetyList'));
     }
 
     /**
@@ -158,8 +162,6 @@ class SafetyBehaviorChecklistController extends Controller
     public function edit(string $id)
     {
         $answer = Answer::findOrFail($id);
-        // You may need to fetch additional data based on your requirements
-        // For example: $companies = Company::all();
         $companies = Company::all();
         $safetyList = SafetyBehaviorChecklist::all();
         // dd($answer);
@@ -178,6 +180,8 @@ class SafetyBehaviorChecklistController extends Controller
         $answer->date_finding = $request->input('date_finding');
         $answer->operation_name = $request->input('operation_name');
         $answer->company_id = $request->input('company_id');
+        $answer->nomor_laporan = $request->input('nomor_laporan');
+
 
         // Update question answers (similar to the store method)
         $questions = $request->input('question');
@@ -217,8 +221,9 @@ class SafetyBehaviorChecklistController extends Controller
         $safetyIndex = $totalAnswers > 0 ? ($safeCount / $totalAnswers) * 100 : 0;
 
         // Update the rest of the fields (similar to the store method)
-        Answer::create([
+        $answer->update([
             'user_id' => auth()->user()->id,
+            'nomor_laporan' => $request->input('nomor_laporan'),
             'date_finding' => $request->input('date_finding'),
             'operation_name' => $request->input('operation_name'),
             'company_id' => $request->input('company_id'),
@@ -229,7 +234,7 @@ class SafetyBehaviorChecklistController extends Controller
         ]);
 
         // Save the updated answer
-        $answer->save();
+        // $answer->update($answer);
 
         // Redirect to the index page or the show page (whichever is appropriate)
         return redirect()->route('safety-behavior-checklist.index')->with('success', 'Safety Behavior Checklist updated successfully.');

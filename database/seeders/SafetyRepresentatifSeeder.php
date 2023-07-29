@@ -24,7 +24,6 @@ class SafetyRepresentatifSeeder extends Seeder
                     'password' => Hash::make('password'),
                     'role' => 'safety representatif',
                     'company_id' => $company->id,
-                    'status' => 'APPROVED',
                 ]);
             }
     }

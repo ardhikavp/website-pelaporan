@@ -4,9 +4,7 @@
     <div class="container">
         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
             <a href="{{ route('users.index') }}" class="btn btn-primary" id="btn-users-all">All</a>
-            <a href="{{ route('users.pending') }}" class="btn btn-outline-primary" id="btn-users-pending">Pending Approval</a>
-            <a href="{{ route('users.approved') }}" class="btn btn-outline-primary" id="btn-users-approved">Approved</a>
-            <a href="{{ route('users.rejected') }}" class="btn btn-outline-primary" id="btn-users-rejected">Rejected</a>
+            <a href="{{ route('users.create') }}">Create</a>
         </div>
         <div style="mt-1">
             <form action="{{ route('users.index') }}" method="get">
@@ -28,7 +26,6 @@
                         <th>Nama</th>
                         <th>NIK</th>
                         <th>Perusahaan</th>
-                        <th>Status</th>
                         <th>Role</th>
                         <th>Action</th>
                     </tr>
@@ -39,7 +36,6 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->username }}</td>
                             <td>{{ $companies->find($user->company_id)->company }}</td>
-                            <td>{{ $user->status }}</td>
                             <td>{{ $user->role }}</td>
                             <td >
                                 <a href="#" class="button button--primary">
@@ -57,6 +53,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $users->links() }}
         </div>
 @endsection
 

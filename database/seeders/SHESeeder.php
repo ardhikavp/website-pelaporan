@@ -24,7 +24,6 @@ class SHESeeder extends Seeder
                     'password' => Hash::make('password'),
                     'role' => 'SHE',
                     'company_id' => $company->id,
-                    'status' => 'APPROVED',
                 ]);
 
                 User::create([
@@ -34,7 +33,6 @@ class SHESeeder extends Seeder
                     'password' => Hash::make('password'),
                     'role' => 'SHE',
                     'company_id' => $company->id,
-                    'status' => 'APPROVED',
                 ]);
             }
     }

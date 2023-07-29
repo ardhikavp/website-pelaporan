@@ -25,7 +25,6 @@ class AdminSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'role' => 'admin',
                 'company_id' => $company->id,
-                'status' => 'APPROVED',
             ]);
         }
     }

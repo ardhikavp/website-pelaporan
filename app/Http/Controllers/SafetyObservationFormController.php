@@ -369,7 +369,7 @@ class SafetyObservationFormController extends Controller
         // Check if the user is authorized to edit the form using the editForm policy
         if (Gate::allows('editForm', $form)) {
             $locations = Location::all();
-            return view('safety-observation-forms.safety-observation-form-edit', compact('form', 'locations'));
+            return view('safety-observation-forms.approval.safety-observation-form-edit', compact('form', 'locations'));
         } else {
             // User is not authorized to edit the form
             // You can redirect them to a different page or show an error message

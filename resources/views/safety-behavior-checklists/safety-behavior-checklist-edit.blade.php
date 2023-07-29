@@ -13,6 +13,12 @@
                             @method('PUT')
 
                             <div class="form-group">
+                                <label for="nomor_laporan">Nomor Laporan</label>
+                                <input type="text" name="nomor_laporan" id="nomor_laporan" class="form-control"
+                                    value="{{ $answer->nomor_laporan }}" required>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="date_finding">Date Finding</label>
                                 <input type="date" name="date_finding" id="date_finding" class="form-control"
                                     value="{{ $answer->date_finding }}" required>
@@ -54,7 +60,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- ... your other form elements ... -->
+                                        <!-- ... Simpanan Data Answer ... -->
                                         @php
                                             $index = 0;
                                         @endphp
@@ -123,12 +129,11 @@
                                                 $index = $index + 1;
                                             @endphp
                                         @endforeach
-                                        <!-- ... your other form elements ... -->
                                     </tbody>
                                 </table>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                                <button type="submit" class="btn btn-primary">Update</button>
                             </div>
                         </form>
                     </div>

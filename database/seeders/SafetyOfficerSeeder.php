@@ -24,7 +24,6 @@ class SafetyOfficerSeeder extends Seeder
                     'password' => Hash::make('password'),
                     'role' => 'safety officer',
                     'company_id' => $company->id,
-                    'status' => 'APPROVED',
                 ]);
             }
     }

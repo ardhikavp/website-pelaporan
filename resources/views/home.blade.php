@@ -32,7 +32,7 @@
                                         <li>{{ $observation->location }}: {{ $observation->total }}</li>
                                     @endforeach
                                 </ul>
-                                <canvas id="chart" width="400" height="200"></canvas>
+                                <canvas id="chart-bar" width="400" height="200"></canvas>
                             </div>
                         </div>
                     </div>
@@ -72,6 +72,7 @@
                 </div>
             </div>
         </div>
+        @include('component.card')
     </div>
 </div>
 @pushOnce('body-scripts')
@@ -84,7 +85,7 @@
     const data = {!! json_encode($safetyObservationsPerLocation->pluck('total')) !!};
 
     // Create a new bar chart
-    const ctx = document.getElementById('chart').getContext('2d');
+    const ctx = document.getElementById('chart-bar').getContext('2d');
     const myChart = new Chart(ctx, {
         type: 'bar',
         data: {
