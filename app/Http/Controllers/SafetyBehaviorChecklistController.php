@@ -162,6 +162,7 @@ class SafetyBehaviorChecklistController extends Controller
         // For example: $companies = Company::all();
         $companies = Company::all();
         $safetyList = SafetyBehaviorChecklist::all();
+        // dd($answer);
 
         return view('safety-behavior-checklists.safety-behavior-checklist-edit', compact('answer', 'companies', 'safetyList'));
     }
