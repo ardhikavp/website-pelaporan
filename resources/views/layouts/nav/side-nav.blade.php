@@ -1,4 +1,13 @@
-<div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
+@push('head-script')
+<style>
+@media (max-width: 767px) {
+  #sidebar {
+    display: none;
+  }
+}
+</style>
+@endpush
+<div class="flex-shrink-0 p-3 bg-white" style="width: 220px;">
     <ul class="navbar-nav">
         <li class="nav-item">
             <a class="nav-link" href="/dashboard">
@@ -36,9 +45,8 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('location.index') }}">Lokasi</a></li>
                 </ul>
                 <ul class="nav">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">User</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">Pengguna</a></li>
                 </ul>
-                {{-- <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">Pengguna</a></li> --}}
             </div>
             @endif
         </li>
@@ -48,3 +56,20 @@
         {{ auth()->user()->name }}
     </div>
 </div>
+@push('body-script')
+<script>
+$(document).ready(function() {
+  // Check if the window is less than 767px wide
+  if ($(window).width() <= 767) {
+    // Hide the sidebar
+    $("#sidebar").hide();
+
+    // Add a click event to the sidebar toggle button
+    $("#sidebar-toggle").click(function() {
+      // Toggle the sidebar
+      $("#sidebar").toggle();
+    });
+  }
+});
+</script>
+@endpush

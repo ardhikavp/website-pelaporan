@@ -55,16 +55,16 @@
                 </div>
             </div>
         </nav>
-        <div id="layoutSidenav">
-            <div id="layoutSidenav_nav">
-                <div id="layoutSidenav_content" class="row">
+        <div>
+            <div>
+                <div class="row">
                     @if (!in_array(request()->route()->getName(), ['register', 'login']))
-                    <div class="col-md-3">
+                    <div class="col-md-2 card" id="sidebar">
                         <!-- Sidebar -->
                             @include('layouts.nav.side-nav')
-                        </div>
-                        @endif
-                    <div class="col-md-8">
+                    </div>
+                    @endif
+                    <div class="col-md-10 card">
                         <!-- Konten lainnya -->
                         <main class="py-4">
                             @yield('content')
