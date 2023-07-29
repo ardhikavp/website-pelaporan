@@ -7,7 +7,6 @@ use App\Models\Answer;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\SafetyBehaviorChecklist;
 
@@ -176,14 +175,6 @@ class SafetyBehaviorChecklistController extends Controller
     {
         $answer = Answer::findOrFail($id);
 
-        // Update the data in the $answer object based on the form inputs
-        $answer->date_finding = $request->input('date_finding');
-        $answer->operation_name = $request->input('operation_name');
-        $answer->company_id = $request->input('company_id');
-        $answer->nomor_laporan = $request->input('nomor_laporan');
-
-
-        // Update question answers (similar to the store method)
         $questions = $request->input('question');
         $answers = $request->input('answer');
 
@@ -220,21 +211,15 @@ class SafetyBehaviorChecklistController extends Controller
 
         $safetyIndex = $totalAnswers > 0 ? ($safeCount / $totalAnswers) * 100 : 0;
 
-        // Update the rest of the fields (similar to the store method)
-        $answer->update([
-            'user_id' => auth()->user()->id,
-            'nomor_laporan' => $request->input('nomor_laporan'),
-            'date_finding' => $request->input('date_finding'),
-            'operation_name' => $request->input('operation_name'),
-            'company_id' => $request->input('company_id'),
-            'answer' => json_encode($question_answer_collection),
-            'safety_index' => $safetyIndex,
-            'reviewed_by' => null,
-            'approved_by' => null,
-        ]);
-
-        // Save the updated answer
-        // $answer->update($answer);
+        DB::table('answers')
+            ->where('id', $id)
+            ->update([
+                'date_finding' => $request->input('date_finding'),
+                'operation_name' => $request->input('operation_name'),
+                'company_id' => $request->input('company_id'),
+                'answer' => json_encode($question_answer_collection),
+                'safety_index' => $safetyIndex
+            ]);
 
         // Redirect to the index page or the show page (whichever is appropriate)
         return redirect()->route('safety-behavior-checklist.index')->with('success', 'Safety Behavior Checklist updated successfully.');
