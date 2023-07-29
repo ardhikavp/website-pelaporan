@@ -1,6 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+@pushOnce('head-scripts')
+<style>
+    .responsive-image {
+        max-width: 50%;
+        height: auto;
+    }
+</style>
+@endPushOnce
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
@@ -42,18 +50,11 @@
 
                                     <div class="form-group">
                                         <label for="image">Foto Temuan</label><br>
-                                        <input type="file" name="image" id="image" class="form-control-file"
-                                            accept="image/*" onchange="loadFile(event)">
-                                        <img id="output" class="responsive-image">
-                                        <script>
-                                            var loadFile = function(event) {
-                                                var output = document.getElementById('output');
-                                                output.src = URL.createObjectURL(event.target.files[0]);
-                                                output.onload = function() {
-                                                    // URL.revokeObjectURL should be called after the image is no longer needed.
-                                                }
-                                            };
-                                        </script>
+                                        <input type="file" name="image" id="image" class="form-control-file" accept="image/*" onchange="loadFile(event)">
+                                        <input type="checkbox" id="jpegPreview" onchange="togglePreview()">
+                                        <label for="jpegPreview">Show JPEG Preview</label>
+                                        <br>
+                                        <img id="output" class="responsive-image" style="display: none;">
                                     </div>
 
                                     <div class="form-group">
@@ -122,6 +123,7 @@
             </div>
         </div>
     </div>
+
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -131,4 +133,44 @@
             </ul>
         </div>
     @endif
+    @pushOnce('body-scripts')
+    <script>
+        var loadFile = function(event) {
+            var input = event.target;
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var img = new Image();
+                    img.onload = function() {
+                        // Resize the image to the desired percentage (50%)
+                        var canvas = document.createElement('canvas');
+                        var width = img.width * (50 / 100);
+                        var height = img.height * (50 / 100);
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        var ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        // Display the preview when the checkbox is checked
+                        var output = document.getElementById('output');
+                        output.src = canvas.toDataURL();
+                        output.style.display = document.getElementById('jpegPreview').checked ? 'inline' : 'none';
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        };
+
+        function togglePreview() {
+            var jpegPreview = document.getElementById('jpegPreview').checked;
+            var output = document.getElementById('output');
+
+            // Show/hide the preview based on the checkbox value
+            output.style.display = jpegPreview ? 'inline' : 'none';
+        }
+    </script>
+    @endPushOnce
 @endsection

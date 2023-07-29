@@ -10,9 +10,10 @@ class LocationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $locations = Location::paginate(5)->onEachSide(2);
+        $locations = Location::paginate(5);
+
         return view('locations.location-index', compact('locations'));
     }
 

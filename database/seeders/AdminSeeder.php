@@ -15,7 +15,7 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        $company = Company::where('company', 'PPNS')->first();
+        $company = Company::where('company', 'PT Petro Jordan Abadi')->first();
 
         if ($company) {
             User::create([

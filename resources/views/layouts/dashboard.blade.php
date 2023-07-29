@@ -4,6 +4,7 @@
 <head>
     <title>{{ config('app.name', 'Laravel') }}</title>
     @include('layouts.head.head')
+    @vite(['resources/sass/app.scss'])
 </head>
 
 <body id="page-top">

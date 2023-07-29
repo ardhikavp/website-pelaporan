@@ -22,8 +22,6 @@
                                             <input type="date" name="date_finding" id="date_finding" class="form-control" required>
                                         </div>
                                         <div class="form-group fw-bold">
-                                            {{-- <auto-complete-input-operation-name>
-                                            </auto-complete-input-operation-name> --}}
                                             <label for="operation_name">Nama Operasi</label>
                                             <input type="text" name="operation_name" id="operation_name" class="form-control" value="" required>
                                         </div>
@@ -117,13 +115,3 @@
     </div>
 @endsection
 
-@section('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/js/select2.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/css/select2.min.css" rel="stylesheet" />
-    <script>
-        $(document).ready(function() {
-            $('#company').select2();
-        });
-    </script>
-@endsection

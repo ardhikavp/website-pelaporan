@@ -38,6 +38,7 @@
                             </table>
                             <div id="pagination">
                                 {{ $locations->links() }}
+                                
                             </div>
                         </div>
                     </div>

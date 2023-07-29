@@ -6,7 +6,10 @@
 
 import './bootstrap';
 import { createApp } from 'vue';
-import './chartpie';
+
+
+
+// import './chartpie';
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready
@@ -22,6 +25,7 @@ app.component('example-component', ExampleComponent);
 
 import AutoCompleteInputOperationName from './components/AutoCompleteInputOperationName.vue';
 app.component('auto-complete-input-operation-name', AutoCompleteInputOperationName);
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -39,5 +43,6 @@ app.component('auto-complete-input-operation-name', AutoCompleteInputOperationNa
  * an "id" attribute of "app". This element is included with the "auth"
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
+
 
 app.mount('#app');

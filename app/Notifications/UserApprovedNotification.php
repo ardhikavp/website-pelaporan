@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NeedReviewDocument extends Notification
+class UserApprovedNotification extends Notification
 {
     use Queueable;
 
@@ -16,7 +16,7 @@ class NeedReviewDocument extends Notification
      */
     public function __construct()
     {
-        //
+
     }
 
     /**
@@ -34,10 +34,11 @@ class NeedReviewDocument extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
+
         return (new MailMessage)
-                    ->line('Terdapat Dokumen yang perlu di review.')
-                    ->action('Review', url('/'))
-                    ->line('Terimakasih atas perhatiannya!');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', route('home'))
+                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -48,8 +49,8 @@ class NeedReviewDocument extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => 'You have a new form submission that requires review.',
-            'url' => route('safety-observation-forms.review-by-she'),
+
+
         ];
     }
 }

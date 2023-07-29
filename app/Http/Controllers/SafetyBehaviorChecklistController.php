@@ -157,7 +157,13 @@ class SafetyBehaviorChecklistController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $answer = Answer::findOrFail($id);
+        // You may need to fetch additional data based on your requirements
+        // For example: $companies = Company::all();
+        $companies = Company::all();
+        $safetyList = SafetyBehaviorChecklist::all();
+
+        return view('safety-behavior-checklists.safety-behavior-checklist-edit', compact('answer', 'companies', 'safetyList'));
     }
 
     /**
@@ -165,7 +171,67 @@ class SafetyBehaviorChecklistController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $answer = Answer::findOrFail($id);
+
+        // Update the data in the $answer object based on the form inputs
+        $answer->date_finding = $request->input('date_finding');
+        $answer->operation_name = $request->input('operation_name');
+        $answer->company_id = $request->input('company_id');
+
+        // Update question answers (similar to the store method)
+        $questions = $request->input('question');
+        $answers = $request->input('answer');
+
+        $question_answer_collection = [];
+        foreach ($answers as $category => $question_ids) {
+            $item_to_be_added = ["category" => $category, "question_answers" => []];
+            foreach ($question_ids as $question_id => $answer) {
+                $item_to_be_added["question_answers"][] = [
+                    "question_id" => $question_id,
+                    "question" => $questions[$category][$question_id],
+                    "answer" => $answer
+                ];
+            }
+            $question_answer_collection[] = $item_to_be_added;
+        }
+
+        // Menghitung safety index
+        $safeCount = 0;
+        $unsafeCount = 0;
+        $naCount = 0;
+
+        foreach ($answers as $category => $questionIds) {
+            foreach ($questionIds as $questionId => $answer) {
+                if ($answer === 'safe') {
+                    $safeCount++;
+                } elseif ($answer === 'unsafe') {
+                    $unsafeCount++;
+                } elseif ($answer === 'n/a') {
+                    $naCount++;
+                }
+            }
+        }
+        $totalAnswers = $safeCount + $unsafeCount;
+
+        $safetyIndex = $totalAnswers > 0 ? ($safeCount / $totalAnswers) * 100 : 0;
+
+        // Update the rest of the fields (similar to the store method)
+        Answer::create([
+            'user_id' => auth()->user()->id,
+            'date_finding' => $request->input('date_finding'),
+            'operation_name' => $request->input('operation_name'),
+            'company_id' => $request->input('company_id'),
+            'answer' => json_encode($question_answer_collection),
+            'safety_index' => $safetyIndex,
+            'reviewed_by' => null,
+            'approved_by' => null,
+        ]);
+
+        // Save the updated answer
+        $answer->save();
+
+        // Redirect to the index page or the show page (whichever is appropriate)
+        return redirect()->route('safety-behavior-checklist.index')->with('success', 'Safety Behavior Checklist updated successfully.');
     }
 
     /**

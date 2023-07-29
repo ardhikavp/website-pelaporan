@@ -71,6 +71,6 @@ class Kernel extends HttpKernel
         'safety officer' => \App\Http\Middleware\SafetyOfficerMiddleware::class,
         'safety representatif' => \App\Http\Middleware\SafetyRepresentatifMiddleware::class,
         'manager maintenance' => \App\Http\Middleware\ManagerMiddleware::class,
-        'checkUserStatus' => \App\Http\Middleware\CheckUserStatus::class,
+        // 'checkUserStatus' => \App\Http\Middleware\CheckUserStatus::class,
     ];
 }

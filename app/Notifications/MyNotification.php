@@ -6,8 +6,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+    
 
-class NeedReviewDocument extends Notification
+class MyNotification extends Notification
 {
     use Queueable;
 
@@ -35,9 +36,11 @@ class NeedReviewDocument extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('Terdapat Dokumen yang perlu di review.')
-                    ->action('Review', url('/'))
-                    ->line('Terimakasih atas perhatiannya!');
+            ->subject('Welcome to Laravel 10 Notification')
+            ->greeting('Hello, ' . $notifiable->name)
+            ->line('Thank you for registering on our website.')
+            ->action('Visit Website', url('/'))
+            ->line('If you have any questions, feel free to contact us.');
     }
 
     /**
@@ -48,8 +51,7 @@ class NeedReviewDocument extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => 'You have a new form submission that requires review.',
-            'url' => route('safety-observation-forms.review-by-she'),
+            //
         ];
     }
 }

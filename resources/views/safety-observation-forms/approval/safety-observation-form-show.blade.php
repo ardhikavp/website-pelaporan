@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active"><a href="{{ route('safety-observation-forms.index') }}">Laporan Safety Observation</a></li>
+        <li class="breadcrumb-item" aria-current="page">Detail Laporan</li>
+    </ol>
+</nav>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
@@ -9,7 +16,7 @@
                     <div class="card-body">
                         <div class="container">
                             <div class="row justify-content-center">
-                                <div class="col-md-6">
+                                <div>
                                     <div class="form-group">
                                         <label for="created_by">Nomor Laporan</label>
                                         <input type="text" name="nomor_laporan" id="nomor_laporan" class="form-control"
@@ -115,10 +122,7 @@
                                     </div>
 
                                     <br>
-                                    {{-- <footer class="footer">
-                                        <!-- Footer content here -->
-                                        <a href="{{ route('safety-observation-forms.edit', ['safety_observation_form' => $safety_observation_form->id]) }}" class="btn btn-primary">Edit</a>
-                                    </footer> --}}
+
                                 </div>
                             </div>
                         </div>

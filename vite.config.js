@@ -10,6 +10,9 @@ export default defineConfig({
                 'resources/js/app.js',
             ],
             refresh: true,
+            pusher: {
+                cluster: 'ap1', // Replace with your actual Pusher cluster
+              },
         }),
         vue({
             template: {

@@ -12,20 +12,14 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-
+    <link href="{{ asset('template/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <!-- Menambahkan link CSS SweetAlert -->
     {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11"> --}}
-    <style>
-        .responsive-image {
-            max-width: 100%;
-            height: auto;
-        }
-    </style>
     {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"> --}}
     <!-- Menambahkan script SweetAlert -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <style type="text/css">
@@ -33,6 +27,8 @@
             font-size: 100%;
         }
     </style>
+     <script src="{{ asset('template/vendor/chart.js/Chart.min.js') }}"></script>
+    @stack('head-scripts')
 </head>
 <body>
     <div id="app">
@@ -62,12 +58,12 @@
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
                 <div id="layoutSidenav_content" class="row">
+                    @if (!in_array(request()->route()->getName(), ['register', 'login']))
                     <div class="col-md-3">
                         <!-- Sidebar -->
-                        @if (!in_array(request()->route()->getName(), ['register', 'login']))
                             @include('layouts.nav.side-nav')
+                        </div>
                         @endif
-                    </div>
                     <div class="col-md-8">
                         <!-- Konten lainnya -->
                         <main class="py-4">
@@ -78,12 +74,12 @@
             </div>
         </div>
     </div>
-
+    @stack('body-scripts')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.min.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
 
     {{-- <script src="{{ asset('/resources/js/chartpie.js') }}"></script> --}}
