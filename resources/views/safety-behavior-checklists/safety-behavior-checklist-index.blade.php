@@ -40,13 +40,17 @@
                                     <td>{{ $answer->safety_index }}%</td>
                                     <td>{{ $answer->status }}</td>
                                     <td>
-                                        <a href="{{ route('safety-behavior-checklist.show', $answer->id) }}" class="btn btn-sm btn-info">Lihat</a>
-                                        <a href="{{ route('safety-behavior-checklist.edit', $answer->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                        <a href="{{ route('safety-behavior-checklist.show', $answer->id) }}" class="btn btn-sm btn-info"><i class="fas fa-eye" title="Lihat"></i></a>
+                                        <a href="{{ route('safety-behavior-checklist.edit', $answer->id) }}" class="btn btn-sm btn-secondary"><i class="fas fa-pencil-alt" title="Edit"></i></a>
                                         <form action="{{ route('safety-behavior-checklist.destroy', $answer) }}" method="POST" class="btn btn-sm btn-danger">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this item?')"><i class="fas fa-trash-alt" title="Delete"></i></button>
                                         </form>
+                                        <a href="{{ route('safety-behavior-checklist.review-by-pic', ['answer' => $answer->id]) }}"
+                                            class="btn btn-sm btn-primary my-1"><i class="bi bi-pass"></i></a>
+                                        <a href="{{ route('safety-behavior-checklist.approve-by-manager', ['answer' => $answer->id]) }}"
+                                            class="btn btn-sm btn-primary my-1"><i class="bi bi-pass"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach

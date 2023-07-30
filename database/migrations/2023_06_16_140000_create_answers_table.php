@@ -24,6 +24,7 @@ return new class extends Migration
             $table->foreignId('approved_by')->nullable()->constrained('users');
             $table->enum('status',['PENDING_REVIEW','PENDING_APPROVAL', 'APPROVED', 'REJECTED'])->default('PENDING_REVIEW');
             $table->text('approve_comment')->nullable()->default(null);
+            $table->text('reject_comment')->nullable()->default(null);
             $table->timestamps();
         });
     }

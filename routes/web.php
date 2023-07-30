@@ -67,8 +67,14 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
         Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
 
 
-        Route::get('safety-behavior-checklist/{answer}/agrement-by-pic', [SafetyBehaviorChecklistController::class, 'reviewBySafetyOfficer'])
+        Route::get('safety-behavior-checklist/{answer}/agreement-by-pic', [SafetyBehaviorChecklistController::class, 'reviewByPIC'])
         ->name('safety-behavior-checklist.review-by-pic');
+        Route::put('safety-behavior-checklist/{answer}/agreed-by-pic', [SafetyBehaviorChecklistController::class, 'updateReviewedByPIC'])
+        ->name('safety-behavior-checklist.update-reviewed-by-pic');
+        Route::get('safety-behavior-checklist/{answer}/approve-by-manager', [SafetyBehaviorChecklistController::class, 'approveByManager'])
+        ->name('safety-behavior-checklist.approve-by-manager');
+        Route::put('safety-behavior-checklist/{answer}/approved-by-manager', [SafetyBehaviorChecklistController::class, 'updateApprovedBymanager'])
+        ->name('safety-behavior-checklist.update-approved-by-manager');
         // Route:get('safety-observation-forms/')
     });
 

@@ -8,7 +8,9 @@ use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Models\SafetyBehaviorChecklist;
+use Illuminate\Support\Facades\Session;
 
 class SafetyBehaviorChecklistController extends Controller
 {
@@ -235,7 +237,7 @@ class SafetyBehaviorChecklistController extends Controller
         return redirect()->route('safety-behavior-checklist.index')->with('success', 'Safety Behavior Checklist berhasil dihapus.');
     }
 
-    public function reviewBySafetyOfficer($id)
+    public function reviewByPIC($id)
     {
         $answer = Answer::findOrFail($id);
         $companies = Company::all();
@@ -244,5 +246,68 @@ class SafetyBehaviorChecklistController extends Controller
         return view('safety-behavior-checklists.approval.safety-behavior-checklist-review', compact('answer', 'companies', 'safetyList'));
     }
 
-    
+    public function updateReviewedByPIC(Request $request, $id)
+    {
+        $answer = Answer::findOrFail($id);
+        $reviewedById = Auth::id();
+
+        $action = $request->input('action');
+
+        // $reviewComment = null;
+        // $rejectionComment = null;
+        if ($action === 'approve') {
+            $finalStatus = 'PENDING_APPROVAL';}
+        //     $reviewComment = $request->input('review_comment') ?? 'NO COMMENT';
+        // } elseif ($action === 'reject') {
+        //     $finalStatus = 'REJECTED';
+        //     $rejectionComment = $request->input('reject_comment') ?? 'NO COMMENT';
+        // }
+
+        $answer->update([
+            'status' => $finalStatus,
+            // 'review_comment' => $reviewComment,
+            // 'reject_comment' => $rejectionComment,
+            'reviewed_by' => $reviewedById
+        ]);
+
+        Session::flash('message', 'Form ' . ucfirst($action) . 'ed successfully.');
+        return redirect()->route('safety-behavior-checklist.index');
+    }
+
+    public function approveByManager($id)
+    {
+        $answer = Answer::findOrFail($id);
+        $companies = Company::all();
+        $safetyList = SafetyBehaviorChecklist::all();
+
+        return view('safety-behavior-checklists.approval.safety-behavior-checklist-approve', compact('answer', 'companies', 'safetyList'));
+    }
+
+    public function updateApprovedByManager(Request $request, $id)
+    {
+        $answer = Answer::findOrFail($id);
+        $approvedById = Auth::id();
+
+        $action = $request->input('action');
+
+        $approveComment = null;
+        $rejectionComment = null;
+        if ($action === 'approve') {
+            $finalStatus = 'APPROVED';
+            $approveComment = $request->input('approve_comment') ?? 'NO COMMENT';
+        } elseif ($action === 'reject') {
+            $finalStatus = 'REJECTED';
+            $rejectionComment = $request->input('reject_comment') ?? 'NO COMMENT';
+        }
+
+        $answer->update([
+            'status' => $finalStatus,
+            'approve_comment' => $approveComment,
+            'reject_comment' => $rejectionComment,
+            'approved_by' => $approvedById
+        ]);
+
+        Session::flash('message', 'Form ' . ucfirst($action) . 'ed successfully.');
+        return redirect()->route('safety-behavior-checklist.index');
+    }
 }

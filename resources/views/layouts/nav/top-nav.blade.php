@@ -41,11 +41,11 @@
         </a>
 
         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{{ route('profile.show', Auth::user()->id) }}">Profile</a>
+            <a class="dropdown-item" href="{{ route('profile.show', Auth::user()->id) }}"><i class="fas fa-portrait float">Profile</i></a>
             <a class="dropdown-item" href="{{ route('logout') }}"
             onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
-                {{ __('Logout') }}
+                <i class="fas fa-door-open">{{ __('Logout') }}</i>
             </a>
 
 

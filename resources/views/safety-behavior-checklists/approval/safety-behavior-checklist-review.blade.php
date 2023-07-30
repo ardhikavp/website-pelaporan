@@ -8,7 +8,7 @@
                     <div class="card-header">Persetujuan Laporan Safety Behavior Checklist</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('safety-behavior-checklist.show', $answer->id) }}">
+                        <form method="POST" action="{{ route('safety-behavior-checklist.update-reviewed-by-pic', $answer->id) }}">
                             @csrf
                             @method('PUT')
 
@@ -126,6 +126,32 @@
                                     </tbody>
                                 </table>
                             </div>
+                            {{-- <div class="form-group">
+                                <label for="review_comment">Review Comment</label>
+                                <textarea name="review_comment" id="review_comment" class="form-control" rows="3"
+                                    placeholder="Komentar untuk feedback review"></textarea>
+                            </div> --}}
+
+                            <div class="form-group">
+                                <label for="reject_comment">Reject Comment</label>
+                                <textarea name="reject_comment" id="reject_comment" class="form-control" rows="3"
+                                    placeholder="Komentar untuk feedback tolak laporan"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="reviewed_by">Reviewed By</label>
+                                <input type="text" name="reviewed_by" id="reviewed_by" class="form-control"
+                                    value="{{ auth()->user()->id }}" readonly>
+                            </div>
+
+                            <br>
+                            <footer class="footer">
+                                <!-- Footer content here -->
+                                <button type="submit" name="action" value="approve"
+                                    class="btn btn-primary">Approve</button>
+                                <button type="submit" name="action" value="reject"
+                                    class="btn btn-danger mx-3">Reject</button>
+                            </footer>
                         </form>
                     </div>
                 </div>
