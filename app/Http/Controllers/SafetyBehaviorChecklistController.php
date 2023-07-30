@@ -235,13 +235,14 @@ class SafetyBehaviorChecklistController extends Controller
         return redirect()->route('safety-behavior-checklist.index')->with('success', 'Safety Behavior Checklist berhasil dihapus.');
     }
 
-    // public function getOperationNames(Request $request)
-    // {
-    //     $query = $request->query('q');
-    //     $operationNames = DB::table('answers')
-    //         ->where('operation_name', 'like', "%{$query}%")
-    //         ->pluck('operation_name');
+    public function reviewBySafetyOfficer($id)
+    {
+        $answer = Answer::findOrFail($id);
+        $companies = Company::all();
+        $safetyList = SafetyBehaviorChecklist::all();
 
-    //     return response()->json($operationNames);
-    // }
+        return view('safety-behavior-checklists.approval.safety-behavior-checklist-review', compact('answer', 'companies', 'safetyList'));
+    }
+
+    
 }

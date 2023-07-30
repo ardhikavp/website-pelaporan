@@ -185,4 +185,16 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    // 'notification.channels' => [
+    //     'database' => [
+    //         'driver' => 'database',
+    //         'table' => 'notifications',
+    //     ],
+    // ],
+
+    // 'listen' => [
+    //     'App\Notifications\NeedReviewDocument' => [
+    //         'App\Listeners\NeedReviewDocumentNotificationListener',
+    //     ],
+    // ],
 ];

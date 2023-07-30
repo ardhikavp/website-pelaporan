@@ -10,13 +10,15 @@ use Illuminate\Notifications\Notification;
 class NeedReviewDocument extends Notification
 {
     use Queueable;
-
+    public $user;
+    public $form;
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct($user, $form)
     {
-        //
+        $this->user = $user;
+        $this->form = $form;
     }
 
     /**
@@ -26,7 +28,7 @@ class NeedReviewDocument extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -35,9 +37,9 @@ class NeedReviewDocument extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('Terdapat Dokumen yang perlu di review.')
-                    ->action('Review', url('/'))
-                    ->line('Terimakasih atas perhatiannya!');
+                ->line('Terdapat Dokumen yang perlu di review.')
+                ->action('Review', url('/safety-observation-forms/' . $this->form->id))
+                ->line('Terimakasih atas perhatiannya!');
     }
 
     /**
@@ -48,8 +50,16 @@ class NeedReviewDocument extends Notification
     public function toArray(object $notifiable): array
     {
         return [
+            'user_id' => $this->user->id,
+            'role' => $this->user->role('SHE'),
             'message' => 'You have a new form submission that requires review.',
-            'url' => route('safety-observation-forms.review-by-she'),
+            'created_at' => now(),
+            'form' => $this->form,
         ];
+    }
+
+    public function broadcastOn()
+    {
+        return ['database'];
     }
 }

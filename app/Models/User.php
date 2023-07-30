@@ -54,6 +54,7 @@ class User extends Authenticatable
     //     return $this->role === 'admin'; // Gantikan dengan logika pengecekan peran admin pada model User Anda
     // }
 
+
     public function answers()
     {
         return $this->hasMany(Answer::class);

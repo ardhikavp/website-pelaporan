@@ -12,15 +12,30 @@
 @endif
 @else
     <li class="nav-item">
-        <a class="nav-link" href="#">
-            {{-- {{ route('notifications.index') }} --}}
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownNotif" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
             <i class="fa fa-bell"></i> <!-- Font Awesome bell icon -->
-            @if(Auth::user()->unreadNotifications->count() > 0)
-                <span class="badge badge-danger">{{ Auth::user()->unreadNotifications->count() }}</span>
-            @endif
+            <span class="badge badge-danger">{{ auth()->user()->unreadNotifications->count() }}</span>
         </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownNotif">
+            @if (auth()->user()->unreadNotifications->count() > 0)
+                <a class="dropdown-item" href="{{ route('notifications.index') }}">
+                    All Notifications
+                </a>
+                @foreach (auth()->user()->unreadNotifications as $notification)
+                    @if ($notification->type === 'needReviewDocument')
+                        <a class="dropdown-item" href="{{ $notification->url }}">
+                            {{ $notification->message }}
+                        </a>
+                    @endif
+                @endforeach
+            @else
+                <a class="dropdown-item" href="#">
+                    No unread notifications
+                </a>
+            @endif
+        </div>
     </li>
-    <li class="nav-item dropdown">
+        <li class="nav-item dropdown">
         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
             {{ Auth::user()->name }}
         </a>
@@ -43,3 +58,14 @@
         </div>
     </li>
 @endguest
+@push('body-script')
+<script>
+    window.notifications = {
+        needReviewDocument: {
+            message: 'You have a new form submission that requires review.',
+            action: 'Review',
+            url: '/safety-observation-forms/<% notification.id %>',
+        },
+    };
+</script>
+@endpush

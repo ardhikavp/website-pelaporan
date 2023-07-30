@@ -13,6 +13,8 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SafetyObservationFormController;
 use App\Http\Controllers\SafetyBehaviorChecklistController;
+use App\Models\Answer;
+use App\Models\SafetyBehaviorChecklist;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +66,9 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
         ->name('safety-observation-forms.update-approved-by-manager');
         Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
 
+
+        Route::get('safety-behavior-checklist/{answer}/agrement-by-pic', [SafetyBehaviorChecklistController::class, 'reviewBySafetyOfficer'])
+        ->name('safety-behavior-checklist.review-by-pic');
         // Route:get('safety-observation-forms/')
     });
 

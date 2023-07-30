@@ -339,12 +339,15 @@ class SafetyObservationFormController extends Controller
             'approved_by' => null
         ]);
 
-        $usersToNotify = User::where('role', 'SHE')->get();
+        // $user = User::where('role', 'SHE')->first();
 
         // Send the notification to each user
-        foreach ($usersToNotify as $user) {
-            $user->notify(new NeedReviewDocument());
-        }
+        // if ($user instanceof User) {
+        //     $user->notify(new NeedReviewDocument($user, $form));
+        // }
+        // foreach ($form as $user) {
+        //     $user->notify(new NeedReviewDocument($user, $form));
+        // }
 
         Session::flash('message', 'Form created successfully.');
 

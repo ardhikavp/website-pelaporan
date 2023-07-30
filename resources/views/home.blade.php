@@ -13,7 +13,6 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-
                         {{ __('You are logged in!') }}
                     </div>
                     <div class="row"></div>
@@ -86,7 +85,7 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
             const labels = {!! json_encode($safetyObservationsPerLocation->pluck('location')) !!};
-            const data = {!! json_encode($safetyObservationsPerLocation->pluck('total')) !!};
+            const dataPerLocs = {!! json_encode($safetyObservationsPerLocation->pluck('total')) !!};
 
             document.addEventListener("DOMContentLoaded", function() {
                 var ctx = document.getElementById('barChart').getContext('2d');
@@ -96,7 +95,7 @@
                     labels: labels,
                     datasets: [{
                         label: 'Sample Bar Chart',
-                        data, // Replace this with your data
+                        data: [...dataPerLocs], // Replace this with your data
                         backgroundColor: 'rgba(75, 192, 192, 0.2)', // Bar fill color
                         borderColor: 'rgba(75, 192, 192, 1)', // Border color
                         borderWidth: 1
@@ -107,7 +106,15 @@
                     responsive: true,
                     scales: {
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    // Format the y-axis labels as integers
+                                    if (value % 1 === 0) {
+                                        return value;
+                                    }
+                                }
+                            }
                         }
                     }
                 };
