@@ -163,11 +163,11 @@ class SafetyBehaviorChecklistController extends Controller
     public function edit(string $id)
     {
         $answer = Answer::findOrFail($id);
+        // dd($answers);
         $companies = Company::all();
-        $safetyList = SafetyBehaviorChecklist::all();
         // dd($answer);
 
-        return view('safety-behavior-checklists.safety-behavior-checklist-edit', compact('answer', 'companies', 'safetyList'));
+        return view('safety-behavior-checklists.safety-behavior-checklist-edit', compact('answer', 'companies'));
     }
 
     /**
@@ -256,7 +256,8 @@ class SafetyBehaviorChecklistController extends Controller
         // $reviewComment = null;
         // $rejectionComment = null;
         if ($action === 'approve') {
-            $finalStatus = 'PENDING_APPROVAL';}
+            $finalStatus = 'PENDING_APPROVAL';
+        }
         //     $reviewComment = $request->input('review_comment') ?? 'NO COMMENT';
         // } elseif ($action === 'reject') {
         //     $finalStatus = 'REJECTED';

@@ -60,40 +60,33 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- ... Simpanan Data Answer ... -->
-                                        @php
-                                            $index = 0;
-                                        @endphp
-                                        @foreach ($safetyList as $checklist)
+                                        @foreach (json_decode($answer->answer) as $tes)
                                             @php
-                                                $question_array = json_decode($checklist->question, true)['question'];
-                                                $keys = array_keys($question_array);
-                                                $first_index = $keys[0];
-                                                $question_index = 0;
+                                                $counter = 0;
                                             @endphp
-                                            @foreach (json_decode($checklist->question)->question as $key => $question)
+                                            @foreach ($tes->question_answers as $key => $value)
                                                 <tr>
                                                     @php
-                                                        if ($first_index == $key) {
-                                                            echo '<td rowspan="' . count($question_array) . '">' . $checklist->category . '</td>';
+                                                        if ($counter == 0) {
+                                                            echo '<td rowspan="' . count($tes->question_answers) . '">' . $tes->category . '</td>';
                                                         }
+                                                        $counter = $counter + 1;
                                                     @endphp
                                                     <td>
                                                         <div class="mb-3">
-                                                            <p class="mb-0">{{ $question }}</p>
+                                                            <p class="mb-0">{{ $value->question }}</p>
                                                             <input type="hidden"
-                                                                name="question[{{ $checklist->category }}][{{ $key }}]"
-                                                                value="{{ $question }}">
+                                                                name="question[{{ $tes->category }}][{{ $value->question_id }}]"
+                                                                value="{{ $value->question }}">
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="mb-3">
                                                             <label>
-
                                                                 <input type="radio"
-                                                                    name="answer[{{ $checklist->category }}][{{ $key }}]"
+                                                                    name="answer[{{ $tes->category }}][{{ $value->question_id }}]"
                                                                     value="safe"
-                                                                    {{ isset(json_decode($answer->answer)[$index]->question_answers[$question_index]->answer) && json_decode($answer->answer)[$index]->question_answers[$question_index]->answer === 'safe' ? 'checked' : '' }}>
+                                                                    {{ isset($value->answer) && $value->answer === 'safe' ? 'checked' : '' }}>
                                                                 Safe
                                                             </label>
                                                         </div>
@@ -102,9 +95,9 @@
                                                         <div class="mb-3">
                                                             <label>
                                                                 <input type="radio"
-                                                                    name="answer[{{ $checklist->category }}][{{ $key }}]"
+                                                                    name="answer[{{ $tes->category }}][{{ $value->question_id }}]"
                                                                     value="unsafe"
-                                                                    {{ isset(json_decode($answer->answer)[$index]->question_answers[$question_index]->answer) && json_decode($answer->answer)[$index]->question_answers[$question_index]->answer === 'unsafe' ? 'checked' : '' }}>
+                                                                    {{ isset($value->answer) && $value->answer === 'unsafe' ? 'checked' : '' }}>
                                                                 Unsafe
                                                             </label>
                                                         </div>
@@ -113,21 +106,15 @@
                                                         <div class="mb-3">
                                                             <label>
                                                                 <input type="radio"
-                                                                    name="answer[{{ $checklist->category }}][{{ $key }}]"
+                                                                    name="answer[{{ $tes->category }}][{{ $value->question_id }}]"
                                                                     value="n/a"
-                                                                    {{ isset(json_decode($answer->answer)[$index]->question_answers[$question_index]->answer) && json_decode($answer->answer)[$index]->question_answers[$question_index]->answer === 'n/a' ? 'checked' : '' }}>
+                                                                    {{ isset($value->answer) && $value->answer === 'n/a' ? 'checked' : '' }}>
                                                                 N/A
                                                             </label>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                @php
-                                                    $question_index = $question_index + 1;
-                                                @endphp
                                             @endforeach
-                                            @php
-                                                $index = $index + 1;
-                                            @endphp
                                         @endforeach
                                     </tbody>
                                 </table>
