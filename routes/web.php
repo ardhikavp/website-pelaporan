@@ -66,7 +66,6 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
         ->name('safety-observation-forms.update-approved-by-manager');
         Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
 
-
         Route::get('safety-behavior-checklist/{answer}/agreement-by-pic', [SafetyBehaviorChecklistController::class, 'reviewByPIC'])
         ->name('safety-behavior-checklist.review-by-pic');
         Route::put('safety-behavior-checklist/{answer}/agreed-by-pic', [SafetyBehaviorChecklistController::class, 'updateReviewedByPIC'])
@@ -77,7 +76,13 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
         ->name('safety-behavior-checklist.update-approved-by-manager');
         // Route:get('safety-observation-forms/')
     });
-
+Route::middleware(['auth'])->prefix('dashboard/safety-observation-forms')->group(function () {
+    Route::get('/approved-table-data', 'SafetyObservationFormController@getApprovedTableData');
+    Route::get('/pending-review-table-data', 'SafetyObservationFormController@getPendingReviewTableData');
+    Route::get('/pending-approve-table-data', 'SafetyObservationFormController@getPendingApproveTableData');
+    Route::get('/rejected-table-data', 'SafetyObservationFormController@getRejectedTableData');
+    // Add more routes for other tables as needed
+});
 
 // Route::middleware(['auth', 'pegawai'])->prefix('dashboard')->group(function(){
 //     Route::resource('profile', ProfileController::class);

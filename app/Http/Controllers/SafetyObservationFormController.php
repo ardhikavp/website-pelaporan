@@ -7,13 +7,14 @@ use App\Models\Image;
 use App\Models\Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\Models\SafetyObservationForm;
-use App\Notifications\NeedReviewDocument;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use App\Notifications\NeedReviewDocument;
 
 class SafetyObservationFormController extends Controller
 {
@@ -525,5 +526,13 @@ class SafetyObservationFormController extends Controller
 
         Session::flash('message', 'Form ' . ucfirst($action) . 'ed successfully.');
         return redirect()->route('safety-observation-forms.index');
+    }
+
+    public function getPaginatedData(Request $request)
+    {
+        $perPage = 10; // Number of items per page
+        $data = SafetyObservationForm::paginate($perPage);
+
+        return new JsonResponse($data);
     }
 }

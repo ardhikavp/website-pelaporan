@@ -100,10 +100,10 @@
             @endforeach
         </tbody>
     </table>
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center" id="pagination-links">
         {{-- {{ $form_pending_approval->links() }} --}}
-        @if ($form_pending_approval instanceof \Illuminate\Pagination\LengthAwarePaginator)
+        {{-- @if ($form_pending_approval instanceof \Illuminate\Pagination\LengthAwarePaginator) --}}
             {{ $form_pending_approval->links() }}
-        @endif
+        {{-- @endif --}}
     </div>
 </div>

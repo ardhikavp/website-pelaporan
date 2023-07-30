@@ -72,9 +72,11 @@
         </tbody>
     </table>
     {{-- {{ $form_rejected->links() }} --}}
-    @if ($form_rejected instanceof \Illuminate\Pagination\LengthAwarePaginator)
+    <div class="d-flex justify-content-center" id="pagination-links">
+    {{-- @if ($form_rejected instanceof \Illuminate\Pagination\LengthAwarePaginator) --}}
     {{ $form_rejected->links() }}
-    @else
+    {{-- @else
         show nothing
-    @endif
+    @endif --}}
+    </div>
 </div>
