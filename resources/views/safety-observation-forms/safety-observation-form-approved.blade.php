@@ -1,18 +1,28 @@
 
 <div class="table-responsive mb-3">
-    <h3>APPROVED</h3>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div style="background-color: #f2f2f2; padding: 10px;">
+                    <h3 style="font-family: 'Helvetica Neue', sans-serif; color: #090a0a; margin-bottom: 0;">
+                        <i class="fas fa-check-circle" style="margin-right: 5px;"></i>
+                        Laporan Disetujui
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    @if (count($form_approved) > 0)
     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr>
-                <th style="width: 10%;">Nomor Laporan</th>
-                <th style="width: 10%;">Nama Perusahaan</th>
-                <th style="width: 10%;">Jenis</th>
+                <th style="width: 20%;">Nomor Laporan</th>
+                <th style="width: 15%;">Jenis</th>
                 <th style="width: 30%;">Foto</th>
                 <th style="width: 15%;">Dibuat Oleh</th>
-                <th style="width: 15%;">Direview Oleh</th>
-                <th style="width: 15%;">Disetujui Oleh</th>
-                <th style="width: 20%;">Status</th>
-                <th style="width: 20%;">Aksi</th>
+                <th style="width: 10%;">Status</th>
+                <th style="width: 10%;">Aksi</th>
             </tr>
         </thead>
 
@@ -20,8 +30,7 @@
             @foreach ($form_approved as $form)
                 <tr>
                     <td style="font-size: 14px;">{{ $form->nomor_laporan }}</td>
-                    <td style="font-size: 14px;">{{ $form->createdBy->company->company }}</td>
-                    <td style="font-size: 14px;">{{ $form->safety_observation_type }}</td>
+                    <td style="font-size: 14px;">{{ str_replace('_', ' ', $form->safety_observation_type) }}</td>
                     <td style="font-size: 14px;">
                         @if ($form->image)
                             <img style="width: 50%"
@@ -57,10 +66,6 @@
                         @endif
                     </td>
                     <td style="font-size: 14px;">{{ $form->createdBy->name }}</td>
-                    <td style="font-size: 14px;">{{ $form->reviewedBy?->name ?? 'NOT REVIEWED' }}
-                    </td>
-                    <td style="font-size: 14px;">{{ $form->approvedBy?->name ?? 'NOT APPROVED' }}
-                    </td>
                     <td style="font-size: 14px;">{{ $form->status }}</td>
                     <td>
                         <a href="{{ route('safety-observation-forms.show', ['safety_observation_form' => $form->id]) }}"
@@ -102,4 +107,9 @@
             {{ $form_approved->links() }}
         @endif
     </div>
+    @else
+    <div class="text-center mt-3">
+        Tidak terdapat laporan yang telah disetujui.
+    </div>
+    @endif
 </div>

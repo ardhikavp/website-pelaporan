@@ -448,6 +448,8 @@ class SafetyObservationFormController extends Controller
 
         $reviewComment = null;
         $rejectionComment = null;
+        $approveComment = null;
+
         if ($action === 'approve') {
             $finalStatus = 'PENDING_APPROVAL';
             $reviewComment = $request->input('review_comment') ?? 'NO COMMENT';
@@ -461,33 +463,13 @@ class SafetyObservationFormController extends Controller
             'status' => $finalStatus,
             'review_comment' => $reviewComment,
             'reject_comment' => $rejectionComment,
+            'approve_comment' => $approveComment,
             'reviewed_by' => $reviewedById
         ]);
 
         Session::flash('message', 'Form ' . ucfirst($action) . 'ed successfully.');
         return redirect()->route('safety-observation-forms.index');
     }
-
-    // public function reviewSafetyObservation(SafetyObservationForm $forms)
-    // {
-    //     // Assuming you have authenticated the reviewer user.
-    //     $reviewer = auth()->user();
-
-    //     // Perform any checks to ensure the user is authorized to review the form.
-
-    //     // For example, check user roles or permissions here.
-
-    //     // Update the review status of the form to "Reviewed" (you can adjust this status according to your needs).
-    //     $forms->status = 'Reviewed';
-    //     $forms->save();
-
-    //     // Associate the reviewer with the form.
-    //     $forms->reviewer()->associate($reviewer);
-    //     $forms->save();
-
-    //     // Redirect back or perform any other action as needed.
-    //     return redirect()->back()->with('success', 'Safety Observation Form reviewed successfully.');
-    // }
 
     public function approveByManager($id)
     {
@@ -504,6 +486,7 @@ class SafetyObservationFormController extends Controller
 
         $approveComment = null;
         $rejectionComment = null;
+        
         if ($action === 'approve') {
             $finalStatus = 'APPROVED';
             $approveComment = $request->input('approve_comment') ?? 'NO COMMENT';

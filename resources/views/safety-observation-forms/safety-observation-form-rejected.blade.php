@@ -20,7 +20,7 @@
                 <tr>
                     <td style="font-size: 14px;">{{ $form->nomor_laporan }}</td>
                     <td style="font-size: 14px;">{{ $form->createdBy->company->company }}</td>
-                    <td style="font-size: 14px;">{{ $form->safety_observation_type }}</td>
+                    <td style="font-size: 14px;">{{ str_replace('_', ' ', $form->safety_observation_type) }}</td>
                     <td style="font-size: 14px;">
                         @if ($form->image)
                             <img style="width: 50%"

@@ -13,20 +13,26 @@
                             @method('PUT')
 
                             <div class="form-group">
+                                <label for="nomor_laporan">Nomor Laporan</label>
+                                <input type="text" name="nomor_laporan" id="nomor_laporan" class="form-control"
+                                    value="{{ $answer->nomor_laporan }}" readonly>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="date_finding">Date Finding</label>
                                 <input type="date" name="date_finding" id="date_finding" class="form-control"
-                                    value="{{ $answer->date_finding }}" disabled>
+                                    value="{{ $answer->date_finding }}" readonly>
                             </div>
 
                             <div class="form-group">
                                 <label for="operation_name">Operation Name</label>
                                 <input type="text" name="operation_name" id="operation_name" class="form-control"
-                                    value="{{ $answer->operation_name }}" disabled>
+                                    value="{{ $answer->operation_name }}" readonly>
                             </div>
 
                             <div class="form-group">
                                 <label for="company_id">Company</label>
-                                <select name="company_id" id="company_id" class="form-control" disabled>
+                                <select name="company_id" id="company_id" class="form-control" readonly>
                                     @foreach ($companies as $company)
                                         <option value="{{ $company->id }}"
                                             {{ $answer->company_id == $company->id ? 'selected' : '' }}>
@@ -36,7 +42,7 @@
                                 </select>
                             </div>
 
-                            <div class="table-responsive ">
+                            <div class="table-responsive">
                                 <table class="table table-bordered border-dark">
                                     <thead>
                                         <tr>
@@ -54,41 +60,34 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- ... Simpanan Data Answer ... -->
-                                        @php
-                                            $index = 0;
-                                        @endphp
-                                        @foreach ($safetyList as $checklist)
+                                        @foreach (json_decode($answer->answer) as $tes)
                                             @php
-                                                $question_array = json_decode($checklist->question, true)['question'];
-                                                $keys = array_keys($question_array);
-                                                $first_index = $keys[0];
-                                                $question_index = 0;
+                                                $counter = 0;
                                             @endphp
-                                            @foreach (json_decode($checklist->question)->question as $key => $question)
+                                            @foreach ($tes->question_answers as $key => $value)
                                                 <tr>
                                                     @php
-                                                        if ($first_index == $key) {
-                                                            echo '<td rowspan="' . count($question_array) . '">' . $checklist->category . '</td>';
+                                                        if ($counter == 0) {
+                                                            echo '<td rowspan="' . count($tes->question_answers) . '">' . $tes->category . '</td>';
                                                         }
+                                                        $counter = $counter + 1;
                                                     @endphp
                                                     <td>
                                                         <div class="mb-3">
-                                                            <p class="mb-0">{{ $question }}</p>
+                                                            <p class="mb-0">{{ $value->question }}</p>
                                                             <input type="hidden"
-                                                                name="question[{{ $checklist->category }}][{{ $key }}]"
-                                                                value="{{ $question }}" disabled>
+                                                                name="question[{{ $tes->category }}][{{ $value->question_id }}]"
+                                                                value="{{ $value->question }}" readonly>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="mb-3">
                                                             <label>
-
                                                                 <input type="radio"
-                                                                    name="answer[{{ $checklist->category }}][{{ $key }}]"
+                                                                    name="answer[{{ $tes->category }}][{{ $value->question_id }}]"
                                                                     value="safe"
-                                                                    {{ isset(json_decode($answer->answer)[$index]->question_answers[$question_index]->answer) && json_decode($answer->answer)[$index]->question_answers[$question_index]->answer === 'safe' ? 'checked' : '' }} disabled>
-                                                                Safe
+                                                                    {{ isset($value->answer) && $value->answer === 'safe' ? 'checked' : '' }} disabled>
+
                                                             </label>
                                                         </div>
                                                     </td>
@@ -96,10 +95,10 @@
                                                         <div class="mb-3">
                                                             <label>
                                                                 <input type="radio"
-                                                                    name="answer[{{ $checklist->category }}][{{ $key }}]"
+                                                                    name="answer[{{ $tes->category }}][{{ $value->question_id }}]"
                                                                     value="unsafe"
-                                                                    {{ isset(json_decode($answer->answer)[$index]->question_answers[$question_index]->answer) && json_decode($answer->answer)[$index]->question_answers[$question_index]->answer === 'unsafe' ? 'checked' : '' }} disabled>
-                                                                Unsafe
+                                                                    {{ isset($value->answer) && $value->answer === 'unsafe' ? 'checked' : '' }} disabled>
+
                                                             </label>
                                                         </div>
                                                     </td>
@@ -107,26 +106,23 @@
                                                         <div class="mb-3">
                                                             <label>
                                                                 <input type="radio"
-                                                                    name="answer[{{ $checklist->category }}][{{ $key }}]"
+                                                                    name="answer[{{ $tes->category }}][{{ $value->question_id }}]"
                                                                     value="n/a"
-                                                                    {{ isset(json_decode($answer->answer)[$index]->question_answers[$question_index]->answer) && json_decode($answer->answer)[$index]->question_answers[$question_index]->answer === 'n/a' ? 'checked' : '' }} disabled>
-                                                                N/A
+                                                                    {{ isset($value->answer) && $value->answer === 'n/a' ? 'checked' : '' }} disabled>
+
                                                             </label>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                @php
-                                                    $question_index = $question_index + 1;
-                                                @endphp
                                             @endforeach
-                                            @php
-                                                $index = $index + 1;
-                                            @endphp
                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
                         </form>
+                        <div class="form-group">
+                            <a class="btn btn-primary" href="{{ route('safety-behavior-checklist.edit', $answer->id) }}">Edit</a>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -41,6 +41,73 @@
           }
         }
         </style>
+        <style>
+            .container {
+                max-width: 960px;
+                margin: 0 auto;
+            }
+
+            .card {
+                margin-bottom: 20px;
+            }
+
+            .card-header {
+                border-bottom: 1px solid #ccc;
+            }
+
+            .card-body {
+                padding: 10px;
+            }
+
+            .form-group {
+                margin-bottom: 10px;
+            }
+
+            input {
+                width: 100%;
+            }
+
+            .btn {
+                color: white;
+                background-color: #007bff;
+                border: none;
+                border-radius: 1px;
+                padding: 5px 10px;
+                cursor: pointer;
+            }
+
+            .btn-primary {
+                background-color: #0056b3;
+            }
+
+            @media (max-width: 576px) {
+                .container {
+                    max-width: 100%;
+                }
+            }
+
+            /* NH Housing Primary Brand Colors Color Palette */
+
+            .nh-red {
+                color: #d34b4b;
+            }
+
+            .nh-blue {
+                color: #007bff;
+            }
+
+            .nh-green {
+                color: #4caf50;
+            }
+
+            .nh-yellow {
+                color: #ffc107;
+            }
+
+            .nh-gray {
+                color: #999;
+            }
+            </style>
     @stack('head-scripts')
 </head>
 <body>

@@ -1,76 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-@pushOnce('head-scripts')
-<style>
-.container {
-    max-width: 960px;
-    margin: 0 auto;
-}
-
-.card {
-    margin-bottom: 20px;
-}
-
-.card-header {
-    border-bottom: 1px solid #ccc;
-}
-
-.card-body {
-    padding: 10px;
-}
-
-.form-group {
-    margin-bottom: 10px;
-}
-
-input {
-    width: 100%;
-}
-
-.btn {
-    color: white;
-    background-color: #007bff;
-    border: none;
-    border-radius: 1px;
-    padding: 5px 10px;
-    cursor: pointer;
-}
-
-.btn-primary {
-    background-color: #0056b3;
-}
-
-@media (max-width: 576px) {
-    .container {
-        max-width: 100%;
-    }
-}
-
-/* NH Housing Primary Brand Colors Color Palette */
-
-.nh-red {
-    color: #d34b4b;
-}
-
-.nh-blue {
-    color: #007bff;
-}
-
-.nh-green {
-    color: #4caf50;
-}
-
-.nh-yellow {
-    color: #ffc107;
-}
-
-.nh-gray {
-    color: #999;
-}
-</style>
-@endPushOnce
     <div class="container">
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+                <li class="breadcrumb-item" aria-current="page">Profile  Saya</li>
+            </ol>
+        </nav>
         <div class="card">
             <div class="card-header">
                 <h3>Profile <a href="/edit-profile" class="btn btn-primary float-right">Edit</a></h3>
@@ -93,7 +30,6 @@ input {
                     <label for="role">Jabatan</label>
                     <input type="text" name="role" id="role" class="form-control" value="{{ $user->role }}" readonly>
                 </div>
-
 
                 @if ($company)
                     <h4>Informasi Perusahaan</h4>

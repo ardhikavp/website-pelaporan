@@ -20,23 +20,26 @@
         @endif
     </a>
     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
-        @if (Auth::user()->unreadNotifications->count() > 0)
-            @foreach (auth()->user()->unreadNotifications as $notification)
-                <a href="#" class="dropdown-item text-success">{{ $notification->data['data'] }}</a>
-            @endforeach
-        @else
-            <a href="#" class="dropdown-item text-muted">Tidak ada notifikasi</a>
-        @endif
+        <div style="max-height: 300px; overflow-y: auto;"> <!-- Set maximum height and add scrollbar if needed -->
+            @if (Auth::user()->unreadNotifications->count() > 0)
+                @foreach (auth()->user()->unreadNotifications as $notification)
+                    <a href="#" class="dropdown-item text-success">{{ $notification->data['data'] }}</a>
+                @endforeach
+            @else
+                <a href="#" class="dropdown-item text-muted">Belum ada notif</a>
+            @endif
 
-        @if (Auth::user()->readNotifications->count() > 0)
-            <div class="dropdown-divider"></div>
-            <span class="dropdown-header">Read Notifications</span>
-            @foreach (auth()->user()->readNotifications as $notification)
-                <a href="#" class="dropdown-item text-secondary">{{ $notification->data['data'] }}</a>
-            @endforeach
-        @endif
+            @if (Auth::user()->readNotifications->count() > 0)
+                <div class="dropdown-divider"></div>
+                <span class="dropdown-header">Read Notifications</span>
+                @foreach (auth()->user()->readNotifications as $notification)
+                    <a href="#" class="dropdown-item text-secondary">{{ $notification->data['data'] }}</a>
+                @endforeach
+            @endif
+        </div>
     </div>
 </li>
+
     <li class="nav-item">
         <a class="nav-link" href="{{ route('mark-as-read') }}">
             Mark All as Read

@@ -123,7 +123,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col">
-                                <h2 class="card-title">Laporan Safety Observation</h2>
+                                <h3 class="card-title">Laporan Safety Observation</h3>
                             </div>
                             <div class="col-md-3 text-right">
                                 <a href="{{ route('safety-observation-forms.create') }}" class="btn btn-primary">
@@ -140,7 +140,7 @@
                             <div class="alert alert-success">{{ Session::get('message') }}</div>
                         @endif
                     </div>
-                    <div class="card-body" id="so-approved-table" hidden>
+                    <div class="card-body" id="so-approved-table">
                         @include('safety-observation-forms.safety-observation-form-approved')
                     </div>
                     <div class="card-body" id="so-pending-review-table" hidden>

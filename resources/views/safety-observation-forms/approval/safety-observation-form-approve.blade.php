@@ -2,7 +2,13 @@
 
 @section('content')
     <div class="container">
-        <h1>Approve</h1>
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active"><a href="{{ route('safety-observation-forms.index') }}">Laporan Safety Observation</a></li>
+                <li class="breadcrumb-item" aria-current="page">Terima Laporan</li>
+            </ol>
+        </nav>
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
@@ -113,7 +119,13 @@
                                     <div class="form-group">
                                         <label for="created_by">Created By</label>
                                         <input type="text" name="created_by" id="created_by" class="form-control"
-                                            value="{{ $form->created_by }}" disabled>
+                                            value="{{ $form->createdBy->name}}" disabled>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="created_by">Reviewed By</label>
+                                        <input type="text" name="created_by" id="created_by" class="form-control"
+                                            value="{{ $form->reviewedBy->name}}" disabled>
                                     </div>
 
                                     <div class="form-group">
@@ -124,7 +136,7 @@
 
                                     <div class="form-group">
                                         <label for="review_comment">Review Comment</label>
-                                        <textarea name="review_comment" id="review_comment" class="form-control" value="{{ $form->review_comment }}">
+                                        <textarea name="review_comment" id="review_comment" class="form-control" value="{{ $form->review_comment }}" readonly>
                                     </div>
 
                                     <div class="form-group">
