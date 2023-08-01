@@ -5,6 +5,12 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     @include('layouts.head.head')
     @vite(['resources/sass/app.scss'])
+    @stack('head-scripts')
+    <style>
+        .logo-brand-icon img {
+            width: 40%;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -90,7 +96,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('template/js/sb-admin-2.min.js') }}"></script>
-
+    @stack('body-scripts')
 </body>
 
 </html>

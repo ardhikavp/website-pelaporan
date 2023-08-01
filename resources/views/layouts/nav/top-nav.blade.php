@@ -76,42 +76,9 @@
                 <i class="fas fa-door-open">{{ __('Logout') }}</i>
             </a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#notificationsModal">
-                <i class="fas fa-bell"></i> Notifications
-                @if (Auth::check() && Auth::user()->unreadNotifications->count() > 0)
-                    <span class="badge badge-danger">{{ Auth::user()->unreadNotifications->count() }}</span>
-                @endif
-            </a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                 @csrf
             </form>
-        </div>
-        <div class="modal fade" id="notificationsModal" tabindex="-1" role="dialog" aria-labelledby="notificationsModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="notificationsModalLabel">Notifications</h5>
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        @foreach (auth()->user()->unreadNotifications as $notification)
-                            <div class="alert alert-success">
-                                {{ $notification->data['data'] }}
-                            </div>
-                        @endforeach
-                        @foreach (auth()->user()->readNotifications as $notification)
-                            <div class="alert alert-secondary">
-                                {{ $notification->data['data'] }}
-                            </div>
-                        @endforeach
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
         </div>
     </li>
 @pushOnce('body-scripts')

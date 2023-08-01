@@ -1,11 +1,13 @@
+
 <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
+        <div class="logo-brand-icon">
+            <img src="/logo/safe_surround_check.png" alt="Website Logo">
         </div>
-        <div class="sidebar-brand-text mx-3"> WEBSITE PELAPORAN</div>
+
+        <div class="sidebar-brand-text mx-3"> SHE Section</div>
     </a>
 
     <!-- Divider -->
@@ -37,7 +39,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Custom Components:</h6>
                 <a class="collapse-item" href="{{ route('safety-observation-forms.index') }}">Safety Observation</a>
-                <a class="collapse-item" href="{{ route('safety-behavior-checklist.index') }}">Safety Patrol</a>
+                <a class="collapse-item" href="{{ route('safety-behavior-checklist.index') }}">Safety Behavior Checklist</a>
             </div>
         </div>
     </li>
@@ -62,7 +64,7 @@
 
     <!-- Divider -->
     <hr class="sidebar-divider">
-
+{{--
     <!-- Heading -->
     <div class="sidebar-heading">
         Addons
@@ -102,7 +104,7 @@
         <a class="nav-link" href="tables.html">
             <i class="fas fa-fw fa-table"></i>
             <span>Tables</span></a>
-    </li>
+    </li> --}}
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

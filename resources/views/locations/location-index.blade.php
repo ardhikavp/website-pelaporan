@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('content')
     <div class="container-fluid">
@@ -38,7 +38,7 @@
                             </table>
                             <div id="pagination">
                                 {{ $locations->links() }}
-                                
+
                             </div>
                         </div>
                     </div>
