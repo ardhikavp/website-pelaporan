@@ -25,4 +25,16 @@ class NotificationController extends Controller
 
     }
 
+    public function markNotificationAsRead(Request $request)
+    {
+        $notificationId = $request->input('notification_id');
+
+        $notification = Auth::user()->unreadNotifications->where('id', $notificationId)->first();
+        if ($notification) {
+            $notification->markAsRead();
+        }
+
+        return response()->json(['message' => 'Notification marked as read.']);
+    }
+
 }

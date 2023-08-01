@@ -7,18 +7,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NewRegisterUser extends Notification
+class SafetyIndexThresholdNotification extends Notification
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    protected $newUser;
+    protected $year;
+    protected $percentage;
 
-    public function __construct($newUser)
+    public function __construct($year, $percentage)
     {
-        $this->newUser = $newUser;
+        $this->year = $year;
+        $this->percentage = $percentage;
     }
 
     /**
@@ -28,7 +30,7 @@ class NewRegisterUser extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database'];
+        return ['mail'];
     }
 
     /**
@@ -38,7 +40,7 @@ class NewRegisterUser extends Notification
     {
         return (new MailMessage)
                     ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('safesurroundcheck.ac.id'))
+                    ->action('Notification Action', url('/'))
                     ->line('Thank you for using our application!');
     }
 
@@ -49,11 +51,8 @@ class NewRegisterUser extends Notification
      */
     public function toArray(object $notifiable): array
     {
-        $url = route('users.show', ['user' => $this->newUser->id]);
-
         return [
-            'data' => 'New user registered with email: ' . $this->newUser->email,
-            'url' => $url,
+            //
         ];
     }
 }

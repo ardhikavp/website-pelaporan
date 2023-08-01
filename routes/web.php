@@ -29,7 +29,7 @@ use App\Models\SafetyBehaviorChecklist;
 */
 // Route::get('/notifications', 'NotificationController@index');
 Route::get('/', function () {
-    MessageCreated::dispatch('welcome to website pelaporan');
+    // MessageCreated::dispatch('welcome to website pelaporan');
 
     return view('welcome');
 });
@@ -48,6 +48,8 @@ Route::middleware(['auth'])->prefix('dashboard/users')->group(function () {
 
 Route::middleware(['auth'])->prefix('dashboard')->group(function () {
     Route::get('/mark-as-read', 'App\Http\Controllers\NotificationController@markAsRead')->name('mark-as-read');
+    Route::post('/mark-notification-as-read', 'NotificationController@markNotificationAsRead')->name('mark-notification-as-read');
+
     // Route::get('notifications', [NotificationController::class,'notification']);
     Route::get('/chart', [ChartJSController::class, 'index']);
         Route::resource('profile', ProfileController::class);

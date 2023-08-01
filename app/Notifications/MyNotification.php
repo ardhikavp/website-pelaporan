@@ -39,7 +39,7 @@ class MyNotification extends Notification
             ->subject('Pendaftaran Pengguna Website Pelaporan')
             ->greeting('Halo, ' . $notifiable->name)
             ->line('Terimakasih telah melakukan pendaftaran pada website kami.')
-            ->action('Website', url('/'))
+            ->action('Website', url('safesurroundcheck.ac.id'))
             ->line('Jika terdapat pertanyaan lebih lanjut, dapat menkontak seksi SHE');
     }
 

@@ -52,6 +52,7 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users,email',
+            'username' => 'required',
             'role' => 'required|in:admin,pegawai,SHE,safety officer,safety representatif,manager maintenance',
             'company_id' => 'required|exists:companies,id',
             'password' => 'required|min:8|confirmed',
@@ -60,13 +61,14 @@ class UserController extends Controller
         // Simpan data pengguna baru ke database
         User::create([
             'name' => $validatedData['name'],
+            'username' => $validatedData['username'],
             'email' => $validatedData['email'],
             'role' => $validatedData['role'],
             'company_id' => $request->input('company_id'),
             'password' => bcrypt($validatedData['password']),
         ]);
 
-        return redirect()->route('user.index')->with('success', 'User created successfully.');
+        return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
 

@@ -20,30 +20,49 @@
         @endif
     </a>
     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
-        <div style="max-height: 300px; overflow-y: auto;"> <!-- Set maximum height and add scrollbar if needed -->
+        <div class="list-group" style="max-height: 300px; overflow-y: auto;">
+            <!-- Unread Notifications -->
             @if (Auth::user()->unreadNotifications->count() > 0)
                 @foreach (auth()->user()->unreadNotifications as $notification)
-                    {{-- <a href="{{ $notification->data['url'] }}" class="dropdown-item text-success">{{ $notification->data['data'] }}</a> --}}
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            @if (isset($notification->data['url']))
+                                <a href="{{ $notification->data['url'] }}" class="card-link text-success">{{ $notification->data['data'] }}</a>
+                            @else
+                                <span class="card-text text-success">{{ $notification->data['data'] }}</span>
+                            @endif
+                            @if (!$notification->read_at)
+                                <a href="#" class="mark-as-read-link text-secondary" data-notification-id="{{ $notification->id }}">Mark as Read</a>
+                            @endif
+                        </div>
+                    </div>
                 @endforeach
             @else
                 <a href="#" class="dropdown-item text-muted">Belum ada notif</a>
             @endif
 
+            <div class="dropdown-divider"></div>
+            <span class="dropdown-header">Read Notifications</span>
+            <!-- Read Notifications -->
             @if (Auth::user()->readNotifications->count() > 0)
-                <div class="dropdown-divider"></div>
-                <span class="dropdown-header">Read Notifications</span>
                 @foreach (auth()->user()->readNotifications as $notification)
-                    {{-- <a href="{{ $notification->data['url'] }}" class="dropdown-item text-secondary">{{ $notification->data['data'] }}</a> --}}
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            @if (isset($notification->data['url']))
+                                <a href="{{ $notification->data['url'] }}" class="card-link text-secondary">{{ $notification->data['data'] }}</a>
+                            @else
+                                <span class="card-text text-secondary">{{ $notification->data['data'] }}</span>
+                            @endif
+                        </div>
+                    </div>
                 @endforeach
             @endif
         </div>
     </div>
 </li>
 
+
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('mark-as-read') }}">
-            Mark All as Read
-        </a>
         <li class="nav-item dropdown">
         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
             {{ Auth::user()->name }}
@@ -95,5 +114,35 @@
             </div>
         </div>
     </li>
+@pushOnce('body-scripts')
+<script>
+    // Function to mark notification as read
+    function markNotificationAsRead(notificationId) {
+        // Send an AJAX request to mark the notification as read
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('mark-notification-as-read') }}',
+            data: {
+                _token: '{{ csrf_token() }}',
+                notification_id: notificationId
+            },
+            success: function (data) {
+                // If the request is successful, remove the notification card from the dropdown
+                $('.card[data-notification-id="' + notificationId + '"]').remove();
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    }
+
+    // Handle click event on "Mark as Read" link
+    $(document).on('click', '.mark-as-read-link', function (e) {
+        e.preventDefault();
+        var notificationId = $(this).data('notification-id');
+        markNotificationAsRead(notificationId);
+    });
+</script>
+@endPushOnce
 @endguest
 

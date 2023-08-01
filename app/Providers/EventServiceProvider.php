@@ -23,6 +23,9 @@ class EventServiceProvider extends ServiceProvider
         UserRegistered::class => [
             SendAdminNotification::class,
         ],
+        SafetyIndexThresholdReached::class => [
+            NotifyUsersOnSafetyIndexThreshold::class,
+        ],
     ];
 
     /**

@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\SafetyBehaviorChecklist;
 use Illuminate\Support\Facades\Session;
+use App\Events\SafetyIndexThresholdReached;
 
 class SafetyBehaviorChecklistController extends Controller
 {
@@ -220,7 +221,7 @@ class SafetyBehaviorChecklistController extends Controller
                 'operation_name' => $request->input('operation_name'),
                 'company_id' => $request->input('company_id'),
                 'answer' => json_encode($question_answer_collection),
-                'safety_index' => $safetyIndex
+                'safety_index' => $safetyIndex,
             ]);
 
         // Redirect to the index page or the show page (whichever is appropriate)
@@ -311,4 +312,56 @@ class SafetyBehaviorChecklistController extends Controller
         Session::flash('message', 'Form ' . ucfirst($action) . 'ed successfully.');
         return redirect()->route('safety-behavior-checklist.index');
     }
+
+    public function triggerSafetyIndexThresholdEvent(Request $request)
+    {
+        $triggerType = $request->input('trigger_type');
+
+        if ($triggerType === 'now') {
+            $this->triggerEventNow();
+            return redirect()->back()->with('success', 'Safety Index Threshold Event triggered successfully (Immediate trigger).');
+        } elseif ($triggerType === 'select_date') {
+            $request->validate([
+                'selected_date' => 'required|date',
+            ]);
+
+            $selectedDate = Carbon::parse($request->input('selected_date'));
+            $this->triggerEventForDate($selectedDate);
+            return redirect()->back()->with('success', 'Safety Index Threshold Event triggered successfully (Selected date trigger).');
+        }
+
+        return redirect()->back()->with('error', 'Invalid trigger type.');
+    }
+
+    private function triggerEventNow()
+    {
+        $companies = Company::all();
+        $year = Carbon::now()->year;
+
+        foreach ($companies as $company) {
+            $safetyIndexPercentage = $this->calculateSafetyIndexPercentage($company, $year);
+            if ($safetyIndexPercentage >= 50) {
+                event(new SafetyIndexThresholdReached($year, $company, $safetyIndexPercentage));
+            }
+        }
+    }
+
+    private function triggerEventForDate(Carbon $date)
+    {
+        $companies = Company::all();
+        $year = $date->year;
+
+        foreach ($companies as $company) {
+            $safetyIndexPercentage = $this->calculateSafetyIndexPercentage($company, $year);
+            if ($safetyIndexPercentage >= 50) {
+                event(new SafetyIndexThresholdReached($year, $company, $safetyIndexPercentage));
+            }
+        }
+    }
+
+    private function calculateSafetyIndexPercentage(Company $company, $year)
+    {
+
+    }
+
 }

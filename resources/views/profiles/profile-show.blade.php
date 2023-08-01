@@ -10,7 +10,7 @@
         </nav>
         <div class="card">
             <div class="card-header">
-                <h3>Profile <a href="{{ route("profile.edit") }}" class="btn btn-primary float-right">Edit</a></h3>
+                <h3>Profile <a href="{{ route('profile.edit', ['profile' => $user->id]) }}" class="btn btn-primary float-right">Edit</a></h3>
             </div>
             <div class="card-body">
                 <h4>User Information</h4>
