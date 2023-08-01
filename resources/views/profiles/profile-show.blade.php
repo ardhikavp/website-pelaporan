@@ -10,7 +10,7 @@
         </nav>
         <div class="card">
             <div class="card-header">
-                <h3>Profile <a href="/edit-profile" class="btn btn-primary float-right">Edit</a></h3>
+                <h3>Profile <a href="{{ route("profile.edit") }}" class="btn btn-primary float-right">Edit</a></h3>
             </div>
             <div class="card-body">
                 <h4>User Information</h4>
@@ -38,6 +38,12 @@
                         <input type="text" name="company" id="company" class="form-control" value="{{ $company->company }}" readonly>
                     </div>
                 @endif
+
+                <div class="mt-4">
+                    <a href="{{ route('password.request') }}" class="btn btn-primary">
+                        Reset Password
+                    </a>
+                </div>
             </div>
         </div>
     </div>

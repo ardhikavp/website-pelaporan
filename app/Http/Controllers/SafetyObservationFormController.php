@@ -15,6 +15,8 @@ use App\Models\SafetyObservationForm;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Notifications\NeedReviewDocument;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\NewNeedReviewSafetyObservation;
 
 class SafetyObservationFormController extends Controller
 {
@@ -340,15 +342,9 @@ class SafetyObservationFormController extends Controller
             'approved_by' => null
         ]);
 
-        // $user = User::where('role', 'SHE')->first();
-
-        // Send the notification to each user
-        // if ($user instanceof User) {
-        //     $user->notify(new NeedReviewDocument($user, $form));
-        // }
-        // foreach ($form as $user) {
-        //     $user->notify(new NeedReviewDocument($user, $form));
-        // }
+        $userToNotify = User::where('role', 'SHE')->get();
+        
+        Notification::send($userToNotify, new NewNeedReviewSafetyObservation($form));
 
         Session::flash('message', 'Form created successfully.');
 
@@ -486,7 +482,7 @@ class SafetyObservationFormController extends Controller
 
         $approveComment = null;
         $rejectionComment = null;
-        
+
         if ($action === 'approve') {
             $finalStatus = 'APPROVED';
             $approveComment = $request->input('approve_comment') ?? 'NO COMMENT';

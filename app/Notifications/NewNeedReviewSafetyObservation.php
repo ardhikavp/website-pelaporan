@@ -18,7 +18,7 @@ class NewNeedReviewSafetyObservation extends Notification
 
     public function __construct($newReview)
     {
-        $this->needReviewSO = $newReview;
+        $this->newReview = $newReview;
     }
 
     /**
@@ -36,9 +36,10 @@ class NewNeedReviewSafetyObservation extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
+        $url = route('safety-observation-forms.review-by-she', ['safety_observation_form' => $this->newReview->id]);
         return (new MailMessage)
                     ->line('Dokumen Baru Safety Observation')
-                    ->action('Review Dokumen', route('safety-observation-forms.review-by-she'))
+                    ->action('Review Dokumen', $url)
                     ->line('Jangan lupa untuk memberikan komentar pada laporan.');
     }
 
@@ -49,8 +50,11 @@ class NewNeedReviewSafetyObservation extends Notification
      */
     public function toArray(object $notifiable): array
     {
+
+        $url = route('safety-observation-forms.review-by-she', ['safety_observation_form' => $this->newReview->id]);
         return [
-            'data' => 'New user registered with email: ' . $this->needReviewSO->email,
+            'data' => 'Laporan baru butuh peninjau: ' . $this->newReview->nomor_laporan,
+            'url' => $url,
         ];
     }
 }

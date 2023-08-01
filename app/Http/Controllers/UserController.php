@@ -62,7 +62,7 @@ class UserController extends Controller
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'role' => $validatedData['role'],
-            'company_id' => $validatedData['company_id'],
+            'company_id' => $request->input('company_id'),
             'password' => bcrypt($validatedData['password']),
         ]);
 

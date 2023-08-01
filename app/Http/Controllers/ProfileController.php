@@ -63,7 +63,7 @@ class ProfileController extends Controller
             'username' => 'required|string|max:255|unique:users,username,except,id',
             'current_password' => 'required',
             'password' => 'required|string|min:8|confirmed',
-            // tambahkan validasi lain sesuai kebutuhan
+            
         ]);
 
         // Update data profil pengguna
