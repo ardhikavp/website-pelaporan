@@ -11,6 +11,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PdfGeneratorController;
 use App\Http\Controllers\SafetyObservationFormController;
 use App\Http\Controllers\SafetyBehaviorChecklistController;
 use App\Models\Answer;
@@ -75,6 +76,8 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
         ->name('safety-behavior-checklist.approve-by-manager');
         Route::put('safety-behavior-checklist/{answer}/approved-by-manager', [SafetyBehaviorChecklistController::class, 'updateApprovedBymanager'])
         ->name('safety-behavior-checklist.update-approved-by-manager');
+
+        Route::get('laporan/{safety_observation_form}/generate', [PdfGeneratorController::class, 'downloadSafetyObservation'])->name('laporan-pdf-generator.download_so_report');
         // Route:get('safety-observation-forms/')
     });
 // Route::middleware(['auth'])->prefix('dashboard/safety-observation-forms')->group(function () {

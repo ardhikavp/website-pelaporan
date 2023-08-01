@@ -96,6 +96,8 @@
                                         title="Hapus Laporan"></i></button>
                             </form>
                         @endcan
+                        <a href="{{ route('laporan-pdf-generator.download_so_report', ['safety_observation_form' => $form->id]) }}"
+                            class="btn btn-sm btn-primary my-1"><i class="bi bi-pass"></i></a>
                     </td>
                 </tr>
             @endforeach
