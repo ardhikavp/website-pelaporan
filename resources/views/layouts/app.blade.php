@@ -24,6 +24,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <style type="text/css">
+        body{
+            overflow: hidden;
+        }
         i{
             font-size: 100%;
         }
@@ -139,12 +142,12 @@
             <div>
                 <div class="row">
                     @if (!in_array(request()->route()->getName(), ['register', 'login']))
-                        <div class="col-md-2 card" id="sidebar">
+                        <div class="col-lg-3 card" id="sidebar">
                             <!-- Sidebar -->
                                 @include('layouts.nav.side-nav')
                         </div>
                     @endif
-                    <div class="col-md-10 card" id="main-content">
+                    <div class="col-lg-9 card" id="main-content">
                         <!-- Konten lainnya -->
                         <main class="py-4">
                             @yield('content')
