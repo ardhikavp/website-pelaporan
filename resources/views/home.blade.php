@@ -14,6 +14,11 @@
                             </div>
                         @endif
                         {{ __('You are logged in!') }}
+                        @if ($notificationData)
+                        <div class="alert alert-success">
+                            {{ is_array($notificationData['data']) ? $notificationData['data']['data'] : $notificationData['data'] }}
+                        </div>
+                    @endif
                     </div>
                     <div class="row"></div>
                     <div class="col-md-6">
@@ -45,7 +50,7 @@
                 <div class="card-header">
                     <h1>Laporan</h1>
                     <div class="card-body">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered table-responsive">
                             <thead>
                                 <tr>
                                     <th>Tahun</th>

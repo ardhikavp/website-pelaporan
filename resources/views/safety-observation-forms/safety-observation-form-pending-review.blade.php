@@ -87,8 +87,8 @@
         </tbody>
     </table>
     <div class="d-flex justify-content-center" id="pagination-links">
-    {{-- @if ($form_pending_review instanceof \Illuminate\Pagination\LengthAwarePaginator) --}}
+    @if ($form_pending_review instanceof \Illuminate\Pagination\LengthAwarePaginator)
     {{ $form_pending_review->links() }}
-    {{-- @endif  --}}
+    @endif
     </div>
 </div>

@@ -56,20 +56,6 @@
         {{ auth()->user()->name }}
     </div>
 </div>
-@push('body-script')
-<script>
-$(document).ready(function() {
-  // Check if the window is less than 767px wide
-  if ($(window).width() <= 767) {
-    // Hide the sidebar
-    $("#sidebar").hide();
 
-    // Add a click event to the sidebar toggle button
-    $("#sidebar-toggle").click(function() {
-      // Toggle the sidebar
-      $("#sidebar").toggle();
-    });
-  }
-});
-</script>
-@endpush
+<button id="sidebar-toggle" class="d-block d-md-none">Toggle Sidebar</button> <!-- Add the toggle button here -->
+

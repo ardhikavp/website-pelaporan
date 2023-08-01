@@ -46,6 +46,7 @@ Route::middleware(['auth'])->prefix('dashboard/users')->group(function () {
 });
 
 Route::middleware(['auth'])->prefix('dashboard')->group(function () {
+    Route::get('/mark-as-read', 'App\Http\Controllers\NotificationController@markAsRead')->name('mark-as-read');
     // Route::get('notifications', [NotificationController::class,'notification']);
     Route::get('/chart', [ChartJSController::class, 'index']);
         Route::resource('profile', ProfileController::class);
@@ -64,7 +65,7 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
         ->name('safety-observation-forms.approve-by-manager');
         Route::put('/safety-observation-forms/{safety_observation_form}/approved-by-manager', [SafetyObservationFormController::class, 'updateApprovedByManager'])
         ->name('safety-observation-forms.update-approved-by-manager');
-        Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+        Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
 
         Route::get('safety-behavior-checklist/{answer}/agreement-by-pic', [SafetyBehaviorChecklistController::class, 'reviewByPIC'])
         ->name('safety-behavior-checklist.review-by-pic');

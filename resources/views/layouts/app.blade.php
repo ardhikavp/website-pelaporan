@@ -8,9 +8,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-
-
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -33,6 +30,17 @@
 
     </style>
      <script src="{{ asset('template/vendor/chart.js/Chart.min.js') }}"></script>
+     <style>
+        @media (max-width: 767px) {
+          #sidebarssc {
+            display: none;
+          }
+
+          .show-sidebarssc #sidebarssc {
+            display: block;
+          }
+        }
+        </style>
     @stack('head-scripts')
 </head>
 <body>
@@ -64,12 +72,12 @@
             <div>
                 <div class="row">
                     @if (!in_array(request()->route()->getName(), ['register', 'login']))
-                    <div class="col-md-2 card" id="sidebar">
-                        <!-- Sidebar -->
-                            @include('layouts.nav.side-nav')
-                    </div>
+                        <div class="col-md-2 card" id="sidebar">
+                            <!-- Sidebar -->
+                                @include('layouts.nav.side-nav')
+                        </div>
                     @endif
-                    <div class="col-md-10 card">
+                    <div class="col-md-10 card" id="main-content">
                         <!-- Konten lainnya -->
                         <main class="py-4">
                             @yield('content')
@@ -86,8 +94,10 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
 
     {{-- <script src="{{ asset('/resources/js/chartpie.js') }}"></script> --}}
-
+    @include('layouts.script.sidebar')
 </body>
 </html>

@@ -21,12 +21,14 @@ class UserController extends Controller
             function (Builder $builder) use ($request) {
                 $builder->where('name', 'like', "%{$request->q}%")
                     ->orWhere('username', 'like', "%{$request->q}%")
+                    ->orWhere('role', 'like', "%{$request->q}%")
                     ->orWhereHas('company', function (Builder $query) use ($request) {
                         $query->where('company', 'like', "%{$request->q}%");
                     });
             }
         )
         ->Paginate(5);
+
         $companies = Company::all();
 
         return view('users.user-index', compact('users', 'companies'));
@@ -73,7 +75,10 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $users = User::findOrFail($id);
+        $companies = Company::all();
+
+        return view('users.user-show', compact('users', 'companies'));
     }
 
     /**

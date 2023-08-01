@@ -6,6 +6,7 @@ use App\Models\Company;
 use App\Models\Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Models\SafetyObservationForm;
 
 class HomeController extends Controller
@@ -84,8 +85,15 @@ class HomeController extends Controller
         }
 
         // dd($safetyObservationsPerLocation);
-
-
-        return view('home', compact('chartData', 'totalCompanies', 'safetyObservationsPerLocation', 'data'));
+        $user = Auth::user();
+        if ($user->notifications->isNotEmpty()) {
+            // Fetch the notification data for the user (assuming you want to pass the first notification)
+            $notificationData = $user->notifications->first()->toArray();
+        } else {
+            // If there are no notifications, set $notificationData to null or an empty array
+            $notificationData = null; // or $notificationData = [];
+        }
+        
+        return view('home', compact('chartData', 'totalCompanies', 'safetyObservationsPerLocation', 'data', 'notificationData'));
     }
 }

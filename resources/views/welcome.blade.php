@@ -9,9 +9,7 @@
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>
-          Test
-        </title>
+        <title>{{ config('app.name', 'Laravel') }}</title>
         <meta name="description" content="Simple landind page" />
         <meta name="keywords" content="" />
         <meta name="author" content="" />
@@ -27,16 +25,16 @@
         </style>
             <style>
                 body {
-                    background-color: #f7fafc;
+                    background-color: #bfe2fa;
                 }
 
                 .container {
-                    max-width: 600px;
+                    max-width: 1000px;
                     margin: 0 auto;
                     padding: 40px;
-                    background-color: #fff;
+                    background-color: #d0e0de;
                     border-radius: 8px;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
                     text-align: center;
                 }
 
@@ -56,7 +54,7 @@
                     display: inline-block;
                     margin-top: 30px;
                     padding: 10px 20px;
-                    background-color: #4a86e8;
+                    background-color: #b1c8ed;
                     color: #fff;
                     text-decoration: none;
                     border-radius: 4px;
@@ -84,14 +82,13 @@
                         @endauth
                     </div>
                 @endif
-
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="max-w-3xl mx-auto text-center">
-                        <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white sm:text-5xl">Selamat Datang di Website Pelaporan PT PJA</h1>
-                        <p class="mt-3 text-xl text-gray-500 dark:text-gray-300 sm:mt-4">Keselamatan dimulai dari melaporkan ketidaksesuaian K3 di lingkungan sendiri.</p>
-                        <div class="mt-6">
+                        <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white sm:text-5xl">Selamat Datang di Website Pelaporan Perusahaan Industri Kimia</h1>
+                        <p class="mt-3 text-xl text-gray-500 dark:text-gray-300 sm:mt-4">Laporkan Bahaya di Sekitarmu Menggunakan Safe Surround Check</p>
+                        {{-- <div class="mt-6">
                             <a href="" class="inline-block px-5 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold">Learn More</a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

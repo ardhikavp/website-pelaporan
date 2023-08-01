@@ -7,17 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-
-class MyNotification extends Notification
+class NewRegisterUser extends Notification
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    protected $newUser;
+
+    public function __construct($newUser)
     {
-        //
+        $this->newUser = $newUser;
     }
 
     /**
@@ -27,7 +28,7 @@ class MyNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['database'];
     }
 
     /**
@@ -36,11 +37,9 @@ class MyNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Pendaftaran Pengguna Website Pelaporan')
-            ->greeting('Halo, ' . $notifiable->name)
-            ->line('Terimakasih telah melakukan pendaftaran pada website kami.')
-            ->action('Website', url('/'))
-            ->line('Jika terdapat pertanyaan lebih lanjut, dapat menkontak seksi SHE');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -51,7 +50,7 @@ class MyNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'data' => 'New user registered with email: ' . $this->newUser->email,
         ];
     }
 }

@@ -125,7 +125,7 @@
                             <div class="col">
                                 <h2 class="card-title">Laporan Safety Observation</h2>
                             </div>
-                            <div class="col-md-2 text-right">
+                            <div class="col-md-3 text-right">
                                 <a href="{{ route('safety-observation-forms.create') }}" class="btn btn-primary">
                                     Lapor Temuan Baru</a>
                                 </div>

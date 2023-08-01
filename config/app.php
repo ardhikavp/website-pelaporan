@@ -168,6 +168,7 @@ return [
         App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Illuminate\Notifications\NotificationServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -183,14 +184,24 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
+        'Notification' => Illuminate\Support\Facades\Notification::class,
     ])->toArray(),
 
-    // 'notification.channels' => [
-    //     'database' => [
-    //         'driver' => 'database',
-    //         'table' => 'notifications',
-    //     ],
-    // ],
+    'notification' => [
+        'default' => env('NOTIFICATION_CHANNEL', 'database'),
+
+        'channels' => [
+            'database' => [
+                'driver' => 'database',
+                'table' => 'notifications', // The name of the notifications table
+            ],
+
+            'mail' => [
+                'driver' => 'mail',
+                'queue' => true,
+            ],
+        ],
+    ],
 
     // 'listen' => [
     //     'App\Notifications\NeedReviewDocument' => [

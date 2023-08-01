@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
 use App\Models\Company;
+use App\Events\UserRegistered;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Notifications\MyNotification;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use App\Notifications\MyNotification;
 
 class RegisterController extends Controller
 {
@@ -85,6 +86,8 @@ class RegisterController extends Controller
         ]);
 
         $user->notify(new MyNotification($user));
+        event(new UserRegistered($user));
+        
         return $user;
     }
 
