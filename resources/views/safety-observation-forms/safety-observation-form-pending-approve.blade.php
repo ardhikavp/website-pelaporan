@@ -1,15 +1,26 @@
 <div class="table-responsive mb-3">
-    <h3>PENDING APPROVAL</h3>
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div style="background-color: #f2f2f2; padding: 10px; margin-top: 10px;">
+                <h3 style="font-family: 'Helvetica Neue', sans-serif; color: #090a0a; margin-bottom: 0;">
+                    <i class="fas fa-hourglass-half" style="margin-right: 5px;"></i>
+                    Laporan akan Disetujui
+                </h3>
+            </div>
+        </div>
+    </div>
+    <br>
+    @if (count($form_pending_approval) > 0)
     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th style="width: 10%;">Nomor Laporan</th>
                 <th style="width: 10%;">Nama Perusahaan</th>
                 <th style="width: 10%;">Jenis</th>
-                <th style="width: 30%;">Foto</th>
-                <th style="width: 15%;">Dibuat Oleh</th>
-                <th style="width: 15%;">Direview Oleh</th>
-                <th style="width: 20%;">Aksi</th>
+                <th style="width: 20%;">Foto</th>
+                <th style="width: 10%;">Dibuat Oleh</th>
+                <th style="width: 10%;">Direview Oleh</th>
+                <th style="width: 10%;">Aksi</th>
             </tr>
         </thead>
 
@@ -87,4 +98,9 @@
             {{ $form_pending_approval->links() }}
         @endif
     </div>
+    @else
+    <div class="text-center mt-3 p-3" style="background-color: #f2f2f2; border-radius: 5px;">
+        Tidak terdapat laporan yang telah di-review.
+    </div>
+    @endif
 </div>

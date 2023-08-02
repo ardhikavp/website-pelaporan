@@ -1,16 +1,17 @@
 <div style="overflow-x:auto;">
-    <table class="table table-responsive table-bordered scroller" id="mytable" width="100%" cellspacing="0">
-        <div class="row justify-content-center">
-            <div class="col-12">
-                <div style="background-color: #f2f2f2; padding: 10px; margin-top: 10px;">
-                    <h3 style="font-family: 'Helvetica Neue', sans-serif; color: #090a0a; margin-bottom: 0;">
-                        <i class="fas fa-hourglass-start" style="margin-right: 5px;"></i>
-                        Laporan akan ditinjau
-                    </h3>
-                </div>
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div style="background-color: #f2f2f2; padding: 10px; margin-top: 10px;">
+                <h3 style="font-family: 'Helvetica Neue', sans-serif; color: #090a0a; margin-bottom: 0;">
+                    <i class="fas fa-hourglass-start" style="margin-right: 5px;"></i>
+                    Laporan akan ditinjau
+                </h3>
             </div>
         </div>
-        <br>
+    </div>
+    <br>
+    @if (count($form_pending_review) > 0)
+    <table class="table table-responsive table-bordered scroller" id="mytable" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th style="width: 10%;">Nomor Laporan</th>
@@ -91,4 +92,9 @@
     {{ $form_pending_review->links() }}
     @endif
     </div>
+    @else
+    <div class="text-center mt-3 p-3" style="background-color: #f2f2f2; border-radius: 5px;">
+        Tidak terdapat laporan yang telah dibuat.
+    </div>
+    @endif
 </div>

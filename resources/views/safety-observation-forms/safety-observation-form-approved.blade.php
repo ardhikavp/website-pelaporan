@@ -101,8 +101,8 @@
         @endif
     </div>
     @else
-    <div class="text-center mt-3">
-        Tidak terdapat laporan yang telah disetujui.
+    <div class="text-center mt-3 p-3" style="background-color: #f2f2f2; border-radius: 5px;">
+        Tidak terdapat laporan yang telah di-review.
     </div>
     @endif
 </div>

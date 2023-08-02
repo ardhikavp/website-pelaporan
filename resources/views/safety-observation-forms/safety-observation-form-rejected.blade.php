@@ -1,16 +1,25 @@
 <div class="table-responsive mb-3">
-    <h3>REJECTED</h3>
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div style="background-color: #f2f2f2; padding: 10px; margin-top: 10px;">
+                <h3 style="font-family: 'Helvetica Neue', sans-serif; color: #090a0a; margin-bottom: 0;">
+                    <i class="fas fa-times-circle" style="margin-right: 5px;"></i>
+                    Laporan Ditolak
+                </h3>
+            </div>
+        </div>
+    </div>
+    <br>
+    @if (count($form_rejected) > 0)
     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th style="width: 10%;">Nomor Laporan</th>
-                <th style="width: 10%;">Nama Perusahaan</th>
                 <th style="width: 10%;">Jenis</th>
                 <th style="width: 30%;">Foto</th>
                 <th style="width: 15%;">Dibuat Oleh</th>
                 <th style="width: 15%;">Direview Oleh</th>
                 <th style="width: 15%;">Disetujui Oleh</th>
-                <th style="width: 20%;">Status</th>
                 <th style="width: 20%;">Aksi</th>
             </tr>
         </thead>
@@ -19,7 +28,6 @@
             @foreach ($form_rejected as $form)
                 <tr>
                     <td style="font-size: 14px;">{{ $form->nomor_laporan }}</td>
-                    <td style="font-size: 14px;">{{ $form->createdBy->company->company }}</td>
                     <td style="font-size: 14px;">{{ str_replace('_', ' ', $form->safety_observation_type) }}</td>
                     <td style="font-size: 14px;">
                         @if ($form->image)
@@ -51,7 +59,6 @@
                     </td>
                     <td style="font-size: 14px;">{{ $form->approvedBy?->name ?? 'NOT APPROVED' }}
                     </td>
-                    <td style="font-size: 14px;">{{ $form->status }}</td>
                     <td>
                         <a href="{{ route('safety-observation-forms.show', ['safety_observation_form' => $form->id]) }}"
                             class="btn btn-sm btn-info my-1"><i class="fas fa-eye"></i></a><br>
@@ -92,4 +99,9 @@
         {{-- show nothing --}}
     @endif
     </div>
+    @else
+    <div class="text-center mt-3 p-3" style="background-color: #f2f2f2; border-radius: 5px;">
+        Tidak terdapat laporan yang telah ditolak.
+    </div>
+    @endif
 </div>
