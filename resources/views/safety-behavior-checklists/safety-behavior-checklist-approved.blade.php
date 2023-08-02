@@ -45,6 +45,8 @@
                             class="btn btn-sm btn-primary my-1"><i class="bi bi-pass"></i></a>
                         <a href="{{ route('safety-behavior-checklist.approve-by-manager', ['answer' => $answer->id]) }}"
                             class="btn btn-sm btn-primary my-1"><i class="bi bi-pass"></i></a>
+                        <a href="{{ route('laporan-pdf-generator.download_sbc_report', ['safety_behavior_checklist' => $answer->id]) }}"
+                            class="btn btn-sm btn-primary my-1"><i class="fas fa-file-download"></i></a>
                     </td>
                 </tr>
                 @endforeach

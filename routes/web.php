@@ -81,6 +81,7 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
         ->name('safety-behavior-checklist.update-approved-by-manager');
 
         Route::get('laporan/{safety_observation_form}/generate', [PdfGeneratorController::class, 'downloadSafetyObservation'])->name('laporan-pdf-generator.download_so_report');
+        Route::get('safety-behavior-checklist-report/{safety_behavior_checklist}/generate', [PdfGeneratorController::class, 'downloadSafetyBehavior'])->name('laporan-pdf-generator.download_sbc_report');
         // Route:get('safety-observation-forms/')
     });
 
