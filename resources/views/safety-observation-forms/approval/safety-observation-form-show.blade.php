@@ -134,7 +134,7 @@
 
                                     <div class="form-group">
                                         <label for="reject_comment">Reject Comment</label>
-                                        <textarea name="reject_comment" id="reject_comment" class="form-control"  disabled>{{ $safety_observation_form->review_comment }}</textarea>
+                                        <textarea name="reject_comment" id="reject_comment" class="form-control"  disabled>{{ $safety_observation_form->reject_comment }}</textarea>
                                     </div>
 
                                     <br>
