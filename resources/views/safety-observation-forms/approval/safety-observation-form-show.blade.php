@@ -121,6 +121,22 @@
                                             value="{{ $safety_observation_form->status }}" readonly>
                                     </div>
 
+
+                                    <div class="form-group">
+                                        <label for="review_comment">Review Comment</label>
+                                        <textarea name="review_comment" id="review_comment" class="form-control"  disabled>{{ $safety_observation_form->review_comment }}</textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="approve_comment">Approve Comment</label>
+                                        <textarea name="approve_comment" id="approve_comment" class="form-control"  disabled>{{ $safety_observation_form->approve_comment }}</textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="reject_comment">Reject Comment</label>
+                                        <textarea name="reject_comment" id="reject_comment" class="form-control"  disabled>{{ $safety_observation_form->review_comment }}</textarea>
+                                    </div>
+
                                     <br>
 
                                 </div>

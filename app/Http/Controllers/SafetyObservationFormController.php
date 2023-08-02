@@ -343,7 +343,7 @@ class SafetyObservationFormController extends Controller
         ]);
 
         $userToNotify = User::where('role', 'SHE')->get();
-        
+
         Notification::send($userToNotify, new NewNeedReviewSafetyObservation($form));
 
         Session::flash('message', 'Form created successfully.');
@@ -444,7 +444,6 @@ class SafetyObservationFormController extends Controller
 
         $reviewComment = null;
         $rejectionComment = null;
-        $approveComment = null;
 
         if ($action === 'approve') {
             $finalStatus = 'PENDING_APPROVAL';
@@ -459,7 +458,6 @@ class SafetyObservationFormController extends Controller
             'status' => $finalStatus,
             'review_comment' => $reviewComment,
             'reject_comment' => $rejectionComment,
-            'approve_comment' => $approveComment,
             'reviewed_by' => $reviewedById
         ]);
 

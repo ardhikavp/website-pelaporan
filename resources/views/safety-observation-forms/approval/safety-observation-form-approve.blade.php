@@ -136,7 +136,7 @@
 
                                     <div class="form-group">
                                         <label for="review_comment">Review Comment</label>
-                                        <textarea name="review_comment" id="review_comment" class="form-control" value="{{ $form->review_comment }}" readonly>
+                                        <textarea name="review_comment" id="review_comment" class="form-control" value="{{ $form->review_comment }}" readonly></textarea>
                                     </div>
 
                                     <div class="form-group">
@@ -173,7 +173,7 @@
             </div>
         </div>
     </div>
-    @if ($errors->any())
+    {{-- @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
                 @foreach ($errors->all() as $error)
@@ -181,5 +181,5 @@
                 @endforeach
             </ul>
         </div>
-    @endif
+    @endif --}}
 @endsection
