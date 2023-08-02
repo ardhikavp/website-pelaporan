@@ -6,7 +6,7 @@
     <title>LAPORAN SAFETY OBSERVATION</title>
     <style>
         body {
-            font-family: "Calibri", sans-serif;
+            font-family: 'Times New Roman', serif;
         }
 
         .container {
