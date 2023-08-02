@@ -9,6 +9,11 @@
             </ol>
         </nav>
         <div class="card">
+            @if (Session::has('message'))
+            <div class="alert alert-success mt-4">
+                {{ Session::get('message') }}
+            </div>
+            @endif
             <div class="card-header">
                 <h3>Profile <a href="{{ route('profile.edit', ['profile' => $user->id]) }}" class="btn btn-primary float-right">Edit</a></h3>
             </div>

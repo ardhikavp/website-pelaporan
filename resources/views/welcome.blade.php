@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
+        <link rel="icon" href="/logo/safe_surround_check.png" type="image/x-icon">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -65,6 +66,18 @@
                     background-color: #2563d8;
                 }
             </style>
+                    <style>
+                        .logo {
+                            display: flex;
+                            justify-content: center;
+                            margin-top: 50px; /* Adjust the margin-top as needed */
+                        }
+
+                        .logo img {
+                            max-width: 200px; /* Adjust the maximum width of the logo as needed */
+                            height: auto;
+                        }
+                    </style>
     </head>
     <body class="antialiased bg-transparent">
         <div id="app">
@@ -83,6 +96,10 @@
                     </div>
                 @endif
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <!-- Add the logo section here -->
+                    <div class="logo">
+                        <img src="/logo/safe_surround_check.png" alt="Logo">
+                    </div>
                     <div class="max-w-3xl mx-auto text-center">
                         <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white sm:text-5xl">Selamat Datang di Website Pelaporan Perusahaan Industri Kimia</h1>
                         <p class="mt-3 text-xl text-gray-500 dark:text-gray-300 sm:mt-4">Laporkan Bahaya di Sekitarmu Menggunakan Safe Surround Check</p>

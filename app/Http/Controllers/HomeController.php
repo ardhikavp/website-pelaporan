@@ -93,7 +93,10 @@ class HomeController extends Controller
             // If there are no notifications, set $notificationData to null or an empty array
             $notificationData = null; // or $notificationData = [];
         }
+
+        //Safety Index Each Company
         
+
         return view('home', compact('chartData', 'totalCompanies', 'safetyObservationsPerLocation', 'data', 'notificationData'));
     }
 }

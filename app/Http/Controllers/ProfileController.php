@@ -46,32 +46,29 @@ class ProfileController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        return view('profiles.profile-edit', compact('user'));
+        $user = User::findOrFail($id);
+        $company = Company::findOrFail($user->company_id); // Assuming the foreign key is 'company_id' in the User model
+
+        return view('profiles.profile-edit', compact('user', 'company'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        // Validasi data yang diinput
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,except,id',
-            'username' => 'required|string|max:255|unique:users,username,except,id',
-            'current_password' => 'required',
-            'password' => 'required|string|min:8|confirmed',
-            
-        ]);
+        $user = User::findOrFail($id);
+        $user->update($request->all());
 
-        // Update data profil pengguna
-        $user->update($validatedData);
-
-        return redirect()->route('profile.show', $user->id)->with('success', 'Profile updated successfully.');
+        $company = Company::findOrFail($user->company_id); // Assuming the foreign key is 'company_id' in the User model
+        $company->update(['company' => $request->input('company')]);
+        if ($request->has('email')) {
+            // Update the email if it's different from the current email
+            if ($request->input('email') !== $user->email) {
+                $user->update(['email' => $request->input('email')]);
+            }
+        }
+        return redirect()->route('profile.show', ['profile' => $id])->with('message', 'Profile updated successfully!');
     }
-
     /**
      * Remove the specified resource from storage.
      */

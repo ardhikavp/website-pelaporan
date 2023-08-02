@@ -1,5 +1,5 @@
 
-<div class="table-responsive mb-4">
+<div style="overflow-x:auto;">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12">
@@ -14,7 +14,7 @@
     </div>
     <br>
     @if (count($form_approved) > 0)
-    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    <table class="table table-bordered scroller" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th style="width: 20%;">Nomor Laporan</th>

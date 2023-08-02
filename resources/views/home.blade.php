@@ -6,7 +6,6 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">{{ __('Dashboard') }}</div>
-
                     <div class="card-body">
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
@@ -14,7 +13,7 @@
                             </div>
                         @endif
                         {{ __('You are logged in!') }}
-                        @if ($notificationData)
+                    @if ($notificationData)
                         <div class="alert alert-success">
                             {{ is_array($notificationData['data']) ? $notificationData['data']['data'] : $notificationData['data'] }}
                         </div>

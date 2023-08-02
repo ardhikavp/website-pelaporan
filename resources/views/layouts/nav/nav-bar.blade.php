@@ -28,7 +28,7 @@
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-search fa-fw"></i>
             </a>
-            
+
             <!-- Dropdown - Messages -->
             {{-- <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                 aria-labelledby="searchDropdown">
@@ -59,14 +59,13 @@
         @endif
     </a>
     <!-- Dropdown - Alerts -->
-    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-        aria-labelledby="alertsDropdown">
+    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
         <h6 class="dropdown-header">
-            Alerts Center
+            Notifikasi
         </h6>
         @if (Auth::user()->unreadNotifications->count() > 0)
             @foreach (auth()->user()->unreadNotifications as $notification)
-                <a class="dropdown-item d-flex align-items-center" href="{{ $notification->data['url'] }}">
+                <div class="dropdown-item d-flex align-items-center">
                     <div class="mr-3">
                         <div class="icon-circle bg-primary">
                             <i class="fas fa-file-alt text-white"></i>
@@ -76,14 +75,43 @@
                         <div class="small text-gray-500">{{ $notification->created_at->format('F j, Y') }}</div>
                         <span class="font-weight-bold">{{ $notification->data['data'] }}</span>
                     </div>
-                </a>
+                </div>
+                <div class="ml-auto">
+                    <button type="button" class="btn btn-link details-button" data-toggle="modal" data-target="#detailModal">Detail</button>
+                </div>
             @endforeach
         @else
-            <a href="#" class="dropdown-item text-muted">No new alerts</a>
+            <a href="#" class="dropdown-item text-muted">Tidak ada notifikasi.</a>
         @endif
-        <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+        <a class="dropdown-item text-center small text-gray-500" href="#">Tampilkan semua notifikasi</a>
     </div>
 </li>
+
+
+@foreach (auth()->user()->unreadNotifications as $notification)
+    <!-- Notification Modal -->
+    <div class="modal fade" id="notificationModal{{ $loop->index }}" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notificationModalLabel">Notifikasi Detail</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>{!! nl2br(e($notification->data['data'])) !!}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+@endforeach
+
+
+
+
+
+
         <div class="topbar-divider d-none d-sm-block"></div>
 
         <!-- Nav Item - User Information -->

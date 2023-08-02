@@ -125,7 +125,7 @@ class SafetyObservationFormController extends Controller
                 break;
 
             default:
-                break;
+               break;
         }
 
         return view('safety-observation-forms.safety-observation-form-index', compact('form_pending_review', 'form_pending_approval', 'form_approved', 'form_rejected'));

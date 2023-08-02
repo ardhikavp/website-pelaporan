@@ -7,6 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Include your CSS stylesheets and other meta tags here -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="/logo/safe_surround_check.png" type="image/x-icon">
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('template/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">

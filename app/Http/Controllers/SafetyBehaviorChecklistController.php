@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Answer;
 use App\Models\Company;
 use Illuminate\Http\Request;
@@ -23,8 +24,107 @@ class SafetyBehaviorChecklistController extends Controller
         $data = SafetyBehaviorChecklist::all();
         $answers = Answer::all();
         $companies = Company::all();
+        $user = auth()->user();
+        $form_pending_review = [];
+        $form_pending_approval = [];
+        $form_approved = [];
+        $form_rejected = [];
 
-        return view('safety-behavior-checklists.safety-behavior-checklist-index', ['safetyList' => $data, 'answers' => $answers, 'companies' => $companies]);
+        switch ($user->role) {
+            case ('admin'):
+                $form_approved = Answer::where('status', 'APPROVED')
+                ->paginate(5, ['*'], 'approved')
+                ->appends(request()->except('approved'));
+                $form_rejected = Answer::where('status', 'REJECTED')
+                ->paginate(5, ['*'], 'rejected')
+                ->appends(request()->except('rejected'));
+
+            case ('manager maintenance'):
+                $form_pending_review = Answer::where('status', 'PENDING_REVIEW')
+                    ->paginate(5, ['*'], 'pending_review')
+                    ->appends(request()->except('pending_review'));
+                $form_pending_approval = Answer::where('status', 'PENDING_APPROVAL')
+                    ->paginate(5, ['*'], 'pending_approval')
+                    ->appends(request()->except('pending_approval'));
+                $form_approved = Answer::where('status', 'APPROVED')
+                    ->paginate(5, ['*'], 'approved')
+                    ->appends(request()->except('approved'));
+                $form_rejected = Answer::where('status', 'REJECTED')
+                    ->paginate(5, ['*'], 'rejected')
+                    ->appends(request()->except('rejected'));
+                break;
+
+            case ('SHE'):
+                $form_pending_review = Answer::where('status', 'PENDING_REVIEW')
+                    ->paginate(5, ['*'], 'pending_review')
+                    ->appends(request()->except('pending_review'));
+                $form_pending_approval = Answer::where('status', 'PENDING_APPROVAL')
+                    ->paginate(5, ['*'], 'pending_approval')
+                    ->appends(request()->except('pending_approval'));
+                $form_approved = Answer::where('status', 'APPROVED')
+                    ->paginate(5, ['*'], 'approved')
+                    ->appends(request()->except('approved'));
+                $form_rejected = Answer::where('status', 'REJECTED')
+                    ->paginate(5, ['*'], 'rejected')
+                    ->appends(request()->except('rejected'));
+                break;
+
+            case ('safety representatif'):
+                $companyId = $user->company->id;
+                $form_pending_review = Answer::where('status', 'PENDING_REVIEW')
+                    ->whereHas('answers', function ($query) use ($companyId) {
+                        $query->where('company_id', $companyId);
+                    })
+                    ->paginate(5, ['*'], 'pending_review');
+                $form_pending_approval = Answer::where('status', 'PENDING_APPROVAL')
+                    ->whereHas('answers', function ($query) use ($companyId) {
+                        $query->where('company_id', $companyId);
+                    })
+                    ->paginate(5, ['*'], 'pending_approval');
+                $form_approved = Answer::where('status', 'APPROVED')
+                    ->paginate(5, ['*'], 'form_approved');
+                break;
+
+            case ('safety officer'):
+                $companyId = $user->company->id;
+                $form_pending_review = Answer::where('status', 'PENDING_REVIEW')
+                    ->whereHas('answers', function ($query) use ($companyId) {
+                        $query->where('company_id', $companyId);
+                    })
+                    ->paginate(5, ['*'], 'pending_review');
+                $form_pending_approval = Answer::where('status', 'PENDING_APPROVAL')
+                    ->whereHas('answers', function ($query) use ($companyId) {
+                        $query->where('company_id', $companyId);
+                    })
+                    ->paginate(5, ['*'], 'pending_approval');
+                $form_approved = Answer::where('status', 'APPROVED')
+                    ->paginate(5, ['*'], 'form_approved');
+                break;
+
+            case ('pegawai'):
+                $form_pending_review = Answer::where('status', 'PENDING_REVIEW')
+                    ->where('created_by', $user->id)
+                    ->paginate(5, ['*'], 'pending_review');
+                $form_pending_approval = Answer::where('status', 'PENDING_APPROVAL')
+                    ->where('created_by', $user->id)
+                    ->paginate(5, ['*'], 'pending_approval');
+                $form_approved = Answer::where('status', 'APPROVED')
+                    ->paginate(5, ['*'], 'form_approved');
+                $form_rejected = Answer::where('status', 'REJECTED')
+                    ->where('created_by', $user->id)
+                    ->paginate(5, ['*'], 'rejected')
+                    ->appends(request()->except('rejected'));
+                break;
+
+            default:
+                break;
+        }
+
+
+
+        return view('safety-behavior-checklists.safety-behavior-checklist-index',
+        ['safetyList' => $data, 'answers' => $answers, 'companies' => $companies],
+        compact('form_pending_review', 'form_pending_approval', 'form_approved', 'form_rejected'));
     }
 
     /**
@@ -361,7 +461,34 @@ class SafetyBehaviorChecklistController extends Controller
 
     private function calculateSafetyIndexPercentage(Company $company, $year)
     {
+        $answers = Answer::select('safety_index')
+            ->where('company_id', $company->id)
+            ->whereYear('date_finding', $year)
+            ->get();
 
+        // Your logic to calculate the safety index percentage based on the data in $answers
+        // For example, you may iterate through $answers, extract the 'safety_index' value, and perform the calculations here.
+        // Replace the following example with your actual calculation logic.
+
+        $totalSafetyIndex = 0;
+        $totalCount = 0;
+
+        foreach ($answers as $answer) {
+            $safetyIndex = $answer->safety_index;
+            if (is_numeric($safetyIndex)) {
+                $totalSafetyIndex += $safetyIndex;
+                $totalCount++;
+            }
+        }
+
+        // Avoid division by zero
+        if ($totalCount === 0) {
+            return 0;
+        }
+
+        // Calculate the average safety index percentage
+        $averageSafetyIndex = $totalSafetyIndex / $totalCount;
+        return $averageSafetyIndex;
     }
 
 }

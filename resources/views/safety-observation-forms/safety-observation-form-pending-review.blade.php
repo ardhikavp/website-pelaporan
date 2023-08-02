@@ -11,7 +11,7 @@
     </div>
     <br>
     @if (count($form_pending_review) > 0)
-    <table class="table table-responsive table-bordered scroller" id="mytable" width="100%" cellspacing="0">
+    <table class="table table-bordered scroller" id="mytable" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th style="width: 10%;">Nomor Laporan</th>

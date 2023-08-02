@@ -118,6 +118,31 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                <div class="form-group">
+                                    <label for="user_id">Created By</label>
+                                    <input type="text" name="user_id" id="user_id" class="form-control"
+                                        value="{{ $answer->user->name }}" readonly>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="reviewed_by">Reviewed By</label>
+                                    <input type="text" name="reviewed_by" id="reviewed_by" class="form-control"
+                                        value="{{ $answer->reviewedBy ? $answer->reviewedBy->name : '-' }}"
+                                        readonly>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="approved_by">Approved By</label>
+                                    <input type="text" name="approved_by" id="approved_by" class="form-control"
+                                        value="{{ $answer->approvedBy ? $answer->approvedBy->name : '-' }}"
+                                        readonly>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="status">Status</label>
+                                    <input type="text" name="status" id="status" class="form-control"
+                                        value="{{ $answer->status }}" readonly>
+                                </div>
                             </div>
                         </form>
                         <div class="form-group">
