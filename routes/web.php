@@ -47,7 +47,8 @@ Route::middleware(['auth'])->prefix('dashboard/users')->group(function () {
 });
 
 Route::middleware(['auth'])->prefix('dashboard')->group(function () {
-    Route::get('/mark-as-read', 'App\Http\Controllers\NotificationController@markAsRead')->name('mark-as-read');
+    Route::post('/notifications/mark-all-as-read', 'NotificationController@markAllAsRead')->name('notifications.markAllAsRead');
+    Route::get('/notifications/mark-as-read/{id}', 'NotificationController@markAsRead')->name('notifications.markAsRead');
     Route::post('/mark-notification-as-read', 'NotificationController@markNotificationAsRead')->name('mark-notification-as-read');
 
     // Route::get('notifications', [NotificationController::class,'notification']);
@@ -82,29 +83,9 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
         Route::get('laporan/{safety_observation_form}/generate', [PdfGeneratorController::class, 'downloadSafetyObservation'])->name('laporan-pdf-generator.download_so_report');
         // Route:get('safety-observation-forms/')
     });
-// Route::middleware(['auth'])->prefix('dashboard/safety-observation-forms')->group(function () {
-//     Route::get('/approved-table-data', 'SafetyObservationFormController@getApprovedTableData');
-//     Route::get('/pending-review-table-data', 'SafetyObservationFormController@getPendingReviewTableData');
-//     Route::get('/pending-approve-table-data', 'SafetyObservationFormController@getPendingApproveTableData');
-//     Route::get('/rejected-table-data', 'SafetyObservationFormController@getRejectedTableData');
-    // Add more routes for other tables as needed
-// });
 
-// Route::middleware(['auth', 'pegawai'])->prefix('dashboard')->group(function(){
-//     Route::resource('profile', ProfileController::class);
-//     Route::resource('safety-observation-forms', SafetyObservationFormController::class)->only(['create', 'stpre', 'edit']);
-// });
-
-// Route::middleware(['auth', 'SHE'])->prefix('dashboard')->group(function(){
-//     Route::resource('profile', ProfileController::class);
-//     Route::resource('location', LocationController::class)->only(['create', 'stpre', 'edit']);
-//     Route::resource('companies', CompanyController::class)->only(['create', 'stpre', 'edit']);
-//     Route::resource('safety-behavior-checklist', SafetyBehaviorChecklistController::class)->only(['create', 'stpre', 'edit']);
-//     Route::resource('safety-observation-forms', SafetyObservationFormController::class)->only(['create', 'stpre', 'edit']);
-// });
-
-// Route::middleware(['auth', 'manager'])->prefix('dashboard')->group(function(){
-//     Route::resource('profile', ProfileController::class);
-//     Route::resource('safety-behavior-checklist', SafetyBehaviorChecklistController::class)->only(['create', 'stpre', 'edit']);
-//     Route::resource('safety-observation-forms', SafetyObservationFormController::class)->only(['create', 'stpre', 'edit']);
-// });
+    Route::middleware(['auth', 'admin'])->prefix('dashboard')->group(function () {
+            Route::resource('users', UserController::class);
+            Route::resource('location', LocationController::class);
+            Route::resource('companies', CompanyController::class);
+        });

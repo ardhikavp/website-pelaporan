@@ -69,7 +69,7 @@
                                 class="btn btn-sm btn-primary my-1"><i class="fas fa-check"></i></a>
                         @endcan
                         @can('give-safety-observation-approve', $form)
-                            <a href="{{ route('safety-observation-forms.approve-by-manager', [' ' => $form->id]) }}"
+                            <a href="{{ route('safety-observation-forms.approve-by-manager', ['safety_observation_form' => $form->id]) }}"
                             class="btn btn-sm btn-primary my-1"><i class="fas fa-clipboard-check"></i></i></a>
                         @endcan
                         @can('delete-safety-observation-form', $form)

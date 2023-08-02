@@ -131,6 +131,8 @@
     <script src="{{ asset('template/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('template/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
     <script src="{{ asset('template/vendor/jquery/jquery.slim.min.js') }}"></script>
+
+    {{-- <script src="{{ asset('template/vendor/chart.js/chart.min.js') }}"></script> --}}
     <!-- Add jQuery -->
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
 
@@ -138,22 +140,7 @@
     <script src="{{ asset('template/js/sb-admin-2.min.js') }}"></script>
 
     @stack('body-scripts')
-    <script>
-    // Add a click event listener to the notification dropdown items
-    document.querySelectorAll('.notification-item').forEach(item => {
-        item.addEventListener('click', function (event) {
-            event.stopPropagation(); // Prevent the dropdown from closing
-        });
-    });
 
-    // Add a click event listener to the document to close the dropdown when clicking outside
-    document.addEventListener('click', function () {
-        const dropdown = document.getElementById('alertsDropdown');
-        if (dropdown.getAttribute('aria-expanded') === 'true') {
-            dropdown.click();
-        }
-    });
-    </script>
 </body>
 
 </html>

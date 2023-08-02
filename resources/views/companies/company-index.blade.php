@@ -16,7 +16,7 @@
                                     <th style="width: 10%;" class="text-center">ID</th>
                                     <th style="width: 20%;" class="text-center">Perusahaan</th>
                                     <th style="width: 10%;" class="text-center">Jumlah Karyawan</th>
-                                    <th style="width: 20%;" class="text-center">Safety Index</th>
+                                    {{-- <th style="width: 20%;" class="text-center">Safety Index</th> --}}
                                     <th style="width: 20%;" class="text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -26,7 +26,7 @@
                                         <td class="text-center">{{ $company->id }}</td>
                                         <td>{{ $company->company }}</td>
                                         <td class="text-center">{{ $company->users_count }}</td>
-                                        <td> </td>
+                                        {{-- <td>{{ $safetyIndex->company }}%</td> --}}
                                         <td>
                                             <a href="{{ route('companies.edit', $company) }}" class="btn btn-sm btn-primary">Edit</a>
                                             <form action="{{ route('companies.destroy', $company) }}" method="POST" class="d-inline">

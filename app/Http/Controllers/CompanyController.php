@@ -7,21 +7,26 @@ use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Answer;
 use App\Policies\CompanyPolicy;
 
 class CompanyController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('admin');
-        $this->authorizeResource(Company::class, 'company');
-    }
 
     public function index()
     {
         $companies = Company::withCount('users')->paginate(5);
-        return view('companies.company-index', compact('companies'));
-    }
+
+        $safetyIndex = Company::leftJoin('answers', 'companies.id', '=', 'answers.company_id')
+        ->where('answers.status', 'APPROVED')
+        ->select('companies.id', DB::raw('COALESCE(AVG(answers.safety_index), 0) as average_safety_index'))
+        ->groupBy('companies.id')
+        ->get();
+
+    // dd($safetyIndex);
+
+    return view('companies.company-index', compact('safetyIndex', 'companies'));
+}
 
     public function create()
     {

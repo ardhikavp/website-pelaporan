@@ -51,15 +51,13 @@
                                         <td>{{ $companies->find($user->company_id)->company }}</td>
                                         <td>{{ $user->role }}</td>
                                         <td>
-                                            <a href="#" class="button button--primary">
-                                            <i class="bi bi-pencil-square"></i> Edit
-                                            </a>
-                                            <a href="#" class="button button--secondary">
-                                            <i class="bi bi-eye"></i> Show
-                                            </a>
-                                            <a href="#" class="button button--danger">
-                                            <i class="bi bi-trash3"></i> Delete
-                                            </a>
+                                            <a href="{{ route('users.show', $user) }}" class="btn btn-sm btn-primary">Detail</a>
+                                            <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-secondary">Edit</a>
+                                            <form action="{{ route('users.destroy', $user) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this location?')">Delete</button>
+                                            </form>
                                         </td>
                                         </tr>
                                     @endforeach

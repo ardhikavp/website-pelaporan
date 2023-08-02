@@ -75,28 +75,45 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        $users = User::findOrFail($id);
+        $user = User::findOrFail($id);
         $companies = Company::all();
 
-        return view('users.user-show', compact('users', 'companies'));
+        return view('users.user-show', compact('user', 'companies'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        $companies = Company::all();
+        return view('users.user-edit', compact('user', 'companies'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'username' => 'required|unique:users,username,' . $user->id,
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'role' => 'required|in:admin,pegawai,SHE,safety officer,safety representatif,manager maintenance',
+            'company_id' => 'required|exists:companies,id'
+        ]);
+
+        $user->update([
+            'name' => $request->name,
+            'username' => $request->username,
+            'email' => $request->email,
+            'role' => $request->role,
+            'company_id' => $request->company_id
+        ]);
+
+        return redirect()->route('users.show', $user)->with('success', 'User updated successfully.');
     }
 
     /**
