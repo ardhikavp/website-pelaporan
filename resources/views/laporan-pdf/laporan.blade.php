@@ -10,7 +10,7 @@
         }
 
         .container {
-            max-width: 100%;
+            /* max-width: 100%; commented */
             /* Adjust to accommodate the entire table */
             margin: 0 auto;
         }
@@ -45,6 +45,11 @@
         .bold {
             font-weight: bold;
         }
+
+        .table-center {
+            margin: 0 auto;
+            width: 75%;
+        }
     </style>
 </head>
 
@@ -53,7 +58,7 @@
         <div align="center">
             <h2>LAPORAN SAFETY OBSERVATION</h2>
         </div>
-        <table>
+        <table class="table-center">
             <tr>
                 <td class="bold" width="160pt">Nomor Laporan</td>
                 <td colspan="2">{{ $nomor_laporan }}</td>
