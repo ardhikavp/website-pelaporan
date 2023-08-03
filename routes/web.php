@@ -47,9 +47,6 @@ Route::middleware(['auth'])->prefix('dashboard/users')->group(function () {
 });
 
 Route::middleware(['auth'])->prefix('dashboard')->group(function () {
-    Route::post('/notifications/mark-all-as-read', 'NotificationController@markAllAsRead')->name('notifications.markAllAsRead');
-    Route::get('/notifications/mark-as-read/{id}', 'NotificationController@markAsRead')->name('notifications.markAsRead');
-    Route::post('/mark-notification-as-read', 'NotificationController@markNotificationAsRead')->name('mark-notification-as-read');
 
     // Route::get('notifications', [NotificationController::class,'notification']);
     Route::get('/chart', [ChartJSController::class, 'index']);
@@ -59,8 +56,6 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
         Route::resource('companies', CompanyController::class);
         Route::resource('safety-behavior-checklist', SafetyBehaviorChecklistController::class);
         Route::resource('safety-observation-forms', SafetyObservationFormController::class);
-
-        // Route::get('safety-observation-form/');
         Route::get('safety-observation-forms/{safety_observation_form}/review-by-she', [SafetyObservationFormController::class, 'reviewByShe'])
         ->name('safety-observation-forms.review-by-she');
         Route::put('/safety-observation-forms/{safety_observation_form}/reviewed-by-she', [SafetyObservationFormController::class, 'updateReviewedByShe'])
@@ -70,7 +65,6 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
         Route::put('/safety-observation-forms/{safety_observation_form}/approved-by-manager', [SafetyObservationFormController::class, 'updateApprovedByManager'])
         ->name('safety-observation-forms.update-approved-by-manager');
         Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
-
         Route::get('safety-behavior-checklist/{answer}/agreement-by-pic', [SafetyBehaviorChecklistController::class, 'reviewByPIC'])
         ->name('safety-behavior-checklist.review-by-pic');
         Route::put('safety-behavior-checklist/{answer}/agreed-by-pic', [SafetyBehaviorChecklistController::class, 'updateReviewedByPIC'])
@@ -79,7 +73,6 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
         ->name('safety-behavior-checklist.approve-by-manager');
         Route::put('safety-behavior-checklist/{answer}/approved-by-manager', [SafetyBehaviorChecklistController::class, 'updateApprovedBymanager'])
         ->name('safety-behavior-checklist.update-approved-by-manager');
-
         Route::get('laporan/{safety_observation_form}/generate', [PdfGeneratorController::class, 'downloadSafetyObservation'])->name('laporan-pdf-generator.download_so_report');
         Route::get('safety-behavior-checklist-report/{safety_behavior_checklist}/generate', [PdfGeneratorController::class, 'downloadSafetyBehavior'])->name('laporan-pdf-generator.download_sbc_report');
         // Route:get('safety-observation-forms/')

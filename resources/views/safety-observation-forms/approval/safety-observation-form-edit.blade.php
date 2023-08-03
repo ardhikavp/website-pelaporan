@@ -130,8 +130,8 @@
 
                                     <div class="form-group">
                                         <label for="created_by">Created By</label>
-                                        <input type="text" name="created_by" id="created_by" class="form-control"
-                                            value="{{ $form->createdBy->name}}" readonly>
+                                        <input type="text" name="created_by_name" id="created_by_name" class="form-control" value="{{ $form->createdBy->name }}" readonly>
+                                        <input type="hidden" name="created_by" id="created_by" value="{{ $form->createdBy->id }}">
                                     </div>
 
                                     <div class="form-group">

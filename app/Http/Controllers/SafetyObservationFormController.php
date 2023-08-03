@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Notifications\NeedReviewDocument;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\NewNeedReviewSafetyObservation;
+use App\Notifications\NewNeedApproveSafetyObservation;
 
 class SafetyObservationFormController extends Controller
 {
@@ -460,6 +461,10 @@ class SafetyObservationFormController extends Controller
             'reject_comment' => $rejectionComment,
             'reviewed_by' => $reviewedById
         ]);
+
+        $userToNotify = User::where('role', 'manager maintenance')->get();
+
+        Notification::send($userToNotify, new NewNeedApproveSafetyObservation($form));
 
         Session::flash('message', 'Form ' . ucfirst($action) . 'ed successfully.');
         return redirect()->route('safety-observation-forms.index');
