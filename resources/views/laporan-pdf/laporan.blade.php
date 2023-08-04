@@ -50,6 +50,11 @@
             margin: 0 auto;
             width: 75%;
         }
+
+        .table-center img {
+            display: block;
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -85,7 +90,10 @@
             </tr>
             <tr>
                 <td class="bold" width="160pt">Gambar Temuan</td>
-                <td colspan="2">&nbsp;</td>
+                <td>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj06ORgLc09irkPuj3XplptRIDCv52UUahxCGmCS8Gow&s"
+                        alt="">
+                </td>
             </tr>
             <tr>
                 <td class="bold" width="160pt">Deskripsi Gambar</td>
