@@ -90,8 +90,8 @@
             </tr>
             <tr>
                 <td class="bold" width="160pt">Gambar Temuan</td>
-                <td>
-                    <img src="{{ public_path() . "/images/" . $image_path }}" alt="">
+                <td colspan="2">
+                    <img src="{{ public_path() . '/images/' . $image_path }}" alt="">
                 </td>
             </tr>
             <tr>
