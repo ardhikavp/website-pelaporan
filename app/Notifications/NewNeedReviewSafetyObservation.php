@@ -38,9 +38,9 @@ class NewNeedReviewSafetyObservation extends Notification
     {
         $url = route('safety-observation-forms.review-by-she', ['safety_observation_form' => $this->newReview->id]);
         return (new MailMessage)
-                    ->line('Dokumen Baru Safety Observation')
-                    ->action('Review Dokumen', $url)
-                    ->line('Jangan lupa untuk memberikan komentar pada laporan.');
+            ->line('Dokumen Baru Safety Observation')
+            ->action('Review Dokumen', $url)
+            ->line('Jangan lupa untuk memberikan komentar pada laporan.');
     }
 
     /**

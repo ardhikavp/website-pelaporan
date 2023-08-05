@@ -91,8 +91,7 @@
             <tr>
                 <td class="bold" width="160pt">Gambar Temuan</td>
                 <td>
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj06ORgLc09irkPuj3XplptRIDCv52UUahxCGmCS8Gow&s"
-                        alt="">
+                    <img src="{{ public_path() . "/images/" . $image_path }}" alt="">
                 </td>
             </tr>
             <tr>
