@@ -26,7 +26,8 @@ class PdfGeneratorController extends Controller
             'jangka_menengah' => $form->middle_term_recommendation,
             'jangka_panjang' => $form->long_term_recommendation,
             'komentar' => 'testaksjdasdashdkjahsdkjahskjdhakjshdkja shdhasdhaksdhakjshdkasjhdkashdkashdkjashdkahsdkhaskjdhakshdkashdahsk dhaskdhajkshdkashdkahskdashdjhaskjdhaskjdhkahsd akjdslkajskljd asdkajls djakldsj aj sdlkajsd lkajs dlajsd laksjd lkajsdlk asjd klajdlkas jdlkasj dlkasj dlkajsd lkasjdla skdjlaks jdlkasjd lkajs dlkajsd lkajskdlj aslkdj alksjd alksjd lakjsd laksjd alkjdlaksjd lkja akjd klasjdkla sjdaklj dlaksjd lasjd  aksljd alskjdl asdjk',
-            'tanggal_penyelesaian' => '21 juni 22323'
+            'tanggal_penyelesaian' => '21 juni 22323',
+            'image_path' => 'img.png'
         ];
 
         $pdf = $pdf->loadView('laporan-pdf.laporan', $data);
