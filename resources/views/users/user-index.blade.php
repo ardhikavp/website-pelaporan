@@ -28,7 +28,8 @@
                             </div>
                         </div>
                         <div class="card-body">
-                                    <table class="table table-bordered table-responsive sortable">
+                            <div class="table-responsive">
+                                <table class="table" >
                                     <thead>
                                     <tr>
                                         <th style="width: 20%">Nama</th>
@@ -65,6 +66,7 @@
                                 </table>
                             {{ $users->links() }}
 
+                            </div>
                         </div>
                     </div>
                 </div>

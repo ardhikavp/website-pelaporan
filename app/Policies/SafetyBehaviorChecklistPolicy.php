@@ -15,6 +15,12 @@ class SafetyBehaviorChecklistPolicy
 
     // }
 
+    public function viewFormSBC(User $user, Answer $answer)
+    {
+        return (($user->company_id === $answer->company_id && ($user->role === 'safety officer' || $user->role === 'safety representatif'))
+        || $user->role === 'SHE' || $user->role === 'admin' || $user->role === 'manager maintenance')
+        && ($answer->status === 'APPROVED' || $answer->status === 'REJECTED');
+    }
 
     public function editFormSBC(User $user, Answer $answer)
     {

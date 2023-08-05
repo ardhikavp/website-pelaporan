@@ -6,6 +6,7 @@
     <link rel="icon" href="/logo/safe_surround_check.png" type="image/x-icon">
     @include('layouts.head.head')
     @vite(['resources/sass/app.scss'])
+    
     @stack('head-scripts')
     <style>
         .logo-brand-icon img {

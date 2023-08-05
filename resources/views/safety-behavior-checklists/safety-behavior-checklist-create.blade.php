@@ -23,7 +23,18 @@
                                         </div>
                                         <div class="form-group fw-bold">
                                             <label for="operation_name">Nama Operasi</label>
-                                            <input type="text" name="operation_name" id="operation_name" class="form-control" value="" required>
+                                            <div class="input-group">
+                                                <select id="operation_name_select" class="form-control" style="width: 50%;">
+                                                    <option value="">Select an option</option>
+                                                    @foreach($operationNames as $operationName)
+                                                        <option value="{{ $operationName }}">{{ $operationName }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <input type="text" id="operation_name_input" class="form-control" placeholder="Search..." style="display: none; width: 50%;">
+                                            </div>
+                                            <input type="hidden" id="operation_name" name="operation_name">
+
+                                            <button type="button" id="toggleInputButton" class="btn btn-secondary mt-2" data-toggle="input">Tambah Baru</button>
                                         </div>
                                         <div class="form-group  fw-bold" style="margin-bottom: 20px;">
                                             <label for="company">Perusahaan</label>
@@ -113,5 +124,50 @@
             </div>
         </div>
     </div>
+@pushOnce('body-scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const input = document.getElementById('operation_name_input');
+        const select = document.getElementById('operation_name_select');
+        const hiddenInput = document.getElementById('operation_name');
+        const toggleButton = document.getElementById('toggleInputButton');
+
+        input.style.display = 'none';
+
+        toggleButton.addEventListener('click', function() {
+            if (input.style.display === 'none') {
+                input.style.display = 'block';
+                select.style.display = 'none';
+                hiddenInput.disabled = true;
+                hiddenInput.value = '';
+                toggleButton.innerText = 'Pilih Pekerjaan yang Telah Ada';
+                toggleButton.setAttribute('data-toggle', 'select');
+            } else {
+                input.style.display = 'none';
+                select.style.display = 'block';
+                hiddenInput.disabled = false;
+
+                if (hiddenInput.value.trim() !== '') {
+                    select.value = hiddenInput.value;
+                } else {
+                    select.value = ''; // Reset the select value if hiddenInput is empty
+                }
+
+                toggleButton.innerText = 'Tambah Baru';
+                toggleButton.setAttribute('data-toggle', 'input');
+            }
+        });
+
+        select.addEventListener('change', function() {
+            hiddenInput.value = select.value;
+        });
+
+        input.addEventListener('input', function() {
+            hiddenInput.value = input.value;
+        });
+    });
+</script>
+
+@endPushOnce
 @endsection
 

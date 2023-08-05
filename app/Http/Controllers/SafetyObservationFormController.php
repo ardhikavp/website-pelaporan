@@ -293,8 +293,8 @@ class SafetyObservationFormController extends Controller
         $year = $now->format('Y');
 
         // Ambil laporan terakhir dalam bulan tersebut
-        $lastReport = SafetyObservationForm::whereMonth('created_at', '=', $month)
-            ->whereYear('created_at', '=', $year)
+        $lastReport = SafetyObservationForm::whereMonth('date_finding', '=', $month)
+            ->whereYear('date_finding', '=', $year)
             ->orderByDesc('id')
             ->first();
 

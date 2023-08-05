@@ -46,6 +46,23 @@
         </div>
     </li>
 
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseHistory"
+            aria-expanded="true" aria-controls="collapseHistory">
+            <i class="fas fa-file"></i>
+            <span>Riwayat</span>
+        </a>
+        <div id="collapseHistory" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Jenis Riwayat:</h6>
+                <a class="collapse-item" href="#">Safety Observation</a>
+                <a class="collapse-item" href="#">Safety Behavior Checklist</a>
+                <a class="collapse-item" href="#">Safety Index</a>
+            </div>
+        </div>
+    </li>
+
     <!-- Nav Item - Utilities Collapse Menu -->
     @if(auth()->user()->role == 'admin')
     <li class="nav-item">

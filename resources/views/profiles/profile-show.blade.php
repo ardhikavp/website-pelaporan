@@ -15,10 +15,10 @@
             </div>
             @endif
             <div class="card-header">
-                <h3>Profile <a href="{{ route('profile.edit', ['profile' => $user->id]) }}" class="btn btn-primary float-right">Edit</a></h3>
+                <h3>Profile</h3>
             </div>
             <div class="card-body">
-                <h4>User Information</h4>
+                <h4>User Information <a href="{{ route('profile.edit', ['profile' => $user->id]) }}" class="btn-sm btn-primary float-right">Edit</a></h4>
                 <div class="form-group">
                     <label for="name">Nama Lengkap</label>
                     <input type="text" name="name" id="name" class="form-control" value="{{ $user->name }}" readonly>
@@ -36,6 +36,15 @@
                     <input type="text" name="role" id="role" class="form-control" value="{{ $user->role }}" readonly>
                 </div>
 
+                <div class="mt-4">
+                    <a href="{{ route('password.request') }}" class="btn btn-primary">
+                    Reset Password
+                    </a>
+                    <a href="{{ route('password.request') }}" class="btn btn-primary">
+                        Reset Password
+                        </a>
+                </div>
+
                 @if ($company)
                     <h4>Informasi Perusahaan</h4>
                     <div class="form-group">
@@ -43,12 +52,6 @@
                         <input type="text" name="company" id="company" class="form-control" value="{{ $company->company }}" readonly>
                     </div>
                 @endif
-
-                <div class="mt-4">
-                    <a href="{{ route('password.request') }}" class="btn btn-primary">
-                        Reset Password
-                    </a>
-                </div>
             </div>
         </div>
     </div>

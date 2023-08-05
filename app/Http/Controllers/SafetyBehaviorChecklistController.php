@@ -135,11 +135,16 @@ class SafetyBehaviorChecklistController extends Controller
         $data = SafetyBehaviorChecklist::all();
         $answers = Answer::all();
         $companies = Company::all();
+        $operationNames = Answer::pluck('operation_name')->unique();
+
+        // Get unique operation names using the groupBy method
+        $uniqueOperationNames = Answer::groupBy('operation_name')->pluck('operation_name');
 
         return view('safety-behavior-checklists.safety-behavior-checklist-create', [
             'safetyList' => $data,
             'answers' => $answers,
-            'companies' => $companies
+            'companies' => $companies,
+            'operationNames' => $uniqueOperationNames, // Use the unique operation names in the view
         ]);
     }
 
@@ -194,8 +199,8 @@ class SafetyBehaviorChecklistController extends Controller
         $year = $now->format('Y');
 
         // Ambil laporan terakhir dalam bulan tersebut
-        $lastReport = Answer::whereMonth('created_at', '=', $month)
-            ->whereYear('created_at', '=', $year)
+        $lastReport = Answer::whereMonth('date_finding', '=', $month)
+            ->whereYear('date_finding', '=', $year)
             ->orderByDesc('id')
             ->first();
 
