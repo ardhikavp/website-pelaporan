@@ -19,7 +19,7 @@
         @page {
             size: A4;
             /* You can adjust to other page sizes like "letter", "legal", etc. */
-            margin: 20mm;
+            margin: 5mm;
             /* Adjust margins as needed */
         }
 
@@ -35,7 +35,7 @@
             padding: 8px;
             text-align: left;
             /* Set fixed widths for the table cells */
-            width: 120pt;
+            width: 150pt;
         }
 
         .center {
