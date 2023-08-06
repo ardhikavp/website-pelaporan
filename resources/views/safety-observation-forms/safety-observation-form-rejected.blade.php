@@ -59,32 +59,31 @@
                     </td>
                     <td style="font-size: 14px;">{{ $form->approvedBy?->name ?? 'NOT APPROVED' }}
                     </td>
-                    <td>
+                    <td class="text-center " style="display: flex;">
                         <a href="{{ route('safety-observation-forms.show', ['safety_observation_form' => $form->id]) }}"
-                            class="btn btn-sm btn-info my-1"><i class="fas fa-eye"></i></a><br>
+                            class="btn" style="background-color: #89c4d1; color: #373737; width: auto; padding: auto; height:auto; margin: 1px;">
+                            <i class="fas fa-eye"></i> Lihat</a>
                         @can('edit-safety-observation-form', $form)
-                            <!-- Assuming $form is the Safety Observation Form you want to edit -->
                             <a href="{{ route('safety-observation-forms.edit', ['safety_observation_form' => $form->id]) }}"
-                                class="btn btn-sm btn-secondary my-1"><i class="fas fa-pencil-alt"></i></a><br>
-                            {{-- <a href="{{ route('safety-observation-forms.edit') }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil-alt"></i></a> --}}
+                                class="btn" style="background-color: #485457; color: #ffffff; width: auto; padding: auto; height:auto; margin: 1px;"><i class="fas fa-pencil-alt"></i> Edit</a>
                         @endcan
                         @can('give-safety-observation-review', $form)
                             <a href="{{ route('safety-observation-forms.review-by-she', ['safety_observation_form' => $form->id]) }}"
-                                class="btn btn-sm btn-primary my-1"><i class="fas fa-check"></i></a><br>
+                                class="btn"  style="background-color: #ddeb3f; color: #000000; width: auto; padding: auto; height:auto; margin: 1px;"><i class="fas fa-check"> Review</i></a>
                         @endcan
                         @can('give-safety-observation-approve', $form)
                             <a href="{{ route('safety-observation-forms.approve-by-manager', ['safety_observation_form' => $form->id]) }}"
-                            class="btn btn-sm btn-primary my-1"><i class="fas fa-clipboard-check"></i></i></a><br>
+                            class="btn" style="background-color: #274cd3; color: #ffffff; width: auto; padding: auto; height:auto; margin: 1px;"><i class="fas fa-clipboard-check"></i> Approve</a>
                         @endcan
                         @can('delete-safety-observation-form', $form)
                             <form action="{{ route('safety-observation-forms.destroy', $form->id) }}"
                                 method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger my-1"
+                                <button type="submit" class="btn" style="background-color: #FF0000; color: #ffffff; width: auto; padding: auto; height:auto; margin: 1px;"
                                     onclick="return confirm('Are you sure you want to delete this item?')"><i
-                                        class="fas fa-trash"></i></button>
-                            </form><br>
+                                        class="fas fa-trash"></i> Delete</button>
+                            </form>
                         @endcan
                     </td>
                 </tr>

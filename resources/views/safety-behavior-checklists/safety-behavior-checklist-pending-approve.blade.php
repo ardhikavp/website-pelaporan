@@ -55,7 +55,7 @@
                         @can('approve-safety-behavior-checklist', $answer)
                         <a href="{{ route('safety-behavior-checklist.approve-by-manager', ['answer' => $answer->id]) }}"
                             class="btn" style="background-color: #274cd3; color: #ffffff; width: auto; padding: auto; height:auto; margin: 1px;">
-                            <i class="bi bi-pass"></i> Approve</a>
+                            <i class="fas fa-clipboard-check"></i></i> Approve</a>
                         @endcan
                     </td>
                 </tr>

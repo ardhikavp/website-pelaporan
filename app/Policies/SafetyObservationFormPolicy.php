@@ -33,4 +33,9 @@ class SafetyObservationFormPolicy
     {
         return $user->role === 'manager maintenance' && $form->status === 'PENDING_APPROVAL';
     }
+
+    public function exportForm(User $user,SafetyObservationForm $form)
+    {
+        return $user->role === 'admin' && $form->status === 'APPROVED';
+    }
 }

@@ -112,7 +112,7 @@
                                     $userRole = Auth::user()->role; // Assuming you have a 'role' column in your users table representing the user's role.
                                 @endphp
                                 @if ($userRole == 'SHE')
-                                <a href="{{ route('safety-behavior-checklist.create') }}" class="btn btn-primary">Catat <i>Safety Behavior Checklist</i> Baru</a>
+                                <a href="{{ route('safety-behavior-checklist.create') }}" class="btn btn-primary btn-sm">Catat <i>Safety Behavior Checklist</i> Baru</a>
                                 @endif
                             </div>
                             <div class="btn-group btn-group-sm d-flex" role="group" aria-label="">
