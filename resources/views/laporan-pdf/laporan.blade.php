@@ -138,14 +138,14 @@
             <tr>
             </tr>
             <tr>
-                <td class="bold" width="160pt">Nama</td>
-                <td class="bold" width="287pt">Nama</td>
-                <td class="bold" width="160pt">Nama</td>
+                <td class="bold" width="160pt">{{ $approved_by }}</td>
+                <td class="bold" width="287pt">{{ $reviewed_by }}</td>
+                <td class="bold" width="160pt">{{ $created_by }}</td>
             </tr>
             <tr>
-                <td class="bold" width="160pt">Posisi</td>
-                <td class="bold" width="287pt">Posisi</td>
-                <td class="bold" width="160pt">Posisi</td>
+                <td class="bold" width="160pt">{{ $approver_role }}</td>
+                <td class="bold" width="287pt">{{ $reviewer_role }}</td>
+                <td class="bold" width="160pt">{{ $creator_role }}</td>
             </tr>
             <tr>
                 <td class="center" colspan="3">
