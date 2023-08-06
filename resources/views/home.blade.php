@@ -26,6 +26,9 @@
                     <div class="col-md-6">
                         <canvas id="barChart" width="50%" height="50%"></canvas>
                     </div>
+                    <div>
+                        <canvas id="ucLineChart"></canvas>
+                    </div>
                 </div>
                 <div class="col">
                     <div class="card">
@@ -83,10 +86,16 @@
     </div>
     </div>
     @pushOnce('body-scripts')
+
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
             var chartData = @json($chartData);
+            var configUC = @json($configUC);
+
+            var ctxUC = document.getElementById('ucLineChart').getContext('2d');
+            var myChartUC = new Chart(ctxUC, configUC);
         </script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
             const labels = {!! json_encode($safetyObservationsPerLocation->pluck('location')) !!};
             const dataPerLocs = {!! json_encode($safetyObservationsPerLocation->pluck('total')) !!};
@@ -98,7 +107,7 @@
                 var data = {
                     labels: labels,
                     datasets: [{
-                        label: 'Sample Bar Chart',
+                        label: 'Laporan Safety Observation',
                         data: [...dataPerLocs], // Replace this with your data
                         backgroundColor: 'rgba(75, 192, 192, 0.2)', // Bar fill color
                         borderColor: 'rgba(75, 192, 192, 1)', // Border color
