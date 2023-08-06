@@ -72,12 +72,12 @@ class SafetyBehaviorChecklistController extends Controller
             case ('safety representatif'):
                 $companyId = $user->company->id;
                 $form_pending_review = Answer::where('status', 'PENDING_REVIEW')
-                    ->whereHas('answers', function ($query) use ($companyId) {
+                    ->whereHas('company', function ($query) use ($companyId) {
                         $query->where('company_id', $companyId);
                     })
                     ->paginate(5, ['*'], 'pending_review');
                 $form_pending_approval = Answer::where('status', 'PENDING_APPROVAL')
-                    ->whereHas('answers', function ($query) use ($companyId) {
+                    ->whereHas('company', function ($query) use ($companyId) {
                         $query->where('company_id', $companyId);
                     })
                     ->paginate(5, ['*'], 'pending_approval');
@@ -88,12 +88,12 @@ class SafetyBehaviorChecklistController extends Controller
             case ('safety officer'):
                 $companyId = $user->company->id;
                 $form_pending_review = Answer::where('status', 'PENDING_REVIEW')
-                    ->whereHas('answers', function ($query) use ($companyId) {
+                    ->whereHas('company', function ($query) use ($companyId) {
                         $query->where('company_id', $companyId);
                     })
                     ->paginate(5, ['*'], 'pending_review');
                 $form_pending_approval = Answer::where('status', 'PENDING_APPROVAL')
-                    ->whereHas('answers', function ($query) use ($companyId) {
+                    ->whereHas('company', function ($query) use ($companyId) {
                         $query->where('company_id', $companyId);
                     })
                     ->paginate(5, ['*'], 'pending_approval');

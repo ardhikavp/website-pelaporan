@@ -36,6 +36,8 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('give-safety-observation-review', [SafetyObservationFormPolicy::class, 'giveReview']);
         Gate::define('give-safety-observation-approve', [SafetyObservationFormPolicy::class, 'giveApprove']);
 
+        Gate::define('export-safety-behavior-checklist', [SafetyBehaviorChecklistPolicy::class, 'exportFormSBC']);
+        Gate::define('view-safety-behavior-checklist', [SafetyBehaviorChecklistPolicy::class, 'viewFormSBC']);
         Gate::define('edit-safety-behavior-checklist', [SafetyBehaviorChecklistPolicy::class, 'editFormSBC']);
         Gate::define('delete-safety-behavior-checklist', [SafetyBehaviorChecklistPolicy::class, 'deleteFormSBC']);
         Gate::define('give-safety-behavior-checklist-review', [SafetyBehaviorChecklistPolicy::class, 'giveReviewSBC']);

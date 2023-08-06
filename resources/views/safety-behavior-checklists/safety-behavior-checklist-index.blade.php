@@ -84,6 +84,12 @@
         .custom-modal h1 {
             font-size: 1.5rem;
         }
+        .fas {
+            font-size: 1rem;
+        }
+        .fas.fa-fw {
+            width: 0.5rem;
+        }
     </style>
 @endPushOnce
 <div class="container">

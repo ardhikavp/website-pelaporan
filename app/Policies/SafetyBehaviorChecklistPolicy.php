@@ -19,7 +19,7 @@ class SafetyBehaviorChecklistPolicy
     {
         return (($user->company_id === $answer->company_id && ($user->role === 'safety officer' || $user->role === 'safety representatif'))
         || $user->role === 'SHE' || $user->role === 'admin' || $user->role === 'manager maintenance')
-        && ($answer->status === 'APPROVED' || $answer->status === 'REJECTED');
+        ;
     }
 
     public function editFormSBC(User $user, Answer $answer)
@@ -41,4 +41,10 @@ class SafetyBehaviorChecklistPolicy
     {
         return $user->role === 'manager maintenance' && $answer->status === 'PENDING_APPROVAL';
     }
+
+    public function exportFormSBC(User $user, Answer $answer)
+    {
+        return $user->role === 'admin' && $answer->status === 'APPROVED';
+    }
+
 }

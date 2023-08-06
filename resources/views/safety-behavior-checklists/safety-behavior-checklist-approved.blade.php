@@ -19,7 +19,7 @@
                 <tr>
                     <th style="width: 15%;">Nomor Laporan</th>
                     <th style="width: 15%;">Pekerjaan</th>
-                    <th style="width: 30%;">Perusahaan</th>
+                    <th style="width: 2%;">Perusahaan</th>
                     <th style="width: 20%;">Safety Index</th>
                     <th>Status</th>
                     <th style="width: 20%;">Aksi</th>
@@ -33,20 +33,37 @@
                     <td>{{ $companies->find($answer->company_id)->company }}</td>
                     <td>{{ $answer->safety_index }}%</td>
                     <td>{{ $answer->status }}</td>
-                    <td>
-                        <a href="{{ route('safety-behavior-checklist.show', $answer->id) }}" class="btn btn-sm btn-info"><i class="fas fa-eye" title="Lihat"></i></a>
-                        <a href="{{ route('safety-behavior-checklist.edit', $answer->id) }}" class="btn btn-sm btn-secondary"><i class="fas fa-pencil-alt" title="Edit"></i></a>
-                        <form action="{{ route('safety-behavior-checklist.destroy', $answer) }}" method="POST" class="btn btn-sm btn-danger">
+                    <td class="text-center " style="display: flex;">
+                        @can('view-safety-behavior-checklist', $answer)
+                        <a href="{{ route('safety-behavior-checklist.show', $answer->id) }}" class="btn" style="background-color: #89c4d1; color: #373737; width: auto; padding: auto; height:auto; margin: 1px;">
+                            <i class="fas fa-folder-open" title="Lihat"> Lihat </i></a>
+                        @endcan
+                        @can('edit-safety-behavior-checklist', $answer)
+                        <a href="{{ route('safety-behavior-checklist.edit', $answer->id) }}" class="btn" style="background-color: #485457; color: #ffffff; width: auto; padding: auto; height:auto; margin: 1px;">
+                            <i class="fas fa-pencil-alt" title="Edit"> Edit</i></a>
+                        @endcan
+                        @can('delete-safety-behavior-checklist', $answer)
+                        <form action="{{ route('safety-behavior-checklist.destroy', $answer) }}" method="POST" >
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this item?')"><i class="fas fa-trash-alt" title="Delete"></i></button>
+                            <button type="submit" class="btn" style="background-color: #FF0000; color: #ffffff; width: auto; padding: auto; height:auto; margin: 1px;" onclick="return confirm('Are you sure you want to delete this item?')"><i class="fas fa-trash-alt" title="Delete"> Delete</i></button>
                         </form>
+                        @endcan
+                        @can('review-safety-behavior-checklist', $answer)
                         <a href="{{ route('safety-behavior-checklist.review-by-pic', ['answer' => $answer->id]) }}"
-                            class="btn btn-sm btn-primary my-1"><i class="bi bi-pass"></i></a>
+                            class="btn" style="background-color: #cd9f4b; color: #000000; width: auto; padding: auto; height:auto; margin: 1px;">
+                            <i class="bi bi-pass"></i> Tinjau</a>
+                        @endcan
+                        @can('approve-safety-behavior-checklist', $answer)
                         <a href="{{ route('safety-behavior-checklist.approve-by-manager', ['answer' => $answer->id]) }}"
-                            class="btn btn-sm btn-primary my-1"><i class="bi bi-pass"></i></a>
+                            class="btn" style="background-color: #274cd3; color: #ffffff; width: auto; padding: auto; height:auto; margin: 1px;">
+                            <i class="bi bi-pass"></i> Approve</a>
+                        @endcan
+                        @can('export-safety-behavior-checklist', $answer)
                         <a href="{{ route('laporan-pdf-generator.download_sbc_report', ['safety_behavior_checklist' => $answer->id]) }}"
-                            class="btn btn-sm btn-primary my-1"><i class="fas fa-file-download"></i></a>
+                            class="btn" style="background-color: #102ce0; color: #ffffff; width: auto; padding: auto; height:auto; margin: 1px;">
+                            <i class="fas fa-file-download"> Export</i></a>
+                        @endcan
                     </td>
                 </tr>
                 @endforeach
