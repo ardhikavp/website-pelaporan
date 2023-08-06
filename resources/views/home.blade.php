@@ -19,15 +19,20 @@
                         </div>
                     @endif
                     </div>
-                    <div class="row"></div>
+                    <div class="row">
+                        <div class="btn-group btn-group-sm d-flex" role="group" aria-label="">
+                            <button type="button" class="btn btn-primary" onclick="showCanvas('barChart')"><strong> Laporan Safety Observation Tiap Lokasi</strong></button>
+                            <button type="button" class="btn btn-primary" onclick="showCanvas('ucLineChart')"><strong>Laporan Unsafe Condition</strong></button>
+                        </div>
+                    </div>
                     <div class="col-md-6">
                         <canvas id="pieChart" width="50%" height="50%"></canvas>
                     </div>
                     <div class="col-md-6">
-                        <canvas id="barChart" width="50%" height="50%"></canvas>
+                        <canvas id="barChart" width="50%" height="50%" style="display: block;"></canvas>
                     </div>
                     <div>
-                        <canvas id="ucLineChart"></canvas>
+                        <canvas id="ucLineChart" style="display: none;"></canvas>
                     </div>
                 </div>
                 <div class="col">
@@ -91,10 +96,10 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
             var chartData = @json($chartData);
-            var configUC = @json($configUC);
+            var configLineGraph = @json($configLineGraph);
 
             var ctxUC = document.getElementById('ucLineChart').getContext('2d');
-            var myChartUC = new Chart(ctxUC, configUC);
+            var myChartUC = new Chart(ctxUC, configLineGraph);
         </script>
         <script>
             const labels = {!! json_encode($safetyObservationsPerLocation->pluck('location')) !!};
@@ -139,5 +144,21 @@
                 });
             });
         </script>
+<script>
+    function showCanvas(canvasId) {
+    var allCanvas = document.querySelectorAll('canvas'); // Temukan semua elemen canvas
+
+    // Sembunyikan semua elemen canvas
+    allCanvas.forEach(function(canvas) {
+        canvas.style.display = 'none';
+    });
+
+    // Tampilkan elemen canvas yang sesuai dengan ID yang diberikan
+    var targetCanvas = document.getElementById(canvasId);
+    if (targetCanvas) {
+        targetCanvas.style.display = 'block';
+    }
+}
+</script>
     @endPushOnce
 @endsection

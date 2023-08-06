@@ -95,59 +95,77 @@ class HomeController extends Controller
         }
 
         //Unsafe Condition Grafik
-        $dataUC = DB::table('safety_observation_forms')
-        ->select(DB::raw('DATE_FORMAT(date_finding, "%Y-%m") as month'), DB::raw('COUNT(*) as total'))
-        ->where('safety_observation_type', 'unsafe_condition')
+        $dataLineGraphSO = DB::table('safety_observation_forms')
+        ->select(
+            DB::raw('DATE_FORMAT(date_finding, "%Y-%m") as month'),
+            DB::raw('SUM(CASE WHEN safety_observation_type = "unsafe_action" THEN 1 ELSE 0 END) as unsafe_action_total'),
+            DB::raw('SUM(CASE WHEN safety_observation_type = "unsafe_condition" THEN 1 ELSE 0 END) as unsafe_condition_total'),
+            DB::raw('SUM(CASE WHEN safety_observation_type = "bad_housekeeping" THEN 1 ELSE 0 END) as bad_housekeeping_total')
+        )
         ->where('status', 'APPROVED')
         ->groupBy('month')
         ->orderBy('month')
         ->get();
 
-        // dd($dataUC);
+        $labelsLG = [];
+        $unsafeActionData = [];
+        $unsafeConditionData = [];
+        $badHousekeepingData = [];
 
-    $labelsUC = [];
-    $jumlahUnsafeCondPerBulan = [];
+        $bulanNames = [
+            1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
+            5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus',
+            9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember',
+        ];
 
-    // Daftar nama bulan dalam bahasa Indonesia
-    $bulanNames = [
-        1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
-        5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus',
-        9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember',
-    ];
+        for ($bulan = 1; $bulan <= 12; $bulan++) {
+            $formattedMonth = sprintf('2023-%02d', $bulan);
+            $labelsLG[] = $bulanNames[$bulan] . '-2023';
 
-    // Inisialisasi array bulan-bulan tahun 2023
-    for ($bulan = 1; $bulan <= 12; $bulan++) {
-        $formattedMonth = sprintf('2023-%02d', $bulan);
-        $labelsUC[] = $bulanNames[$bulan] . '-2023';
-        $jumlahUnsafeCondPerBulan[$formattedMonth] = 0; // Inisialisasi jumlah laporan ke 0
-    }
+            $item = $dataLineGraphSO->firstWhere('month', $formattedMonth);
 
-    // Proses data dari query
-    foreach ($dataUC as $item) {
-        $month = date('Y-m', strtotime($item->month));
-        $jumlahUnsafeCondPerBulan[$month] = $item->total;
-    }
+            if ($item) {
+                $unsafeActionData[] = $item->unsafe_action_total;
+                $unsafeConditionData[] = $item->unsafe_condition_total;
+                $badHousekeepingData[] = $item->bad_housekeeping_total;
+            } else {
+                $unsafeActionData[] = 0;
+                $unsafeConditionData[] = 0;
+                $badHousekeepingData[] = 0;
+            }
+        }
 
-    // Konversi jumlah laporan ke dalam array
-    $jumlahUnsafeCondPerBulan = array_values($jumlahUnsafeCondPerBulan);
-
-    $configUC = [
-        'type' => 'line',
-        'data' => [
-            'labels' => $labelsUC,
-            'datasets' => [
-                [
-                    'label' => 'Laporan Unsafe Condition',
-                    'data' => $jumlahUnsafeCondPerBulan,
-                    'fill' => false,
-                    'borderColor' => 'rgb(75, 192, 192)',
-                    'tension' => 0.1,
+        $configLineGraph = [
+            'type' => 'line',
+            'data' => [
+                'labels' => $labelsLG,
+                'datasets' => [
+                    [
+                        'label' => 'Unsafe Action',
+                        'data' => $unsafeActionData,
+                        'fill' => false,
+                        'borderColor' => 'rgb(255, 99, 132)',
+                        'tension' => 0.1,
+                    ],
+                    [
+                        'label' => 'Unsafe Condition',
+                        'data' => $unsafeConditionData,
+                        'fill' => false,
+                        'borderColor' => 'rgb(75, 192, 192)',
+                        'tension' => 0.1,
+                    ],
+                    [
+                        'label' => 'Bad Housekeeping',
+                        'data' => $badHousekeepingData,
+                        'fill' => false,
+                        'borderColor' => 'rgb(54, 162, 235)',
+                        'tension' => 0.1,
+                    ],
                 ],
             ],
-        ],
-    ];
+        ];
+        //End UC Grafik
 
-
-        return view('home', compact('chartData', 'totalCompanies', 'safetyObservationsPerLocation', 'data', 'notificationData', 'configUC'));
+        return view('home', compact('chartData', 'totalCompanies', 'safetyObservationsPerLocation', 'data', 'notificationData', 'configLineGraph'));
     }
 }
