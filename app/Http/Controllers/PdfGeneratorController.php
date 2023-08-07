@@ -26,7 +26,13 @@ class PdfGeneratorController extends Controller
             'jangka_panjang' => $form->long_term_recommendation,
             'komentar' => $form->approved_comment ?? 'NO COMMENT',
             'tanggal_penyelesaian' => '21 juni 22323',
-            'image_path' => $form->image->image
+            'image_path' => $form->image->image,
+            'reviewed_by' => $form->reviewedBy->name,
+            'reviewer_role' => $form->reviewedBy->role,
+            'created_by' => $form->createdBy->name,
+            'creator_role' => $form->createdBy->role,
+            'approved_by' => $form->approvedBy->name,
+            'approver_role' => $form->approvedBy->role
         ];
 
         $pdf = $pdf->loadView('laporan-pdf.laporan', $data);
