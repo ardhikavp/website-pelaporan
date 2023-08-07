@@ -44,8 +44,7 @@
 
                                     <div class="form-group">
                                         <label for="image">Foto Temuan</label><br>
-                                        <img src="{{ asset('storage/images/' . $safety_observation_form->image_id) }}"
-                                            alt="Safety Observation Image" class="responsive-image">
+                                        <img style="width: 20%" src="{{ url('/images/' .$safety_observation_form->image->image) }}" alt="Safety Observation Image" class="responsive-image">
                                     </div>
 
                                     <div class="form-group">

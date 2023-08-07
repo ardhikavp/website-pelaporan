@@ -25,7 +25,7 @@ class PdfGeneratorController extends Controller
             'jangka_menengah' => $form->middle_term_recommendation,
             'jangka_panjang' => $form->long_term_recommendation,
             'komentar' => $form->approved_comment ?? 'NO COMMENT',
-            'tanggal_penyelesaian' => '21 juni 22323',
+            'tanggal_penyelesaian' => $form->completation_date,
             'image_path' => $form->image->image,
             'reviewed_by' => $form->reviewedBy->name,
             'reviewer_role' => $form->reviewedBy->role,

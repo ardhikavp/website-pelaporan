@@ -111,11 +111,13 @@
         </nav>
         <div class="row">
             <div class="col-md-12 mx-auto">
+                @if(auth()->user()->role == 'SHE')
                 <form action="{{ route('notification.generate-low-safety-index-notification') }}" method="post">
                     @csrf
                     <button type="submit" class="btn btn-primary mb-2"><i class="fas fa-bell mr-2"></i> Generate
                         Notification</button>
                 </form>
+                @endif
                 <div class="card">
                     <div class="card-header">
                         <div class="row">

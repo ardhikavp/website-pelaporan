@@ -13,8 +13,11 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\SafetyBehaviorChecklist;
 use Illuminate\Support\Facades\Session;
 use App\Events\SafetyIndexThresholdReached;
-use App\Notifications\LowSafetyBehaviorIndexNotification;
 use Illuminate\Support\Facades\Notification;
+use App\Notifications\LowSafetyBehaviorIndexNotification;
+use App\Notifications\NewApprovedSafetyBehaviorChecklist;
+use App\Notifications\NewNeedApproveSafetyBehaviorChecklist;
+use App\Notifications\NewNeedReviewSafetyBehaviorChecklist;
 
 class SafetyBehaviorChecklistController extends Controller
 {
@@ -245,8 +248,17 @@ class SafetyBehaviorChecklistController extends Controller
             'approved_by' => null,
         ]);
 
+        $newlyCreatedAnswer = Answer::latest()->first();
 
+        // Now you can use the newly created answer to send notifications
+        $companyId = $newlyCreatedAnswer->company_id;
 
+        $rolesToNotify = ['safety officer', 'safety representatif'];
+        $userToNotify = User::where('company_id', $companyId)
+                            ->whereIn('role', $rolesToNotify)
+                            ->get();
+
+        Notification::send($userToNotify, new NewNeedReviewSafetyBehaviorChecklist($newlyCreatedAnswer));
 
         // Redirect ke halaman yang diinginkan (misalnya halaman indeks checklist)
         return redirect()->route('safety-behavior-checklist.index')->with('success', 'Safety Behavior Checklist created successfully.');
@@ -379,6 +391,10 @@ class SafetyBehaviorChecklistController extends Controller
             'reviewed_by' => $reviewedById
         ]);
 
+        $userToNotify = User::where('role', 'manager maintenance')->get();
+
+        Notification::send($userToNotify, new NewNeedApproveSafetyBehaviorChecklist($answer));
+
         Session::flash('message', 'Form ' . ucfirst($action) . 'ed successfully.');
         return redirect()->route('safety-behavior-checklist.index');
     }
@@ -415,6 +431,23 @@ class SafetyBehaviorChecklistController extends Controller
             'reject_comment' => $rejectionComment,
             'approved_by' => $approvedById
         ]);
+
+        $creatorUserIds = Answer::pluck('reviewed_by');
+
+        // Get the user IDs of users with roles 'SHE' and 'admin'
+        $sheAndAdminUserIds = User::whereIn('role', ['SHE', 'admin'])->pluck('id');
+
+        // Combine the user IDs of creators, SHE, and admin users
+        $userIdsToNotify = $creatorUserIds->concat($sheAndAdminUserIds);
+
+        // Remove duplicate user IDs
+        $userIdsToNotify = $userIdsToNotify->unique();
+
+        // Get the actual User objects to notify
+        $usersToNotify = User::whereIn('id', $userIdsToNotify)->get();
+
+        // Send notifications to the users
+        Notification::send($usersToNotify, new NewApprovedSafetyBehaviorChecklist($answer));
 
         Session::flash('message', 'Form ' . ucfirst($action) . 'ed successfully.');
         return redirect()->route('safety-behavior-checklist.index');

@@ -58,19 +58,7 @@
 
                                     <div class="form-group">
                                         <label for="image">Foto Temuan</label><br>
-                                        <input type="file" name="image" id="image" class="form-control-file"
-                                            accept="image/*" onchange="loadFile(event)">
-                                        <img id="output" class="responsive-image"
-                                            src="{{ asset('storage/images/' . $form->image) }}" alt="Current Image">
-                                        <script>
-                                            var loadFile = function(event) {
-                                                var output = document.getElementById('output');
-                                                output.src = URL.createObjectURL(event.target.files[0]);
-                                                output.onload = function() {
-                                                    // URL.revokeObjectURL should be called after the image is no longer needed.
-                                                }
-                                            };
-                                        </script>
+                                        <img style="width: 20%" src="{{ url('/images/' .$form->image->image) }}" alt="Safety Observation Image" class="responsive-image">
                                     </div>
 
                                     <div class="form-group">

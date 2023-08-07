@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Notifications\NeedReviewDocument;
 use Illuminate\Support\Facades\Notification;
+use App\Notifications\NewApprovedSafetyObservation;
 use App\Notifications\NewNeedReviewSafetyObservation;
 use App\Notifications\NewNeedApproveSafetyObservation;
 
@@ -507,6 +508,25 @@ class SafetyObservationFormController extends Controller
             'reject_comment' => $rejectionComment,
             'approved_by' => $approvedById
         ]);
+
+        // Get the user IDs of creators of safety observation forms
+        $creatorUserIds = SafetyObservationForm::pluck('created_by');
+
+        // Get the user IDs of users with roles 'SHE' and 'admin'
+        $sheAndAdminUserIds = User::whereIn('role', ['SHE', 'admin'])->pluck('id');
+
+        // Combine the user IDs of creators, SHE, and admin users
+        $userIdsToNotify = $creatorUserIds->concat($sheAndAdminUserIds);
+
+        // Remove duplicate user IDs
+        $userIdsToNotify = $userIdsToNotify->unique();
+
+        // Get the actual User objects to notify
+        $usersToNotify = User::whereIn('id', $userIdsToNotify)->get();
+
+        // Send notifications to the users
+        Notification::send($usersToNotify, new NewApprovedSafetyObservation($form));
+
 
         Session::flash('message', 'Form ' . ucfirst($action) . 'ed successfully.');
         return redirect()->route('safety-observation-forms.index');
