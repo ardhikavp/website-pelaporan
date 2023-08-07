@@ -35,7 +35,7 @@ class NewApprovedSafetyBehaviorChecklist extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        $url = route('safety-behavior-checklist.show', ['answer' => $this->approved->id]);
+        $url = route('safety-behavior-checklist.show', ['safety_behavior_checklist' => $this->approved->id]);
         return (new MailMessage)
                     ->line('Dokumen Safety Behavior Checklist Telah Disetujui.')
                     ->action('Cek Laporan', $url)
@@ -49,7 +49,7 @@ class NewApprovedSafetyBehaviorChecklist extends Notification
      */
     public function toArray(object $notifiable): array
     {
-        $url = route('safety-behavior-checklist.show', ['answer' => $this->approved->id]);
+        $url = route('safety-behavior-checklist.show', ['safety_behavior_checklist' => $this->approved->id]);
         return [
             'data' => 'Lihat Laporan ' . $this->approved->nomor_laporan,
             'url' => $url,
