@@ -28,23 +28,6 @@
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-search fa-fw"></i>
             </a>
-
-            <!-- Dropdown - Messages -->
-            {{-- <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small"
-                            placeholder="Search for..." aria-label="Search"
-                            aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div> --}}
         </li>
 
         <!-- Nav Item - Alerts -->
@@ -59,19 +42,39 @@
         @endif
     </a>
     <!-- Dropdown - Alerts -->
-    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-        @if (Auth::user()->unreadNotifications->count() > 0)
-            @foreach (auth()->user()->unreadNotifications as $notification)
-                <a class="dropdown-item notification-item" data-id="{{ $notification->id }}" href="{{ $notification->data['url'] }}">
-                    <div>{{ $notification->data['data'] }}</div>
-                </a>
-            @endforeach
+    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" style="max-height: 200px; overflow-y: auto;"
+         aria-labelledby="alertsDropdown">
+        <div class="dropdown-header">
+            <h6 class="m-0 font-weight-bold text-primary">Notifications</h6><a href="{{ route('notifications.index') }}">Lihat semua</a>
+        </div>
+        @if (Auth::check())
+            @if (Auth::user()->unreadNotifications->count() > 0)
+                @foreach (auth()->user()->unreadNotifications as $notification)
+                    <a class="dropdown-item notification-item" data-id="{{ $notification->id }}" href="{{ $notification->data['url'] }}">
+                        <div>{{ $notification->data['data'] }}</div>
+                    </a>
+                @endforeach
+                <div class="dropdown-divider"></div>
+            @else
+                <a href="#" class="dropdown-item text-muted">No new notifications.</a>
+                <div class="dropdown-divider"></div>
+            @endif
+
+            @if (Auth::user()->readNotifications->count() > 0)
+                <span class="dropdown-header">Read Notifications</span>
+                @foreach (auth()->user()->readNotifications as $notification)
+                    <a class="dropdown-item notification-item" href="{{ $notification->data['url'] }}">
+                        <div>{{ $notification->data['data'] }}</div>
+                    </a>
+                @endforeach
+            @endif
         @else
-            <a href="#" class="dropdown-item text-muted">Tidak ada notifikasi.</a>
+            <a href="{{ route('login') }}" class="dropdown-item">Login to see notifications</a>
         @endif
-        {{-- <a class="dropdown-item" href="{{ route('notifications.notifications') }}">Lihat Semua Notifikasi</a> --}}
     </div>
 </li>
+
+
 
         <div class="topbar-divider d-none d-sm-block"></div>
 

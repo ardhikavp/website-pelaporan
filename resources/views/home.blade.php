@@ -31,12 +31,12 @@
                 <div class="card">
                     <div class="card-header">{{ __('Dashboard') }}</div>
                     <div class="card-body">
-                        @if (session('status'))
+                        {{-- @if (session('status'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('status') }}
                             </div>
                         @endif
-                        {{ __('You are logged in!') }}
+                        {{ __('You are logged in!') }} --}}
                         {{-- <a href="{{ route('notifications.notification') }}">Notification</a> --}}
                     </div>
                     <div class="row">
@@ -54,6 +54,22 @@
                     <div>
                         <canvas id="ucLineChart" width="50%" height="30%" style="display: none;"></canvas>
                     </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">{{ __('Dashboard') }}</div>
+                    <div class="card-body">
+                        {{-- @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+                        {{ __('You are logged in!') }} --}}
+                        {{-- <a href="{{ route('notifications.notification') }}">Notification</a> --}}
+                    </div>
+                    <div class="row">
+
                 </div>
             </div>
         </div>

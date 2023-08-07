@@ -58,7 +58,7 @@
                 <h6 class="collapse-header">Jenis Riwayat:</h6>
                 <a class="collapse-item" href="{{ route('historyso.pages') }}">Safety Observation</a>
                 <a class="collapse-item" href="{{ route('historysbc.pages') }}">Safety Behavior Checklist</a>
-                <a class="collapse-item" href="#">Safety Index</a>
+                <a class="collapse-item" href="{{ route('historysi.pages') }}">Safety Index</a>
             </div>
         </div>
     </li>

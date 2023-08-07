@@ -70,4 +70,15 @@ class User extends Authenticatable
         return $this->belongsTo(Company::class, 'company_id', 'id');
     }
 
+    public function unreadNotifications()
+    {
+        return $this->notifications()
+                     ->whereNull('read_at');
+    }
+
+    public function readNotifications()
+    {
+        return $this->notifications()
+                     ->whereNotNull('read_at');
+    }
 }

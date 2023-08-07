@@ -68,9 +68,13 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
         Route::get('history-so-pages', [SafetyObservationFormController::class, 'historyPages'])->name('historyso.pages');
 
 
-        // Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
-        Route::get('notifications/markAllAsRead', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
-        Route::get('notifications', [NotificationController::class,'notification'])->name('notifications.notification');
+        Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
+        // Route::get('notifications/markAllAsRead', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
+        Route::get('/mark-notification-as-read/{id}', [NotificationController::class, 'markAsReadDB'])
+        ->name('mark-notification-as-read-db');
+        // Route::get('notifications', [NotificationController::class,'notification'])->name('notifications.notification');
+
+
         Route::get('safety-behavior-checklist/{answer}/agreement-by-pic', [SafetyBehaviorChecklistController::class, 'reviewByPIC'])
         ->name('safety-behavior-checklist.review-by-pic');
         Route::put('safety-behavior-checklist/{answer}/agreed-by-pic', [SafetyBehaviorChecklistController::class, 'updateReviewedByPIC'])
@@ -80,6 +84,7 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
         Route::put('safety-behavior-checklist/{answer}/approved-by-manager', [SafetyBehaviorChecklistController::class, 'updateApprovedBymanager'])
         ->name('safety-behavior-checklist.update-approved-by-manager');
         Route::get('history-sbc-pages', [SafetyBehaviorChecklistController::class, 'historyPages'])->name('historysbc.pages');
+        Route::get('history-si-pages', [SafetyBehaviorChecklistController::class, 'historySIPages'])->name('historysi.pages');
 
         Route::get('/get-autocomplete-suggestions', [SafetyBehaviorChecklistController::class, 'getAutocompleteSuggestions']);
 

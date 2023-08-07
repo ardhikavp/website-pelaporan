@@ -503,4 +503,28 @@ class SafetyBehaviorChecklistController extends Controller
 
         return view('histories.history-sbc', compact('companies', 'approvedAnswers'));
     }
+
+    public function historySIPages()
+    {
+        $companies = Company::all();
+        $accumulatedSafetyIndex = [];
+
+        foreach ($companies as $company) {
+            $safetyIndexValues = Answer::where('company_id', $company->id)
+                ->where('status', 'APPROVED')
+                ->pluck('safety_index')
+                ->toArray();
+
+            if (!empty($safetyIndexValues)) {
+                $averageSafetyIndex = array_sum($safetyIndexValues) / count($safetyIndexValues);
+                $accumulatedSafetyIndex[] = [
+                    'company' => $company->company,
+                    'average_safety_index' => $averageSafetyIndex,
+                ];
+            }
+        }
+
+        return view('histories.history-si', compact('accumulatedSafetyIndex'));
+    }
+
 }

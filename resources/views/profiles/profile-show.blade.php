@@ -40,11 +40,9 @@
                     <a href="{{ route('password.request') }}" class="btn btn-primary">
                     Reset Password
                     </a>
-                    <a href="{{ route('password.request') }}" class="btn btn-primary">
-                        Reset Password
-                        </a>
                 </div>
-
+                <br>
+                <div>
                 @if ($company)
                     <h4>Informasi Perusahaan</h4>
                     <div class="form-group">
@@ -52,6 +50,7 @@
                         <input type="text" name="company" id="company" class="form-control" value="{{ $company->company }}" readonly>
                     </div>
                 @endif
+            </div>
             </div>
         </div>
     </div>

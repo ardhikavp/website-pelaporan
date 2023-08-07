@@ -11,7 +11,7 @@
     </li>
 @endif
 @else
-<li class="nav-item dropdown">
+{{-- <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-bell"></i>
         Notifications
@@ -32,7 +32,10 @@
                                 <span class="card-text text-success">{{ $notification->data['data'] }}</span>
                             @endif
                             @if (!$notification->read_at)
-                                <a href="#" class="mark-as-read-link text-secondary" data-notification-id="{{ $notification->id }}">Mark as Read</a>
+                            <form action="{{ route('mark-notification-as-read-db', ['id' => $notification->id]) }}" method="POST">
+                                @csrf
+                                <button type="submit">Mark as Read</button>
+                            </form>
                             @endif
                         </div>
                     </div>
@@ -59,7 +62,20 @@
             @endif
         </div>
     </div>
-</li>
+</li> --}}
+{{-- <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-bell"></i>
+        Notifications
+        @if (Auth::check() && Auth::user()->unreadNotifications->count() > 0)
+            <span class="badge badge-danger">{{ Auth::user()->unreadNotifications->count() }}</span>
+        @endif
+    </a>
+</li> --}}
+
+
+
+
 
 
     <li class="nav-item">
@@ -81,35 +97,6 @@
             </form>
         </div>
     </li>
-@pushOnce('body-scripts')
-<script>
-    // Function to mark notification as read
-    function markNotificationAsRead(notificationId) {
-        // Send an AJAX request to mark the notification as read
-        $.ajax({
-            type: 'POST',
-            url: '{{ route('mark-notification-as-read') }}',
-            data: {
-                _token: '{{ csrf_token() }}',
-                notification_id: notificationId
-            },
-            success: function (data) {
-                // If the request is successful, remove the notification card from the dropdown
-                $('.card[data-notification-id="' + notificationId + '"]').remove();
-            },
-            error: function (error) {
-                console.error(error);
-            }
-        });
-    }
 
-    // Handle click event on "Mark as Read" link
-    $(document).on('click', '.mark-as-read-link', function (e) {
-        e.preventDefault();
-        var notificationId = $(this).data('notification-id');
-        markNotificationAsRead(notificationId);
-    });
-</script>
-@endPushOnce
 @endguest
 
