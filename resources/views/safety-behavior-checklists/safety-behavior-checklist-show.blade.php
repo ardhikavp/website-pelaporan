@@ -145,9 +145,9 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <a class="btn btn-primary" href="{{ route('safety-behavior-checklist.edit', $answer->id) }}">Edit</a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
