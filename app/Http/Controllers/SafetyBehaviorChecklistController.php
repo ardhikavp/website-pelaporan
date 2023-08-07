@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\SafetyBehaviorChecklist;
 use Illuminate\Support\Facades\Session;
 use App\Events\SafetyIndexThresholdReached;
+use App\Notifications\LowSafetyBehaviorIndexNotification;
+use Illuminate\Support\Facades\Notification;
 
 class SafetyBehaviorChecklistController extends Controller
 {
@@ -527,4 +529,22 @@ class SafetyBehaviorChecklistController extends Controller
         return view('histories.history-si', compact('accumulatedSafetyIndex'));
     }
 
+    public function generateNotificationForLowSafetyIndex()
+    {
+        $averageSafetyIndexes = DB::table('answers')
+            ->select(DB::raw('avg(safety_index) as average_safety_index, companies.company as company_name, answers.company_id as company_id'))
+            ->join('companies', 'answers.company_id', '=', 'companies.id')
+            ->where('status', '=', 'APPROVED')
+            ->groupBy('company_id', 'companies.company')
+            ->get();
+
+        foreach ($averageSafetyIndexes as $key => $value) {
+            if ($value->average_safety_index <= 50) {
+                $users = User::where('company_id', $value->company_id)->get();
+                Notification::send($users, new LowSafetyBehaviorIndexNotification($value));
+            }
+        }
+
+        return redirect()->route('safety-behavior-checklist.index')->with('success', 'Notifications triggered');
+    }
 }

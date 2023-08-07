@@ -51,50 +51,52 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
 
     // Route::get('/notifications/markAllAsRead', 'NotificationsController@markAllAsRead');
     Route::get('/chart', [ChartJSController::class, 'index']);
-        Route::resource('profile', ProfileController::class);
-        Route::resource('users', UserController::class);
-        Route::resource('location', LocationController::class);
-        Route::resource('companies', CompanyController::class);
-        Route::resource('safety-behavior-checklist', SafetyBehaviorChecklistController::class);
-        Route::resource('safety-observation-forms', SafetyObservationFormController::class);
-        Route::get('safety-observation-forms/{safety_observation_form}/review-by-she', [SafetyObservationFormController::class, 'reviewByShe'])
+    Route::resource('profile', ProfileController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('location', LocationController::class);
+    Route::resource('companies', CompanyController::class);
+    Route::resource('safety-behavior-checklist', SafetyBehaviorChecklistController::class);
+    Route::resource('safety-observation-forms', SafetyObservationFormController::class);
+    Route::get('safety-observation-forms/{safety_observation_form}/review-by-she', [SafetyObservationFormController::class, 'reviewByShe'])
         ->name('safety-observation-forms.review-by-she');
-        Route::put('/safety-observation-forms/{safety_observation_form}/reviewed-by-she', [SafetyObservationFormController::class, 'updateReviewedByShe'])
+    Route::put('/safety-observation-forms/{safety_observation_form}/reviewed-by-she', [SafetyObservationFormController::class, 'updateReviewedByShe'])
         ->name('safety-observation-forms.update-reviewed-by-she');
-        Route::get('safety-observation-forms/{safety_observation_form}/approve-by-manager', [SafetyObservationFormController::class, 'approveByManager'])
+    Route::get('safety-observation-forms/{safety_observation_form}/approve-by-manager', [SafetyObservationFormController::class, 'approveByManager'])
         ->name('safety-observation-forms.approve-by-manager');
-        Route::put('/safety-observation-forms/{safety_observation_form}/approved-by-manager', [SafetyObservationFormController::class, 'updateApprovedByManager'])
+    Route::put('/safety-observation-forms/{safety_observation_form}/approved-by-manager', [SafetyObservationFormController::class, 'updateApprovedByManager'])
         ->name('safety-observation-forms.update-approved-by-manager');
-        Route::get('history-so-pages', [SafetyObservationFormController::class, 'historyPages'])->name('historyso.pages');
+    Route::get('history-so-pages', [SafetyObservationFormController::class, 'historyPages'])->name('historyso.pages');
 
 
-        Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
-        // Route::get('notifications/markAllAsRead', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
-        Route::get('/mark-notification-as-read/{id}', [NotificationController::class, 'markAsReadDB'])
+    Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    // Route::get('notifications/markAllAsRead', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
+    Route::get('/mark-notification-as-read/{id}', [NotificationController::class, 'markAsReadDB'])
         ->name('mark-notification-as-read-db');
-        // Route::get('notifications', [NotificationController::class,'notification'])->name('notifications.notification');
+    // Route::get('notifications', [NotificationController::class,'notification'])->name('notifications.notification');
 
 
-        Route::get('safety-behavior-checklist/{answer}/agreement-by-pic', [SafetyBehaviorChecklistController::class, 'reviewByPIC'])
+    Route::get('safety-behavior-checklist/{answer}/agreement-by-pic', [SafetyBehaviorChecklistController::class, 'reviewByPIC'])
         ->name('safety-behavior-checklist.review-by-pic');
-        Route::put('safety-behavior-checklist/{answer}/agreed-by-pic', [SafetyBehaviorChecklistController::class, 'updateReviewedByPIC'])
+    Route::put('safety-behavior-checklist/{answer}/agreed-by-pic', [SafetyBehaviorChecklistController::class, 'updateReviewedByPIC'])
         ->name('safety-behavior-checklist.update-reviewed-by-pic');
-        Route::get('safety-behavior-checklist/{answer}/approve-by-manager', [SafetyBehaviorChecklistController::class, 'approveByManager'])
+    Route::get('safety-behavior-checklist/{answer}/approve-by-manager', [SafetyBehaviorChecklistController::class, 'approveByManager'])
         ->name('safety-behavior-checklist.approve-by-manager');
-        Route::put('safety-behavior-checklist/{answer}/approved-by-manager', [SafetyBehaviorChecklistController::class, 'updateApprovedBymanager'])
+    Route::put('safety-behavior-checklist/{answer}/approved-by-manager', [SafetyBehaviorChecklistController::class, 'updateApprovedBymanager'])
         ->name('safety-behavior-checklist.update-approved-by-manager');
-        Route::get('history-sbc-pages', [SafetyBehaviorChecklistController::class, 'historyPages'])->name('historysbc.pages');
-        Route::get('history-si-pages', [SafetyBehaviorChecklistController::class, 'historySIPages'])->name('historysi.pages');
+    Route::get('history-sbc-pages', [SafetyBehaviorChecklistController::class, 'historyPages'])->name('historysbc.pages');
+    Route::get('history-si-pages', [SafetyBehaviorChecklistController::class, 'historySIPages'])->name('historysi.pages');
 
-        Route::get('/get-autocomplete-suggestions', [SafetyBehaviorChecklistController::class, 'getAutocompleteSuggestions']);
+    Route::get('/get-autocomplete-suggestions', [SafetyBehaviorChecklistController::class, 'getAutocompleteSuggestions']);
 
-        Route::get('laporan/{safety_observation_form}/generate', [PdfGeneratorController::class, 'downloadSafetyObservation'])->name('laporan-pdf-generator.download_so_report');
-        Route::get('safety-behavior-checklist-report/{safety_behavior_checklist}/generate', [PdfGeneratorController::class, 'downloadSafetyBehavior'])->name('laporan-pdf-generator.download_sbc_report');
-        // Route:get('safety-observation-forms/')
-    });
+    Route::get('laporan/{safety_observation_form}/generate', [PdfGeneratorController::class, 'downloadSafetyObservation'])->name('laporan-pdf-generator.download_so_report');
+    Route::get('safety-behavior-checklist-report/{safety_behavior_checklist}/generate', [PdfGeneratorController::class, 'downloadSafetyBehavior'])->name('laporan-pdf-generator.download_sbc_report');
 
-    Route::middleware(['auth', 'admin'])->prefix('dashboard')->group(function () {
-            Route::resource('users', UserController::class);
-            Route::resource('location', LocationController::class);
-            Route::resource('companies', CompanyController::class);
-        });
+    Route::post('safety-behavior-checklist/notif', [SafetyBehaviorChecklistController::class, 'generateNotificationForLowSafetyIndex'])->name('notification.generate-low-safety-index-notification');
+    // Route:get('safety-observation-forms/')
+});
+
+Route::middleware(['auth', 'admin'])->prefix('dashboard')->group(function () {
+    Route::resource('users', UserController::class);
+    Route::resource('location', LocationController::class);
+    Route::resource('companies', CompanyController::class);
+});
