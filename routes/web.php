@@ -65,7 +65,7 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
         ->name('safety-observation-forms.approve-by-manager');
         Route::put('/safety-observation-forms/{safety_observation_form}/approved-by-manager', [SafetyObservationFormController::class, 'updateApprovedByManager'])
         ->name('safety-observation-forms.update-approved-by-manager');
-        Route::get('history-pages', [SafetyObservationFormController::class, 'historyPages'])->name('history.pages');
+        Route::get('history-so-pages', [SafetyObservationFormController::class, 'historyPages'])->name('historyso.pages');
 
 
         // Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
@@ -79,8 +79,9 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
         ->name('safety-behavior-checklist.approve-by-manager');
         Route::put('safety-behavior-checklist/{answer}/approved-by-manager', [SafetyBehaviorChecklistController::class, 'updateApprovedBymanager'])
         ->name('safety-behavior-checklist.update-approved-by-manager');
-        Route::get('/get-autocomplete-suggestions', [SafetyBehaviorChecklistController::class, 'getAutocompleteSuggestions']);
+        Route::get('history-sbc-pages', [SafetyBehaviorChecklistController::class, 'historyPages'])->name('historysbc.pages');
 
+        Route::get('/get-autocomplete-suggestions', [SafetyBehaviorChecklistController::class, 'getAutocompleteSuggestions']);
 
         Route::get('laporan/{safety_observation_form}/generate', [PdfGeneratorController::class, 'downloadSafetyObservation'])->name('laporan-pdf-generator.download_so_report');
         Route::get('safety-behavior-checklist-report/{safety_behavior_checklist}/generate', [PdfGeneratorController::class, 'downloadSafetyBehavior'])->name('laporan-pdf-generator.download_sbc_report');

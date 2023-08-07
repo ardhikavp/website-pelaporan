@@ -56,8 +56,8 @@
         <div id="collapseHistory" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Jenis Riwayat:</h6>
-                <a class="collapse-item" href="{{ route('history.pages') }}">Safety Observation</a>
-                <a class="collapse-item" href="#">Safety Behavior Checklist</a>
+                <a class="collapse-item" href="{{ route('historyso.pages') }}">Safety Observation</a>
+                <a class="collapse-item" href="{{ route('historysbc.pages') }}">Safety Behavior Checklist</a>
                 <a class="collapse-item" href="#">Safety Index</a>
             </div>
         </div>

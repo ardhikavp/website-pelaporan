@@ -37,7 +37,7 @@
                             </div>
                         @endif
                         {{ __('You are logged in!') }}
-                        <a href="{{ route('notifications.notification') }}">Notification</a>
+                        {{-- <a href="{{ route('notifications.notification') }}">Notification</a> --}}
                     </div>
                     <div class="row">
                         <div class="btn-group btn-group-sm d-flex" role="group" aria-label="">

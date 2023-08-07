@@ -563,4 +563,5 @@ class SafetyObservationFormController extends Controller
         return view('histories.history-so', compact('companies', 'approvedFormsCounts' ,'totalApprovedForms', 'data'));
     }
 
+
 }

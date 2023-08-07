@@ -495,4 +495,12 @@ class SafetyBehaviorChecklistController extends Controller
         $averageSafetyIndex = $totalSafetyIndex / $totalCount;
         return $averageSafetyIndex;
     }
+
+    public function historyPages()
+    {
+        $companies = Company::all();
+        $approvedAnswers = Answer::where('status', 'APPROVED')->get();
+
+        return view('histories.history-sbc', compact('companies', 'approvedAnswers'));
+    }
 }
