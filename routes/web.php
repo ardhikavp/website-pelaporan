@@ -48,7 +48,8 @@ Route::middleware(['auth'])->prefix('dashboard/users')->group(function () {
 
 Route::middleware(['auth'])->prefix('dashboard')->group(function () {
 
-    // Route::get('notifications', [NotificationController::class,'notification']);
+
+    // Route::get('/notifications/markAllAsRead', 'NotificationsController@markAllAsRead');
     Route::get('/chart', [ChartJSController::class, 'index']);
         Route::resource('profile', ProfileController::class);
         Route::resource('users', UserController::class);
@@ -64,8 +65,12 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
         ->name('safety-observation-forms.approve-by-manager');
         Route::put('/safety-observation-forms/{safety_observation_form}/approved-by-manager', [SafetyObservationFormController::class, 'updateApprovedByManager'])
         ->name('safety-observation-forms.update-approved-by-manager');
-        Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
+        Route::get('history-pages', [SafetyObservationFormController::class, 'historyPages'])->name('history.pages');
 
+
+        // Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
+        Route::get('notifications/markAllAsRead', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
+        Route::get('notifications', [NotificationController::class,'notification'])->name('notifications.notification');
         Route::get('safety-behavior-checklist/{answer}/agreement-by-pic', [SafetyBehaviorChecklistController::class, 'reviewByPIC'])
         ->name('safety-behavior-checklist.review-by-pic');
         Route::put('safety-behavior-checklist/{answer}/agreed-by-pic', [SafetyBehaviorChecklistController::class, 'updateReviewedByPIC'])

@@ -69,6 +69,7 @@
         @else
             <a href="#" class="dropdown-item text-muted">Tidak ada notifikasi.</a>
         @endif
+        {{-- <a class="dropdown-item" href="{{ route('notifications.notifications') }}">Lihat Semua Notifikasi</a> --}}
     </div>
 </li>
 

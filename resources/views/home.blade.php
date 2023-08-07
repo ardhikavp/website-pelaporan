@@ -1,6 +1,30 @@
 @extends('layouts.dashboard')
 
 @section('content')
+@pushOnce('head-scripts')
+<style>
+    /* Add custom CSS for button size */
+    .btn-group.btn-group-sm .btn {
+      font-size: 12px; /* Adjust the font size as needed */
+      padding: 0.1rem 0.2rem; /* Adjust the padding as needed */
+    }
+
+    @media (max-width: 576px) {
+      /* Customize button size for small screens */
+      .btn-group.btn-group-sm .btn {
+        font-size: 12px; /* Adjust the font size as needed */
+        padding: 0.1rem 0.2rem; /* Adjust the padding as needed */
+      }
+    }
+    .btn-group-sm .btn-primary {
+            background-color: #71a3b8;
+            border: 1px solid rgba(90, 126, 164, 0.5);
+            border-radius: 5px;
+            margin: 5px;
+            color: #000000;
+        }
+  </style>
+@endPushOnce
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
@@ -13,82 +37,26 @@
                             </div>
                         @endif
                         {{ __('You are logged in!') }}
-                    @if ($notificationData)
-                        <div class="alert alert-success">
-                            {{ is_array($notificationData['data']) ? $notificationData['data']['data'] : $notificationData['data'] }}
-                        </div>
-                    @endif
+                        <a href="{{ route('notifications.notification') }}">Notification</a>
                     </div>
                     <div class="row">
                         <div class="btn-group btn-group-sm d-flex" role="group" aria-label="">
                             <button type="button" class="btn btn-primary" onclick="showCanvas('barChart')"><strong> Laporan Safety Observation Tiap Lokasi</strong></button>
-                            <button type="button" class="btn btn-primary" onclick="showCanvas('ucLineChart')"><strong>Laporan Unsafe Condition</strong></button>
+                            <button type="button" class="btn btn-primary" onclick="showCanvas('ucLineChart')"><strong>Grafik Laporan Safety Observation</strong></button>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <canvas id="pieChart" width="50%" height="50%"></canvas>
                     </div>
-                    <div class="col-md-6">
-                        <canvas id="barChart" width="50%" height="50%" style="display: block;"></canvas>
+                    <div class="col-md-12">
+                        <canvas id="barChart" width="50%" height="30%" style="display: block;"></canvas>
                     </div>
                     <div>
-                        <canvas id="ucLineChart" style="display: none;"></canvas>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <div class="card-header">Project Statistics</div>
-                        <div class="card-body">
-                            <p>Total Companies: {{ $totalCompanies }}</p>
-                            <p>Number of Safety Observations in Each Location:</p>
-                            <ul>
-                                @foreach ($safetyObservationsPerLocation as $observation)
-                                    <li>{{ $observation->location }}: {{ $observation->total }}</li>
-                                @endforeach
-                            </ul>
-                            <canvas id="chart-bar" width="400" height="200"></canvas>
-                        </div>
+                        <canvas id="ucLineChart" width="50%" height="30%" style="display: none;"></canvas>
                     </div>
                 </div>
             </div>
         </div>
-        <div>
-            <div class="card">
-                <div class="card-header">
-                    <h1>Laporan</h1>
-                    <div class="card-body">
-                        <table class="table table-bordered table-responsive">
-                            <thead>
-                                <tr>
-                                    <th>Tahun</th>
-                                    <th>Bulan</th>
-                                    <th>Approved</th>
-                                    <th>Rejected</th>
-                                    <th>Pending Review</th>
-                                    <th>Pending Approval</th>
-                                    <th>Kinerja Keberhasilan laporan (%)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($data as $item)
-                                    <tr>
-                                        <td>{{ $item->tahun }}</td>
-                                        <td>{{ $item->bulan }}</td>
-                                        <td>{{ $item->jumlah_approved }}</td>
-                                        <td>{{ $item->jumlah_rejected }}</td>
-                                        <td>{{ $item->jumlah_pending_review }}</td>
-                                        <td>{{ $item->jumlah_pending_approval }}</td>
-                                        <td>{{ $item->hasil_perhitungan }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @include('component.card')
-    </div>
     </div>
     @pushOnce('body-scripts')
 

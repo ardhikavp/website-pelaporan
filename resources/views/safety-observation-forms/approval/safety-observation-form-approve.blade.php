@@ -136,7 +136,7 @@
 
                                     <div class="form-group">
                                         <label for="review_comment">Review Comment</label>
-                                        <textarea name="review_comment" id="review_comment" class="form-control" value="{{ $form->review_comment }}" readonly></textarea>
+                                        <textarea name="review_comment" id="review_comment" class="form-control" disabled> {{ $form->review_comment }}</textarea>
                                     </div>
 
                                     <div class="form-group">

@@ -6,15 +6,22 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ __('Notifications') }}</div>
+                @if ($notificationData)
+                <div class="alert alert-success">
+                    {{ is_array($notificationData['data']) ? $notificationData['data']['data'] : $notificationData['data'] }}
+                </div>
+            @endif
+                @if ($notifications->count() > 0)
+                @foreach ($notifications as $notification)
+                    <div>
+                        {{ is_array($notifications['data']) ? $notifications['data']['data'] : $notifications['data'] }}
 
-                <div class="card-body">
-                    @forelse ($notifications as $notification)
-                        <p>{{ $notification->data['message'] }}</p>
-                        <a href="{{ $notification->data['url'] }}">View Details</a>
-                        <hr>
-                    @empty
-                        <p>No new notifications.</p>
-                    @endforelse
+                    </div>
+                @endforeach
+            @else
+                <div>Tidak ada notifikasi.</div>
+            @endif
+
                 </div>
             </div>
         </div>
