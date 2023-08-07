@@ -23,7 +23,7 @@
                     </div>
                     <div class="form-group">
                         <label for="username">Nomor Induk Kependudukan</label>
-                        <input type="text" name="username" id="username" class="form-control" value="{{ $user->username }}" required>
+                        <input type="text" name="username" id="username" class="form-control" value="{{ $user->username }}" readonly>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
@@ -31,18 +31,18 @@
                     </div>
                     <div class="form-group">
                         <label for="role">Jabatan</label>
-                        <input type="text" name="role" id="role" class="form-control" value="{{ $user->role }}" required>
+                        <input type="text" name="role" id="role" class="form-control" value="{{ $user->role }}" readonly>
                     </div>
                     @if ($company)
                         <div class="form-group">
                             <label for="company">Perusahaan</label>
-                            <input type="text" name="company" id="company" class="form-control" value="{{ $company->company }}" required>
+                            <input type="text" name="company" id="company" class="form-control" value="{{ $company->company }}" readonly>
                         </div>
                     @endif
 
                     <div class="mt-4">
-                        <button type="submit" class="btn btn-primary">Save</button>
-                        <a href="{{ route('profile.show', ['profile' => $user->id]) }}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <a href="{{ route('profile.show', ['profile' => $user->id]) }}" class="btn btn-secondary">Batal</a>
                     </div>
                 </form>
             </div>

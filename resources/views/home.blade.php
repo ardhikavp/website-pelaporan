@@ -13,7 +13,7 @@
       /* Customize button size for small screens */
       .btn-group.btn-group-sm .btn {
         font-size: 12px; /* Adjust the font size as needed */
-        padding: 0.1rem 0.2rem; /* Adjust the padding as needed */
+        padding: 0.01rem 0.02rem; /* Adjust the padding as needed */
       }
     }
     .btn-group-sm .btn-primary {
@@ -23,6 +23,13 @@
             margin: 5px;
             color: #000000;
         }
+
+    .canvas-responsive {
+        max-width: 100%;
+        max-height: 400px;
+        /* Optional: Add some padding to prevent the chart from being cut off */
+        padding: 10px;
+    }
   </style>
 @endPushOnce
     <div class="container">
@@ -45,31 +52,12 @@
                             <button type="button" class="btn btn-primary" onclick="showCanvas('ucLineChart')"><strong>Grafik Laporan Safety Observation</strong></button>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <canvas id="pieChart" width="50%" height="50%"></canvas>
+                    <div class="col-md-12 wrapper">
+                        <canvas id="barChart" class="canvas-responsive" width="500px" height="600px" style="display: block;"></canvas>
                     </div>
-                    <div class="col-md-12">
-                        <canvas id="barChart" width="50%" height="30%" style="display: block;"></canvas>
+                    <div >
+                        <canvas id="ucLineChart" class="canvas-responsive" width="500px" height="600px" style="display: none;"></canvas>
                     </div>
-                    <div>
-                        <canvas id="ucLineChart" width="50%" height="30%" style="display: none;"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">{{ __('Dashboard') }}</div>
-                    <div class="card-body">
-                        {{-- @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-                        {{ __('You are logged in!') }} --}}
-                        {{-- <a href="{{ route('notifications.notification') }}">Notification</a> --}}
-                    </div>
-                    <div class="row">
-
                 </div>
             </div>
         </div>
@@ -144,5 +132,6 @@
     }
 }
 </script>
+
     @endPushOnce
 @endsection
