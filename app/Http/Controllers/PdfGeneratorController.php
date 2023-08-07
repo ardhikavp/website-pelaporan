@@ -30,7 +30,9 @@ class PdfGeneratorController extends Controller
             'reviewed_by' => $form->reviewedBy->name,
             'reviewer_role' => $form->reviewedBy->role,
             'created_by' => $form->createdBy->name,
-            'creator_role' => $form->createdBy->role
+            'creator_role' => $form->createdBy->role,
+            'approved_by' => $form->approvedBy->name,
+            'approver_role' => $form->approvedBy->role
         ];
 
         $pdf = $pdf->loadView('laporan-pdf.laporan', $data);
