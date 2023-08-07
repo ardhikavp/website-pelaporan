@@ -33,11 +33,11 @@ class SafetyBehaviorChecklistController extends Controller
         switch ($user->role) {
             case ('admin'):
                 $form_approved = Answer::where('status', 'APPROVED')
-                ->paginate(5, ['*'], 'approved')
-                ->appends(request()->except('approved'));
+                    ->paginate(5, ['*'], 'approved')
+                    ->appends(request()->except('approved'));
                 $form_rejected = Answer::where('status', 'REJECTED')
-                ->paginate(5, ['*'], 'rejected')
-                ->appends(request()->except('rejected'));
+                    ->paginate(5, ['*'], 'rejected')
+                    ->appends(request()->except('rejected'));
 
             case ('manager maintenance'):
                 $form_pending_review = Answer::where('status', 'PENDING_REVIEW')
@@ -122,9 +122,11 @@ class SafetyBehaviorChecklistController extends Controller
 
 
 
-        return view('safety-behavior-checklists.safety-behavior-checklist-index',
-        ['safetyList' => $data, 'answers' => $answers, 'companies' => $companies],
-        compact('form_pending_review', 'form_pending_approval', 'form_approved', 'form_rejected'));
+        return view(
+            'safety-behavior-checklists.safety-behavior-checklist-index',
+            ['safetyList' => $data, 'answers' => $answers, 'companies' => $companies],
+            compact('form_pending_review', 'form_pending_approval', 'form_approved', 'form_rejected')
+        );
     }
 
     /**
@@ -133,7 +135,6 @@ class SafetyBehaviorChecklistController extends Controller
     public function create()
     {
         $data = SafetyBehaviorChecklist::all();
-        $answers = Answer::all();
         $companies = Company::all();
         $operationNames = Answer::pluck('operation_name')->unique();
 
@@ -142,7 +143,6 @@ class SafetyBehaviorChecklistController extends Controller
 
         return view('safety-behavior-checklists.safety-behavior-checklist-create', [
             'safetyList' => $data,
-            'answers' => $answers,
             'companies' => $companies,
             'operationNames' => $uniqueOperationNames, // Use the unique operation names in the view
         ]);
@@ -233,7 +233,7 @@ class SafetyBehaviorChecklistController extends Controller
         Answer::create([
             'user_id' => auth()->user()->id,
             'date_finding' => $request->input('date_finding'),
-            'operation_name' => $request->input('operation_name'),
+            'operation_name' => $request->input('operation_name') ?? $request->input('new_operation_name'),
             'company_id' => $request->input('company_id'),
             'answer' => json_encode($question_answer_collection),
             'safety_index' => $safetyIndex,
@@ -495,5 +495,4 @@ class SafetyBehaviorChecklistController extends Controller
         $averageSafetyIndex = $totalSafetyIndex / $totalCount;
         return $averageSafetyIndex;
     }
-
 }
