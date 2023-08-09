@@ -24,8 +24,9 @@ class ImageFactory extends Factory
      */
     public function definition()
     {
+        $imagePath = $this->faker->image(storage_path('app/public/images'), 640, 480, null, false); // Upload random image to storage
         return [
-            'image' => $this->faker->imageUrl(640, 480), // Generate a random image URL
+            'image' => $imagePath,
         ];
     }
 }

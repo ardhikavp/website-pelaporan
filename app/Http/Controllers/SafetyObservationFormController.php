@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\Models\SafetyObservationForm;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use App\Notifications\NeedReviewDocument;
 use Illuminate\Support\Facades\Notification;
@@ -583,5 +584,54 @@ class SafetyObservationFormController extends Controller
         return view('histories.history-so', compact('companies', 'approvedFormsCounts' ,'totalApprovedForms', 'data'));
     }
 
+    public function finishSafetyObsevationForm()
+    {
+        $forms = SafetyObservationForm::all();
 
+        return view('finish_report.finish-report-index', compact('forms'));
+    }
+
+    public function finishingSafetyObsevationForm($id)
+    {
+        $form = SafetyObservationForm::findOrFail($id);
+
+        return view('finish_report.finish-report-closed', compact('form'));
+    }
+
+    public function finalUpdateSafetyObservationForms(Request $request, $id)
+    {
+        $form = SafetyObservationForm::findOrFail($id);
+
+        $action = $request->input('action');
+
+        if ($request->hasFile('pdf_file')) {
+            // Handle file upload and update finish_report_path
+            $pdfFile = $request->file('pdf_file');
+            $pdfFilePath = $pdfFile->store('finish_reports', 'public');
+            $form->finish_report_path = $pdfFilePath;
+            $form->finish_report = 'CLOSED';
+            $form->save();
+        }
+
+        Session::flash('message', 'Form Uploaded successfully.');
+        return redirect()->route('progress.so');
+    }
+
+    public function downloadReport($filename)
+    {
+        $filePath = 'finish_reports/' . $filename;
+
+        if (Storage::disk('public')->exists($filePath)) {
+            return response()->download(storage_path('app/public/' . $filePath));
+        } else {
+            return abort(404); // File not found
+        }
+    }
+
+    public function showFinishSafetyObsevationForm($id)
+    {
+        $form = SafetyObservationForm::findOrFail($id);
+
+        return view('finish_report.finish-report-show', compact('form'));
+    }
 }

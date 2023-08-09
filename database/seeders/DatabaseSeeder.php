@@ -55,8 +55,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory(10)->create();
-        Image::factory(50)->create();
-        
-        SafetyObservationForm::factory(50)->create();
+        Image::factory(5)->create();
+
+        SafetyObservationForm::factory(5)->create();
     }
 }

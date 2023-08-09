@@ -42,6 +42,9 @@
                 @if(auth()->user()->role !== 'pegawai')
                 <a class="collapse-item" href="{{ route('safety-behavior-checklist.index') }}">Safety Behavior Checklist</a>
                 @endif
+                @if(auth()->user()->role !== ['pegawai', 'safety officer'])
+                <a class="collapse-item" href="{{ route('progress.so') }}">Progress Observation </a>
+                @endif
             </div>
         </div>
     </li>

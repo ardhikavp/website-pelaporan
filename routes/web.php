@@ -66,6 +66,12 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
     Route::put('/safety-observation-forms/{safety_observation_form}/approved-by-manager', [SafetyObservationFormController::class, 'updateApprovedByManager'])
         ->name('safety-observation-forms.update-approved-by-manager');
     Route::get('history-so-pages', [SafetyObservationFormController::class, 'historyPages'])->name('historyso.pages');
+    Route::get('progress-safety-observation', [SafetyObservationFormController::class, 'finishSafetyObsevationForm'])->name('progress.so');
+    Route::get('progress-safety-observation/{id}/upload', [SafetyObservationFormController::class, 'finishingSafetyObsevationForm'])->name('progress.so.upload');
+    Route::post('progress-safety-observation/{id}/upload', [SafetyObservationFormController::class, 'finalUpdateSafetyObservationForms'])->name('progress.so.uploaded');
+    Route::get('progress-safety-observation/{filename}', [SafetyObservationFormController::class, 'downloadReport'])->name('progress.so.download');
+    Route::get('progress-safety-observation/{id}/show', [SafetyObservationFormController::class, 'showFinishSafetyObsevationForm'])->name('progress.so.show');
+
 
 
     Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
