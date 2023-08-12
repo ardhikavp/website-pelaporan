@@ -42,9 +42,6 @@
                 @if(auth()->user()->role !== 'pegawai')
                 <a class="collapse-item" href="{{ route('safety-behavior-checklist.index') }}">Safety Behavior Checklist</a>
                 @endif
-                @if(auth()->user()->role !== ['pegawai', 'safety officer'])
-                <a class="collapse-item" href="{{ route('progress.so') }}">Progress Observation </a>
-                @endif
             </div>
         </div>
     </li>
@@ -62,6 +59,9 @@
                 <a class="collapse-item" href="{{ route('historyso.pages') }}">Safety Observation</a>
                 <a class="collapse-item" href="{{ route('historysbc.pages') }}">Safety Behavior Checklist</a>
                 <a class="collapse-item" href="{{ route('historysi.pages') }}">Safety Index</a>
+                @if(auth()->user()->role !== ['pegawai', 'safety officer'])
+                <a class="collapse-item" href="{{ route('progress.so') }}">Progress Observation </a>
+                @endif
             </div>
         </div>
     </li>

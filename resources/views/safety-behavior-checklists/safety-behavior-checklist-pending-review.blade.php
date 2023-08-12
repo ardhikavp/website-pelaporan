@@ -47,7 +47,7 @@
                             <button type="submit" class="btn" style="background-color: #FF0000; color: #ffffff; width: auto; padding: auto; height:auto; margin: 1px;" onclick="return confirm('Are you sure you want to delete this item?')"><i class="fas fa-trash-alt" title="Delete"> Delete</i></button>
                         </form>
                         @endcan
-                        @can('review-safety-behavior-checklist', $answer)
+                        @can('give-safety-behavior-checklist-review', $answer)
                         <a href="{{ route('safety-behavior-checklist.review-by-pic', ['answer' => $answer->id]) }}"
                             class="btn" style="background-color: #cd9f4b; color: #000000; width: auto; padding: auto; height:auto; margin: 1px;">
                             <i class="fas fa-check-circle"></i> Review</a>

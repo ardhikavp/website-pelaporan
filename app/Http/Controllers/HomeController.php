@@ -136,6 +136,30 @@ class HomeController extends Controller
         ];
         //End UC Grafik
 
-        return view('home', compact('chartData', 'totalCompanies', 'safetyObservationsPerLocation', 'configLineGraph'));
+
+        //start pichart logic
+        $openCount = SafetyObservationForm::where('finish_report', 'OPEN')->count();
+        $closedCount = SafetyObservationForm::where('finish_report', 'CLOSED')->count();
+
+        $unsafeActionCount = SafetyObservationForm::where('finish_report', 'OPEN')
+            ->where('safety_observation_type', 'unsafe_action')->count();
+        $unsafeConditionCount = SafetyObservationForm::where('finish_report', 'OPEN')
+            ->where('safety_observation_type', 'unsafe_condition')->count();
+        $badHousekeepingCount = SafetyObservationForm::where('finish_report', 'OPEN')
+            ->where('safety_observation_type', 'bad_housekeeping')->count();
+
+        $closedUnsafeActionCount = SafetyObservationForm::where('finish_report', 'CLOSED')
+            ->where('safety_observation_type', 'unsafe_action')->count();
+        $closedUnsafeConditionCount = SafetyObservationForm::where('finish_report', 'CLOSED')
+            ->where('safety_observation_type', 'unsafe_condition')->count();
+        $closedBadHousekeepingCount = SafetyObservationForm::where('finish_report', 'CLOSED')
+            ->where('safety_observation_type', 'bad_housekeeping')->count();
+
+
+        return view('home', compact(
+        'chartData', 'totalCompanies', 'safetyObservationsPerLocation', 'configLineGraph',
+        'openCount', 'closedCount',
+        'unsafeActionCount', 'unsafeConditionCount', 'badHousekeepingCount',
+        'closedUnsafeActionCount', 'closedUnsafeConditionCount', 'closedBadHousekeepingCount'));
     }
 }

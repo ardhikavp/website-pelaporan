@@ -54,7 +54,7 @@
                             class="btn" style="background-color: #cd9f4b; color: #000000; width: auto; padding: auto; height:auto; margin: 1px;">
                             <i class="bi bi-pass"></i> Tinjau</a>
                         @endcan
-                        @can('approve-safety-behavior-checklist', $answer)
+                        @can('give-safety-behavior-checklist-approve', $answer)
                         <a href="{{ route('safety-behavior-checklist.approve-by-manager', ['answer' => $answer->id]) }}"
                             class="btn" style="background-color: #274cd3; color: #ffffff; width: auto; padding: auto; height:auto; margin: 1px;">
                             <i class="bi bi-pass"></i> Approve</a>
